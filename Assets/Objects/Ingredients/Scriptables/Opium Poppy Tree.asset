@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df6d1a1b7fe71a49bd77c9dc9aaf7c2, type: 3}
+  m_Name: Opium Poppy Tree
+  m_EditorClassIdentifier: 
+  ingredientName: Opium Poppy Tree
+  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  prefab: {fileID: 6858099938998636535, guid: 87473e12e142a574f96b2375c3df3a6d, type: 3}
+  description:
+  - Opium Poppy Tree Description
+  effects:
+  - Local wildlife sleep beneath it
+  - Touching sap causes temporary numbness
+  - May cause hallucinations
+  FoundState: 0
+  currentGatheredState: 0
+  currentProcessedState: 0

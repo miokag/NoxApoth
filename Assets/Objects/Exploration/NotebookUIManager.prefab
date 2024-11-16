@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1771785839674791744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 80240658858476083}
+  - component: {fileID: 1357888145645333790}
+  m_Layer: 0
+  m_Name: NotebookUIManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &80240658858476083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771785839674791744}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 8.398735, y: 2.1323009, z: 3.7889233}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1357888145645333790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1771785839674791744}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afa8e6a86ef31bd4083c76e203fbac12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notebookUI: {fileID: 1587001355314320482, guid: 77e8e728850b97f48843ff93ac7b49c4,
+    type: 3}
+  canvas: {fileID: 0}
+  ingredientDatabase: {fileID: 11400000, guid: da36aa7895d0e4b41815d2ee9a5104cf, type: 2}
+  ingredientListPagePrefab: {fileID: 3262896670710615532, guid: bb10249afe6e562448affc73e2888966,
+    type: 3}
+  ingredientButtonPrefab: {fileID: 155122124886088864, guid: 7ed6f99d9d6629443adbdf3147042bf3,
+    type: 3}
+  ingredientPagePrefab: {fileID: 6293345585225970766, guid: d8a72ce756c56df439bb44a537b4a076,
+    type: 3}
+  potionDatabase: {fileID: 11400000, guid: b251e89b85dea284b8439e500ba12907, type: 2}
+  potionListPagePrefab: {fileID: 4960273963747973158, guid: 16ec5299e22ea8e4b916a1b63e1a1b1d,
+    type: 3}
+  potionButtonPrefab: {fileID: 1628568203549111612, guid: cce1dd45139f7c342840344c4b32deee,
+    type: 3}
+  potionPagePrefab: {fileID: 7366404079989243431, guid: 2b3fc6b565d27cc458ec7e56526aca48,
+    type: 3}
+  playerController: {fileID: 0}
