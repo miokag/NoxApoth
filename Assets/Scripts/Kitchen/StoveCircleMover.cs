@@ -24,6 +24,7 @@ public class StoveCircleMover : MonoBehaviour
 
     private float startTime;
     private Canvas StoveOnCanvas;
+    private CookingPot cookingPot;
 
     // Called immediately when the object is instantiated or enabled
     private void Start()
@@ -142,6 +143,22 @@ public class StoveCircleMover : MonoBehaviour
     {
         // Wait for 1 second
         yield return new WaitForSeconds(1f);
+
+        GameObject potTrigger = GameObject.Find("PotTrigger");
+        cookingPot = potTrigger.GetComponent<CookingPot>();
+
+        cookingPot.inventoryPanel = Instantiate(cookingPot.inventoryPanelPrefab, cookingPot.canvas.transform);
+        cookingPot.inventoryUI = Instantiate(cookingPot.inventoryUIPrefab, cookingPot.canvas.transform);
+
+        // Optionally, you can also position it here as needed
+        RectTransform inventoryRect = cookingPot.inventoryUI.GetComponent<RectTransform>();
+        inventoryRect.anchoredPosition = new Vector2(150, 0); // Adjust X and Y values as needed
+
+        RectTransform inventoryPanelRect = cookingPot.inventoryPanel.GetComponent<RectTransform>();
+        inventoryPanelRect.anchoredPosition = new Vector2(150, 100); // Adjust X and Y values as needed
+
+        CookingPot PotTrigger = GameObject.Find("PotTrigger").GetComponent<CookingPot>();
+        PotTrigger.ShowInventoryItems();
 
         // Destroy the StoveOnCanvas after the delay
         Destroy(StoveOnCanvas.gameObject);

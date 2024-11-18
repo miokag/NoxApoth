@@ -7,13 +7,16 @@ public class Ingredient : ScriptableObject
     public string ingredientName;
     public Sprite icon;
     public GameObject prefab;
+    public GameObject iconGameObject;
     public List<string> description;
     public List<string> effects;
     public bool FoundState;  // Indicates if the ingredient has been found
     public float bottomOffset;
 
     public enum GatheredState { None, Bad, Good, Perfect }
-    public enum ProcessedState { None, Burned, Cooked, Paste, Powdered, Boiled }
+    public enum ProcessedState { None, Burned, Cooked, Paste, Powdered, Simmered, Boiled }
+
+    public ProcessedState neededProcessedState;
 
     public GatheredState currentGatheredState;
     public ProcessedState currentProcessedState;

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private PotionDatabase clonedPotionDatabase;
 
     public List<Ingredient> Inventory { get; private set; }
+    public List<Ingredient> PotionMix = new List<Ingredient>();
     private int inventoryLimit = 3;  // Initial inventory size limit
 
     void Awake()
@@ -170,11 +171,27 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void RemoveToInventory(Ingredient ingredient)
+    public void RemoveFromInventory(Ingredient ingredient)
     {
-        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();
-        Inventory.Remove(clonedIngredient);
-        Debug.Log($"{ingredient.ingredientName} removed from inventory.");
+        // Find the ingredient in the inventory by name (or ID, or any unique field)
+        Ingredient ingredientToRemove = Inventory.Find(i => i.ingredientName == ingredient.ingredientName);
+
+        if (ingredientToRemove != null)
+        {
+            Inventory.Remove(ingredientToRemove);
+            Debug.Log($"{ingredient.ingredientName} removed from inventory.");
+        }
+        else
+        {
+            Debug.LogWarning($"Ingredient {ingredient.ingredientName} not found in inventory.");
+        }
+    }
+
+    
+    public void AddToPotionMix(Ingredient ingredient)
+    {
+        PotionMix.Add(ingredient);
+        Debug.Log($"{ingredient.name} added to Potion Mix.");
     }
 
     public void IncreaseInventoryLimit()
@@ -197,5 +214,23 @@ public class GameManager : MonoBehaviour
 
         Debug.Log(inventoryInfo);
     }
+    
+    public void DebugPotionMix()
+    {
+        string potionMixInfo = "POTION MIX:\n";
+    
+        foreach (Ingredient ingredient in PotionMix)
+        {
+            string ingredientInfo = $"Name: {ingredient.ingredientName}, " +
+                                    $"Description: {string.Join(", ", ingredient.description)}, " +
+                                    $"Current Gathered State: {string.Join(", ",ingredient.currentGatheredState)}, " + 
+                                    $"Current Processed State: {string.Join(", ",ingredient.currentProcessedState)}, " + 
+                                    $"FoundState: {ingredient.FoundState}";
+            potionMixInfo += ingredientInfo + "\n";
+        }
+
+        Debug.Log(potionMixInfo);
+    }
+
 
 }

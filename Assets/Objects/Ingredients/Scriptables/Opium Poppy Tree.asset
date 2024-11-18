@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Opium Poppy Tree
   m_EditorClassIdentifier: 
   ingredientName: Opium Poppy Tree
-  icon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   prefab: {fileID: 6858099938998636535, guid: 87473e12e142a574f96b2375c3df3a6d, type: 3}
+  iconGameObject: {fileID: 6028943097921460087, guid: c805cc8939904324ba9836b066243d4a,
+    type: 3}
   description:
   - Opium Poppy Tree Description
   effects:
@@ -22,5 +24,7 @@ MonoBehaviour:
   - Touching sap causes temporary numbness
   - May cause hallucinations
   FoundState: 0
+  bottomOffset: 0
+  neededProcessedState: 6
   currentGatheredState: 0
   currentProcessedState: 0

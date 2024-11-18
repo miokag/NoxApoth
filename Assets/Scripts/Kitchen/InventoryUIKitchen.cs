@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryUIKitchen : MonoBehaviour
 {
     public Canvas inventoryUICanvas;
+    [SerializeField] private Transform spawnPoint;
 
     private void Start()
     {
+        spawnPoint = GameObject.Find("PotSpawnPoint").GetComponent<Transform>();
         InstantiateUI();
     }
 
@@ -48,6 +51,12 @@ public class InventoryUI : MonoBehaviour
                             Image newImage = newImageObject.AddComponent<Image>();
                             newImage.sprite = ingredient.icon; // Set the sprite to the ingredient's icon
 
+                            // Add a Button component to handle clicks
+                            Button button = newImageObject.AddComponent<Button>();
+
+                            // Assign a click event to the button
+                            button.onClick.AddListener(() => OnIconClicked(ingredient, newImageObject));
+
                             // Optionally, set the Image's size and position (if needed)
                             RectTransform newImageRect = newImage.GetComponent<RectTransform>();
                             newImageRect.sizeDelta = new Vector2(20, 20); // Set appropriate size
@@ -59,6 +68,18 @@ public class InventoryUI : MonoBehaviour
         }
 
     }
+    
+    public void OnIconClicked(Ingredient ingredient, GameObject iconObject)
+    {
+        // Remove the icon from the inventory UI
+        Destroy(iconObject);
+
+        // Instantiate the existing iconGameObject (which is the prefab) at the spawn point
+        Instantiate(ingredient.iconGameObject, spawnPoint.position, Quaternion.identity);
+        
+    }
+
+
 
     public List<GameObject> GetChildrenList(Canvas inventoryUICanvas)
     {
