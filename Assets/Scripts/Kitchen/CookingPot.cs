@@ -28,9 +28,11 @@ public class CookingPot : MonoBehaviour
     private bool isStoveOn = false; // New flag to track if the stove is on
 
     private int finalMixCount;
+    private CameraZoom _cameraZoom;
 
     void Start()
     {
+        _cameraZoom = Camera.main.GetComponent<CameraZoom>();
         potMixer.enabled = false;
         hasStoveOnUI = false;
         mainCamera = GameObject.Find("Main Camera").GetComponent<CameraZoom>();
@@ -55,6 +57,9 @@ public class CookingPot : MonoBehaviour
             // Handle actions before mixing starts
             if (mainCamera != null && mainCamera.isZoomedIn && !hasStoveOnUI && inventoryStatus)
             {
+                // Destroy back button
+                Destroy(_cameraZoom.BackMainKitchenButton);
+                
                 // Instantiate StoveOnUI and set the flag to true
                 StoveOnUI = Instantiate(StoveOnUIPrefab, canvas.transform);
                 Debug.Log("Pot Turned On");
@@ -82,8 +87,17 @@ public class CookingPot : MonoBehaviour
     private void HandleMixingStarted()
     {
         finalMixCount = potMixer.mixCount;
+        if (finalMixCount >= 10 && finalMixCount < 20)
+        {
+            GameManager.Instance.ingredientProcessed.currentProcessedState = Ingredient.ProcessedState.Simmered;
+        }
+        else if (finalMixCount >= 20 && finalMixCount < 50)
+        {
+            GameManager.Instance.ingredientProcessed.currentProcessedState = Ingredient.ProcessedState.Boiled;
+        }
         potMixer.enabled = false;
         Debug.Log("Cooking finished, mix count: " + finalMixCount);
+        GameManager.Instance.DebugPotionMix();
     }
 
     public void StartMixing()

@@ -14,7 +14,7 @@ public class CameraZoom : MonoBehaviour
     public Vector3 defaultPosition; // Default position (optional override)
     public GameObject BackMainKitchenButtonPrefab;
 
-    private GameObject BackMainKitchenButton;
+    public GameObject BackMainKitchenButton;
     private Canvas canvas;
     private Transform targetObject; // The object to focus on
     public bool isZoomedIn = false; // To track the zoom state
@@ -77,6 +77,7 @@ public class CameraZoom : MonoBehaviour
     {
         isZoomedIn = false;
         targetObject = null;
+        
 
         // Destroy the back button and re-enable zooming
         Destroy(BackMainKitchenButton);

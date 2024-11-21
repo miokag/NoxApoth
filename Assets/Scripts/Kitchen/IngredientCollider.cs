@@ -7,10 +7,12 @@ public class IngredientCollider : MonoBehaviour
 {
     [SerializeField] private Ingredient ingredient;
     private PotMixerBehavior mixer;
+    
 
     private void Start()
     {
         mixer = GameObject.Find("Mixer").GetComponent<PotMixerBehavior>();
+        
     }
 
     private void OnCollisionEnter(Collision other)
@@ -25,6 +27,9 @@ public class IngredientCollider : MonoBehaviour
 
             // Add the ingredient to the potion mix
             GameManager.Instance.AddToPotionMix(ingredient);
+            
+            // Become current ingredient being processed
+            GameManager.Instance.CurrentlyProcessing(ingredient);
 
             // Remove Inventory UI components
             InventoryUIKitchen inventoryUIKitchen = FindObjectOfType<InventoryUIKitchen>();

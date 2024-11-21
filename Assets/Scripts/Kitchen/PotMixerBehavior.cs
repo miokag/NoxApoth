@@ -10,7 +10,7 @@ public class PotMixerBehavior : MonoBehaviour
     private float totalDistanceMoved = 0f;
     public int mixCount = 0;
     private float circleThreshold = 0.5f;
-
+    
     public CookingPot cookingPot;
     private void Start()
     {

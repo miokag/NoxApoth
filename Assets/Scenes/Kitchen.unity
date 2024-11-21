@@ -8,8 +8,9 @@ OcclusionCullingSettings:
     smallestOccluder: 5
     smallestHole: 0.25
     backfaceThreshold: 100
-  m_SceneGUID: 00000000000000000000000000000000
-  m_OcclusionCullingData: {fileID: 0}
+  m_SceneGUID: 1a73c6acbfc5eb24ba1aec4da7a7ff35
+  m_OcclusionCullingData: {fileID: 36300000, guid: bce2c07b72431bf4f8deb535deff65cc,
+    type: 2}
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -577,7 +578,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!135 &1052061323
 SphereCollider:
@@ -689,6 +690,7 @@ MonoBehaviour:
   potMixer: {fileID: 1067549195}
   StoveOnUIPrefab: {fileID: 7775410966145621402, guid: 6e958e648b0e7f641a476b7f64025b91,
     type: 3}
+  isMixingStarted: 0
 --- !u!1 &1067549193
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,6 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentTransform: {fileID: 1109549209}
+  mixCount: 0
   cookingPot: {fileID: 1052061327}
 --- !u!65 &1067549196
 BoxCollider:
@@ -827,7 +830,7 @@ GameObject:
   m_TagString: Utensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!65 &1109549206
 BoxCollider:
@@ -1134,7 +1137,7 @@ GameObject:
   m_TagString: Utensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!65 &1440518100
 BoxCollider:
@@ -1239,7 +1242,7 @@ GameObject:
   m_TagString: Utensil
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!65 &1630469614
 BoxCollider:
@@ -1344,7 +1347,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 18
   m_IsActive: 1
 --- !u!135 &1650807049
 SphereCollider:

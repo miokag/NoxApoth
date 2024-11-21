@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public List<Ingredient> Inventory { get; private set; }
     public List<Ingredient> PotionMix = new List<Ingredient>();
     private int inventoryLimit = 3;  // Initial inventory size limit
+    public Ingredient ingredientProcessed;
 
     void Awake()
     {
@@ -192,6 +193,12 @@ public class GameManager : MonoBehaviour
     {
         PotionMix.Add(ingredient);
         Debug.Log($"{ingredient.name} added to Potion Mix.");
+    }
+    
+    public void CurrentlyProcessing(Ingredient ingredient)
+    {
+        ingredientProcessed = ingredient;
+        Debug.Log($"{ingredient.name} is being processed!");
     }
 
     public void IncreaseInventoryLimit()
