@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class CookingPot : MonoBehaviour
 {
+    public static bool IsActive { get; private set; }
+    
     private CameraZoom mainCamera; // Reference to the CameraZoom script
     public Canvas canvas;
 
     public GameObject inventoryPanelPrefab;
     public GameObject inventoryPanel;
+
+    public GameObject bubbleSprites;
+    public GameObject potFire;
+    public GameObject PotSprite;
+    public SpriteRenderer potSpriteRenderer;
+
+    public Sprite[] potStates;
 
     [SerializeField] private GameObject inventoryEmptyPrefab;
     private GameObject inventoryEmpty;
@@ -32,6 +41,7 @@ public class CookingPot : MonoBehaviour
 
     void Start()
     {
+        potSpriteRenderer = PotSprite.GetComponent <SpriteRenderer>();
         _cameraZoom = Camera.main.GetComponent<CameraZoom>();
         potMixer.enabled = false;
         hasStoveOnUI = false;
@@ -40,8 +50,21 @@ public class CookingPot : MonoBehaviour
         UIManager = GameObject.Find("UIManager");
     }
 
+    public void EnableMixerForNextIngredient()
+    {
+        potMixer.enabled = true;
+        potMixer.mixCount = 0;  // Reset the mix count
+        potMixer.totalDistanceMoved = 0f; // Reset distance
+        potMixer.previousPosition = potMixer.transform.position; // Reset previous position
+        isMixingStarted = false;
+        Debug.Log("Mixer enabled for the next ingredient.");
+    }
+
+
     private void OnMouseDown()
     {
+        IsActive = true;
+        CookingPot.IsActive = false;
         bool inventoryStatus = GameManager.Instance.GetInventory();
         Debug.Log("Inventory status: " + inventoryStatus + ", Total Items: " + GameManager.Instance.Inventory.Count);
 
@@ -57,15 +80,14 @@ public class CookingPot : MonoBehaviour
             // Handle actions before mixing starts
             if (mainCamera != null && mainCamera.isZoomedIn && !hasStoveOnUI && inventoryStatus)
             {
-                // Destroy back button
-                Destroy(_cameraZoom.BackMainKitchenButton);
+                // set inactive back button
+                _cameraZoom.BackMainKitchenButton.SetActive(false);
                 
                 // Instantiate StoveOnUI and set the flag to true
                 StoveOnUI = Instantiate(StoveOnUIPrefab, canvas.transform);
                 Debug.Log("Pot Turned On");
                 hasStoveOnUI = true;
                 isStoveOn = true; // Mark the stove as on
-                this.enabled = false;
                 GameManager.Instance.DebugInventory();
             }
             else if (!inventoryStatus)
@@ -84,34 +106,43 @@ public class CookingPot : MonoBehaviour
     }
 
     // Method to handle the behavior when mixing has started
-    private void HandleMixingStarted()
+    public void HandleMixingStarted()
     {
+        Debug.Log("HandleMixingStarted() triggered.");
+        Ingredient ingredient = GameManager.Instance.ingredientProcessed;
+        Ingredient clonedIngredient = (Ingredient)ingredient.Clone(); // Use the cloned version
         finalMixCount = potMixer.mixCount;
+
         if (finalMixCount >= 10 && finalMixCount < 20)
         {
-            GameManager.Instance.ingredientProcessed.currentProcessedState = Ingredient.ProcessedState.Simmered;
+            clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Simmered;
         }
         else if (finalMixCount >= 20 && finalMixCount < 50)
         {
-            GameManager.Instance.ingredientProcessed.currentProcessedState = Ingredient.ProcessedState.Boiled;
+            clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Boiled;
         }
-        potMixer.enabled = false;
-        Debug.Log("Cooking finished, mix count: " + finalMixCount);
-        GameManager.Instance.DebugPotionMix();
-    }
-
-    public void StartMixing()
-    {
-        // Only allow mixing if the stove is turned on
-        if (!isStoveOn)
+        else
         {
-            Debug.Log("Can't start mixing. The stove is off.");
-            return;
+            clonedIngredient.currentProcessedState = Ingredient.ProcessedState.None;
         }
 
-        // This method can be called when the mixing process is triggered
-        isMixingStarted = true;
-        Debug.Log("Mixing started. You can now interact with the pot differently.");
+        finalMixCount = 0;
+        potMixer.OnMixComplete();  // Ensure this is being reached
+        potMixer.enabled = false;
+
+        potSpriteRenderer.sprite = potStates[0];
+        bubbleSprites.SetActive(false);
+        potFire.SetActive(false);
+        
+        // Stove Reset
+        isStoveOn = false;
+        hasStoveOnUI = false;
+        
+        // Add the ingredient to the potion mix
+        GameManager.Instance.AddToPotionMix(clonedIngredient);
+        GameManager.Instance.DebugPotionMix();
+    
+        _cameraZoom.BackMainKitchenButton.SetActive(true);
     }
 
     // Coroutine to destroy inventoryEmpty after a delay
@@ -133,4 +164,7 @@ public class CookingPot : MonoBehaviour
             inventoryUIScript.inventoryUICanvas = inventoryUI.GetComponent<Canvas>();
         }
     }
+    
+    
 }
+

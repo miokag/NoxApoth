@@ -37,7 +37,7 @@ public class DoorBehavior : MonoBehaviour
             return;
 
         // Load orders from the JSON file
-        orders = OrderManager.LoadOrdersFromJson();
+        orders = OrderManager.Instance.GetAllOrders();
 
         if (orders.Count > 0)
         {

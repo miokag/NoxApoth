@@ -10,6 +10,7 @@ using System;
 
 public class DialogueSys : MonoBehaviour
 {
+    public static DialogueSys Instance { get; private set; }
     public event Action OnDialogueFinished;  // Event to notify when dialogue is finished
 
     private TMP_Text characterText;
@@ -37,6 +38,21 @@ public class DialogueSys : MonoBehaviour
     private Canvas canvas;
     private Canvas textboxCanvas;
 
+    private void Awake()
+    {
+        // Singleton implementation
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Optionally keep the instance across scenes
+        }
+        else
+        {
+            Destroy(gameObject); // Destroy duplicate instances
+            return;
+        }
+    }
+    
     void Start()
     {
         LoadLuaScript(luaFileName);

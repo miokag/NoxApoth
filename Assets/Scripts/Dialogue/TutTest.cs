@@ -44,9 +44,13 @@ public class TutTest : MonoBehaviour
         if (dialogueManager == null) { Debug.LogError("DialogueManager is not assigned."); }
         else
         {
-            dialogueManager.StartDialogue("shop1");
-            nextStep = 1;
-            dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
+            if (GameManager.Instance.GetTutorialStep() == 0)
+            {
+                dialogueManager.StartDialogue("shop1");
+                nextStep = 1;
+                dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
+            }
+            
         }
     }
 
@@ -71,6 +75,7 @@ public class TutTest : MonoBehaviour
         {
             dialogueManager.StartDialogue("shop2");
             nextStep++;
+            GameManager.Instance.NextTutorialStep();
         }
     }
 

@@ -58,6 +58,8 @@ namespace DialogueSystem
         {
             _luaScript = new Script();
             string filePath = Path.Combine(Application.dataPath, "Scripts", "Dialogue", fileName + ".lua");
+            Debug.Log($"Loading Lua file: {filePath}");
+
 
             if (File.Exists(filePath))
             {
@@ -73,25 +75,28 @@ namespace DialogueSystem
 
         public void StartDialogue(string node)
         {
-            canvas = FindAnyObjectByType<Canvas>();
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            if (canvas == null)
+            {
+                Debug.LogError("No Canvas found in the scene!");
+                return;
+            }
             _currentNode = node;
             _lineIndex = 0;
             _isWaitingForAction = false;
             IsDialogueFinished = false;
-
-            if (_dialogueText == null || _characterText == null)
-            {
-                Debug.LogError("TMP_Text components are missing in the prefab.");
-            }
-
+            
+            _currentDialogueBox = Instantiate(dialogueBoxPrefab, canvas.transform);
+            _dialogueText = _currentDialogueBox.transform.Find("DialogueBox/DialogueText")?.GetComponent<TMP_Text>();
+            _characterText = _currentDialogueBox.transform.Find("NameBox/CharacterName")?.GetComponent<TMP_Text>();
+            _currentDialogueBox.SetActive(false);
+            
             DisplayDialogueNode(_currentNode);
         }
 
         private void DisplayDialogueNode(string node)
         {
-            _currentDialogueBox = Instantiate(dialogueBoxPrefab, canvas.transform);
-            _dialogueText = _currentDialogueBox.transform.Find("DialogueBox/DialogueText")?.GetComponent<TMP_Text>();
-            _characterText = _currentDialogueBox.transform.Find("NameBox/CharacterName")?.GetComponent<TMP_Text>();
+            _currentDialogueBox.SetActive(true);
 
             if (_isWaitingForAction || IsDialogueFinished) return;  // Prevent processing when the dialogue is finished
             // Prevent any further processing if node is null
@@ -101,7 +106,14 @@ namespace DialogueSystem
                 return;
             }
 
+            Debug.Log($"Attempting to fetch node: {node}");
             DynValue luaNode = _luaScript.Call(_luaScript.Globals["getDialogueNode"], node);
+            if (luaNode == null || luaNode.Type != DataType.Table)
+            {
+                Debug.LogError($"Failed to retrieve dialogue node: {node}");
+                return;
+            }
+
 
             if (luaNode.Type == DataType.Table)
             {

@@ -66,7 +66,7 @@ public class OrderNoteBehavior : MonoBehaviour, IPointerDownHandler
     public void LogOrderList()
     {
         // Load orders directly from the JSON file
-        List<Order> orders = OrderManager.LoadOrdersFromJson();
+        List<Order> orders = OrderManager.Instance.GetAllOrders();
 
         // Log each order for debugging
         if (orders != null && orders.Count > 0)

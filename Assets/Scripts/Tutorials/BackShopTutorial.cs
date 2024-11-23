@@ -6,26 +6,27 @@ using UnityEngine;
 public class BackShopTutorial : MonoBehaviour
 {
     [SerializeField] private GameObject door; // Reference to the Door GameObject
-    private DialogueManager dialogueManager;
+    private DialogueSys dialogueManager;
     private DoorBehavior doorBehavior;
 
     void Start()
     {
 
-        dialogueManager = FindObjectOfType<DialogueManager>();
+        dialogueManager = FindObjectOfType<DialogueSys>();
         doorBehavior = door.transform.Find("Cube")?.GetComponent<DoorBehavior>();
 
         // Check if the tutorial step is 1, and if so, start the dialogue
         if (GameManager.Instance.GetTutorialStep() == 1)
         {
-            DialogueManager.Instance.StartDialogue("backshop");
+            Debug.Log("Next TUTORIAL Step == 1");
+            dialogueManager.StartDialogue("backshop");
 
             // Find the DoorBehavior on the child Cube GameObject
             if (doorBehavior != null)
             {
                 // Disable interaction with the door after starting the tutorial
                 doorBehavior.DisableInteraction(); // Disable interaction with the door
-                dialogueManager.OnDialogueFinishedEvent += OnDialogueFinished;
+                dialogueManager.OnDialogueFinished += OnDialogueFinished;
             }
             else
             {
@@ -42,9 +43,7 @@ public class BackShopTutorial : MonoBehaviour
             doorBehavior.EnableInteraction();
             Debug.Log("Tutorial Step Completed, moving to the next step.");
             GameManager.Instance.NextTutorialStep();
-            dialogueManager.EndDialogue();
-            dialogueManager.ResetDialogue();
-            DialogueManager.Instance.OnDialogueFinishedEvent -= OnDialogueFinished;
+            dialogueManager.OnDialogueFinished -= OnDialogueFinished;
         }
     }
 }

@@ -16,15 +16,24 @@ public class CameraZoom : MonoBehaviour
 
     public GameObject BackMainKitchenButton;
     private Canvas canvas;
-    private Transform targetObject; // The object to focus on
+    public Transform targetObject; // The object to focus on
     public bool isZoomedIn = false; // To track the zoom state
     private bool canZoomIn = true;
+
+    public GameObject ToBackShopButtonPrefab;
+    public GameObject ToBackShopButton;
 
     void Start()
     {
         mainCamera = Camera.main;
         defaultFOV = mainCamera.fieldOfView;
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        ToBackShopButton = canvas.transform.Find("ToBackShopButton").gameObject;
+
+        BackMainKitchenButton = canvas.transform.Find("BackMainKitchenButton").gameObject;
+        BackMainKitchenButton.SetActive(false);
+        Button backButton = BackMainKitchenButton.GetComponent<Button>();
+        backButton.onClick.AddListener(BackToMainKitchen);
 
         // Initialize default position if not set in the Inspector
         if (defaultPosition == Vector3.zero)
@@ -50,9 +59,7 @@ public class CameraZoom : MonoBehaviour
                         targetObject = hit.transform;
                         isZoomedIn = true;
                         canZoomIn = false;  // Disable zooming in while transitioning
-                        BackMainKitchenButton = Instantiate(BackMainKitchenButtonPrefab, canvas.transform);
-                        Button backButton = BackMainKitchenButton.GetComponent<Button>();
-                        backButton.onClick.AddListener(BackToMainKitchen);
+                        BackMainKitchenButton.SetActive(true);
                     }
                 }
             }
@@ -61,6 +68,7 @@ public class CameraZoom : MonoBehaviour
         // Smoothly adjust FOV and camera position
         if (isZoomedIn && targetObject != null)
         {
+            ToBackShopButton.SetActive(false);
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,
                                                          targetObject.position + zoomOffset,
                                                          Time.deltaTime * zoomSpeed);
@@ -73,14 +81,14 @@ public class CameraZoom : MonoBehaviour
         mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, isZoomedIn ? zoomFOV : defaultFOV, Time.deltaTime * zoomSpeed);
     }
 
-    void BackToMainKitchen()
+    public void BackToMainKitchen()
     {
         isZoomedIn = false;
         targetObject = null;
-        
+        ToBackShopButton.SetActive(true);
 
         // Destroy the back button and re-enable zooming
-        Destroy(BackMainKitchenButton);
+        BackMainKitchenButton.SetActive(false);
 
         // Start the coroutine to delay zoom-in until the zoom-out is complete
         StartCoroutine(EnableZoomAfterDelay());

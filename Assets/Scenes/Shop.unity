@@ -433,7 +433,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 365748712}
-  - component: {fileID: 365748711}
   - component: {fileID: 365748713}
   m_Layer: 0
   m_Name: DialogueManager
@@ -442,24 +441,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &365748711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 365748710}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a4c8f9addecc2d44957cd889c595c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogueBoxPrefab: {fileID: 8243923612640862033, guid: c0f906248df92e74580f49b4e816e1bc,
-    type: 3}
-  orderNotePrefab: {fileID: 3837276434537049974, guid: 162f295b109a2ce45832e0e2133633c1,
-    type: 3}
-  luaFileName: TutorialDialogue
-  canvas: {fileID: 2115181466}
 --- !u!4 &365748712
 Transform:
   m_ObjectHideFlags: 0
@@ -621,7 +602,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 510533286}
-  - component: {fileID: 510533285}
   - component: {fileID: 510533287}
   m_Layer: 0
   m_Name: Tutorial
@@ -630,20 +610,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &510533285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510533284}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c6d00880c6d1c48b86de95ac75a3b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customerDatabase: {fileID: 11400000, guid: 7dc11d976fa1f2a41b88d941f1dfa9ee, type: 2}
-  customerSpawner: {fileID: 1285418371}
 --- !u!4 &510533286
 Transform:
   m_ObjectHideFlags: 0
@@ -1615,6 +1581,8 @@ MonoBehaviour:
   currentCustomer: 
   ingredientDatabase: {fileID: 11400000, guid: da36aa7895d0e4b41815d2ee9a5104cf, type: 2}
   potionDatabase: {fileID: 11400000, guid: b251e89b85dea284b8439e500ba12907, type: 2}
+  PotionMix: []
+  ingredientProcessed: {fileID: 0}
 --- !u!4 &1776271643
 Transform:
   m_ObjectHideFlags: 0

@@ -24,9 +24,6 @@ public class IngredientCollider : MonoBehaviour
 
             // Remove the ingredient from inventory
             GameManager.Instance.RemoveFromInventory(ingredient);
-
-            // Add the ingredient to the potion mix
-            GameManager.Instance.AddToPotionMix(ingredient);
             
             // Become current ingredient being processed
             GameManager.Instance.CurrentlyProcessing(ingredient);
@@ -43,9 +40,25 @@ public class IngredientCollider : MonoBehaviour
                 Destroy(InventoryUICanvas);
                 Destroy(inventoryUIKitchen);
             }
+            
+            InventoryUIPan inventoryUIPan = FindObjectOfType<InventoryUIPan>();
+            if (inventoryUIPan != null)
+            {
+                Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+                GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
+                GameObject InventoryUICanvas = canvas.transform.Find("InventoryUICanvas(Clone)").gameObject;
+                
+                Destroy(inventoryUIPanel);
+                Destroy(InventoryUICanvas);
+                Destroy(inventoryUIKitchen);
+            }
 
             // Enable the PotMixerBehavior to allow dragging the mixer
-            mixer.enabled = true; // Ensure that mixer is draggable now
+            if (mixer != null)
+            {
+                mixer.enabled = true;
+                mixer.isDragging = true;
+            } // Ensure that mixer is draggable now 
 
             // Debugging Inventory and Potion Mix
             GameManager.Instance.DebugInventory();

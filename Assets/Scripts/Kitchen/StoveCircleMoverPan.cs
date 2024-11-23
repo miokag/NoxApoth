@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 
-public class StoveCircleMover : MonoBehaviour
+public class StoveCircleMoverPan : MonoBehaviour
 {
     public RectTransform stoveClickerPanel; // The panel containing the sections
     public List<RectTransform> redSections;
@@ -24,7 +24,7 @@ public class StoveCircleMover : MonoBehaviour
 
     private float startTime;
     private Canvas StoveOnCanvas;
-    private CookingPot cookingPot;
+    private CookingPan cookingPan;
 
     // Called immediately when the object is instantiated or enabled
     private void Start()
@@ -34,7 +34,7 @@ public class StoveCircleMover : MonoBehaviour
         rectTransform = GetComponent<RectTransform>();
 
         Canvas mainCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        StoveOnCanvas = mainCanvas.transform.Find("StoveOnCanvas(Clone)").GetComponent<Canvas>();
+        StoveOnCanvas = mainCanvas.transform.Find("StoveOnCanvasPan(Clone)").GetComponent<Canvas>();
         StoveLineCanvas = StoveOnCanvas.transform.Find("StoveLineCanvas").GetComponent<Canvas>();
 
         RectTransform redSection1 = StoveLineCanvas.transform.Find("RedArea1").GetComponent<RectTransform>();
@@ -144,26 +144,24 @@ public class StoveCircleMover : MonoBehaviour
         // Wait for 1 second
         yield return new WaitForSeconds(1f);
 
-        GameObject potTrigger = GameObject.Find("PotTrigger");
-        cookingPot = potTrigger.GetComponent<CookingPot>();
+        GameObject panTrigger = GameObject.Find("PanTrigger");
+        cookingPan = panTrigger.GetComponent<CookingPan>();
 
-        cookingPot.inventoryPanel = Instantiate(cookingPot.inventoryPanelPrefab, cookingPot.canvas.transform);
-        cookingPot.inventoryUI = Instantiate(cookingPot.inventoryUIPrefab, cookingPot.canvas.transform);
+        cookingPan.inventoryPanel = Instantiate(cookingPan.inventoryPanelPrefab, cookingPan.canvas.transform);
+        cookingPan.inventoryUI = Instantiate(cookingPan.inventoryUIPrefab, cookingPan.canvas.transform);
 
         // Optionally, you can also position it here as needed
-        RectTransform inventoryRect = cookingPot.inventoryUI.GetComponent<RectTransform>();
+        RectTransform inventoryRect = cookingPan.inventoryUI.GetComponent<RectTransform>();
         inventoryRect.anchoredPosition = new Vector2(150, 0); // Adjust X and Y values as needed
 
-        RectTransform inventoryPanelRect = cookingPot.inventoryPanel.GetComponent<RectTransform>();
+        RectTransform inventoryPanelRect = cookingPan.inventoryPanel.GetComponent<RectTransform>();
         inventoryPanelRect.anchoredPosition = new Vector2(150, 100); // Adjust X and Y values as needed
 
-        CookingPot PotTrigger = GameObject.Find("PotTrigger").GetComponent<CookingPot>();
-        PotTrigger.ShowInventoryItems();
+        CookingPan PanTrigger = GameObject.Find("PanTrigger").GetComponent<CookingPan>();
+        PanTrigger.ShowInventoryItems();
 
         // Destroy the StoveOnCanvas after the delay
         Destroy(StoveOnCanvas.gameObject);
-        cookingPot.bubbleSprites.SetActive(true);
-        cookingPot.potFire.SetActive(true);
     }
 
 

@@ -44,11 +44,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        orderManager.ClearOrders();
         Inventory = new List<Ingredient>();
         currentCustomer = null;
-
-        Debug.Log(ingredientDatabase);
 
         clonedIngredientDatabase = ingredientDatabase.Clone();
         clonedPotionDatabase = potionDatabase.Clone(clonedIngredientDatabase);
@@ -56,7 +53,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
 
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
     }
+
 
     public void setCurrentCustomer(string customerName)
     {
@@ -191,7 +191,8 @@ public class GameManager : MonoBehaviour
     
     public void AddToPotionMix(Ingredient ingredient)
     {
-        PotionMix.Add(ingredient);
+        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();  // Clone the ingredient before adding
+        PotionMix.Add(clonedIngredient);
         Debug.Log($"{ingredient.name} added to Potion Mix.");
     }
     
