@@ -30,8 +30,30 @@ public class CookingPan : MonoBehaviour
     private int _finalMixCount;
     private CameraZoom _cameraZoom;
     
+    public GameObject outerFry;
+    public Animator outerFryAnimator;
+    
+    public GameObject innerFry;
+    public Animator innerFryAnimator;
+
+    public GameObject panFire;
+    public GameObject panHandle;
+    private PanHandleBehavior _panHandleBehavior;
+
+    public GameObject panSprite;
+    private SpriteRenderer _panSpriteRenderer;
+    
+    
     void Start()
     {
+        panHandle.SetActive(false);
+        
+        _panHandleBehavior = panHandle.GetComponent<PanHandleBehavior>();
+        outerFryAnimator = outerFry.GetComponent<Animator>();
+        innerFryAnimator = innerFry.GetComponent<Animator>();
+        
+        _panSpriteRenderer = panSprite.GetComponent<SpriteRenderer>();
+        
         IsActive = true;
         CookingPan.IsActive = false;
         _cameraZoom = Camera.main.GetComponent<CameraZoom>();
@@ -39,6 +61,57 @@ public class CookingPan : MonoBehaviour
         _mainCamera = GameObject.Find("Main Camera").GetComponent<CameraZoom>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _uiManager = GameObject.Find("UIManager");
+    }
+    
+    public void PlayAnimationInnerFry (string animationStateName)
+    {
+        innerFryAnimator.Play(animationStateName);
+    }
+    
+    private IEnumerator PlayInnerFryAnimationAfterDelay(float delay, string animationStateName)
+    {
+        if (isFryingStarted)
+        {
+            yield return new WaitForSeconds(delay);
+            PlayAnimationInnerFry(animationStateName);
+        }
+    }
+
+    private void HandleFrying()
+    {
+        int finalCount;
+        finalCount = _panHandleBehavior.moveCounter;
+        
+        Ingredient ingredient = GameManager.Instance.ingredientProcessed;
+        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();
+        
+        if (finalCount >= 5  && finalCount < 10)
+        {
+            clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Cooked;
+        }
+        else if (finalCount >= 10 && finalCount < 20)
+        {
+            clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Burned;
+        }
+
+        finalCount = 0;
+        panHandle.SetActive(false);
+        _panHandleBehavior.moveCounter = 0;
+        panFire.SetActive(false);
+        isFryingStarted = false;
+        
+        // Stove Reset
+        _isStoveOn = false;
+        _hasStoveOnUI = false;
+        
+        innerFry.SetActive(false);
+        outerFry.SetActive(false);
+        
+        // Add the ingredient to the potion mix
+        GameManager.Instance.AddToPotionMix(clonedIngredient);
+        GameManager.Instance.DebugPotionMix();
+        
+        _cameraZoom.BackMainKitchenButton.SetActive(true);
     }
     
     private void OnMouseDown()
@@ -50,6 +123,7 @@ public class CookingPan : MonoBehaviour
         if (isFryingStarted)
         {
             Debug.Log("Player is frying, so no inventory actions.");
+            HandleFrying();
         }
         else
         {
@@ -64,6 +138,7 @@ public class CookingPan : MonoBehaviour
                 Debug.Log("Cooking Pan Running");
                 _hasStoveOnUI = true;
                 _isStoveOn = true; // Mark the stove as on
+                
                 GameManager.Instance.DebugInventory();
             }
             else if (!inventoryStatus)

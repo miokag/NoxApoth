@@ -7,7 +7,8 @@ public class IngredientCollider : MonoBehaviour
 {
     [SerializeField] private Ingredient ingredient;
     private PotMixerBehavior mixer;
-    
+    private GameObject _panTrigger;
+    private GameObject _panHandle;
 
     private void Start()
     {
@@ -47,6 +48,16 @@ public class IngredientCollider : MonoBehaviour
                 Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
                 GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
                 GameObject InventoryUICanvas = canvas.transform.Find("InventoryUICanvas(Clone)").gameObject;
+                
+                _panTrigger = GameObject.Find("PanTrigger");
+                CookingPan cookingPan = _panTrigger.GetComponent<CookingPan>();
+                _panHandle = cookingPan.panHandle;
+
+                _panHandle.SetActive(true);
+                
+                cookingPan.isFryingStarted = true;
+                cookingPan.outerFry.SetActive(true);
+                cookingPan.innerFry.SetActive(true);
                 
                 Destroy(inventoryUIPanel);
                 Destroy(InventoryUICanvas);

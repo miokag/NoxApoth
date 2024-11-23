@@ -159,7 +159,9 @@ public class StoveCircleMoverPan : MonoBehaviour
 
         CookingPan PanTrigger = GameObject.Find("PanTrigger").GetComponent<CookingPan>();
         PanTrigger.ShowInventoryItems();
-
+        
+        cookingPan.panFire.SetActive(true);
+        
         // Destroy the StoveOnCanvas after the delay
         Destroy(StoveOnCanvas.gameObject);
     }

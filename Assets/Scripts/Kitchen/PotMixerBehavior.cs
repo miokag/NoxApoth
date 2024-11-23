@@ -63,12 +63,14 @@ public class PotMixerBehavior : MonoBehaviour
             {
                 totalDistanceMoved = 0f;
                 mixCount++;
-                if (mixCount >= 10 && mixCount < 20)
+                if (mixCount >= 5 && mixCount < 10)
                 {
+                    cookingPot.PlayAnimationDirectly("PotBubblesSimmer");
                     cookingPot.potSpriteRenderer.sprite = cookingPot.potStates[1];
                 }
-                else if (mixCount >= 20 && mixCount < 50)
+                else if (mixCount >= 10 && mixCount < 20)
                 {
+                    cookingPot.PlayAnimationDirectly("PotBubblesBoil");
                     cookingPot.potSpriteRenderer.sprite = cookingPot.potStates[2];
                 }
             }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Opium Poppy Tree
   icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 6858099938998636535, guid: 87473e12e142a574f96b2375c3df3a6d, type: 3}
+  prefab: {fileID: 6063292637453430409, guid: 596d6367bbfb99645aecf3bb6900c32b, type: 3}
   iconGameObject: {fileID: 6028943097921460087, guid: c805cc8939904324ba9836b066243d4a,
     type: 3}
   description:

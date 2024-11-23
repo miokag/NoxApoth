@@ -13,10 +13,11 @@ public class CookingPot : MonoBehaviour
     public GameObject inventoryPanel;
 
     public GameObject bubbleSprites;
+    public Animator bubbleAnimator;
+    
     public GameObject potFire;
     public GameObject PotSprite;
     public SpriteRenderer potSpriteRenderer;
-
     public Sprite[] potStates;
 
     [SerializeField] private GameObject inventoryEmptyPrefab;
@@ -39,8 +40,12 @@ public class CookingPot : MonoBehaviour
     private int finalMixCount;
     private CameraZoom _cameraZoom;
 
+    
+    
+
     void Start()
     {
+        bubbleAnimator = bubbleSprites.GetComponent<Animator>();
         potSpriteRenderer = PotSprite.GetComponent <SpriteRenderer>();
         _cameraZoom = Camera.main.GetComponent<CameraZoom>();
         potMixer.enabled = false;
@@ -48,6 +53,11 @@ public class CookingPot : MonoBehaviour
         mainCamera = GameObject.Find("Main Camera").GetComponent<CameraZoom>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         UIManager = GameObject.Find("UIManager");
+    }
+    
+    public void PlayAnimationDirectly(string animationStateName)
+    {
+        bubbleAnimator.Play(animationStateName);
     }
 
     public void EnableMixerForNextIngredient()
@@ -113,11 +123,11 @@ public class CookingPot : MonoBehaviour
         Ingredient clonedIngredient = (Ingredient)ingredient.Clone(); // Use the cloned version
         finalMixCount = potMixer.mixCount;
 
-        if (finalMixCount >= 10 && finalMixCount < 20)
+        if (finalMixCount >= 5 && finalMixCount < 10)
         {
             clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Simmered;
         }
-        else if (finalMixCount >= 20 && finalMixCount < 50)
+        else if (finalMixCount >= 10 && finalMixCount < 20)
         {
             clonedIngredient.currentProcessedState = Ingredient.ProcessedState.Boiled;
         }
@@ -133,6 +143,7 @@ public class CookingPot : MonoBehaviour
         potSpriteRenderer.sprite = potStates[0];
         bubbleSprites.SetActive(false);
         potFire.SetActive(false);
+        PlayAnimationDirectly("PotBubblesAnim");
         
         // Stove Reset
         isStoveOn = false;
