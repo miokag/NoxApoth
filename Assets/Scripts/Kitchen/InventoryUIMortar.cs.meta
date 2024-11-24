@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: c963210e4cb57a949875c52d4b7a4810
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - inventoryUICanvasPrefab: {fileID: 7657375711473568447, guid: 044700dfe88ca8d4ca452e83c3ac0c55,
+      type: 3}
+  - inventoryUICanvas: {instanceID: 0}
+  - inventoryPanelPrefab: {fileID: 8165424853994205709, guid: 92efc9ac46a615342bfeacfdb0a7f0ad,
+      type: 3}
+  - inventoryPanel: {instanceID: 0}
+  - spawnPoint: {instanceID: 0}
+  - canvas: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

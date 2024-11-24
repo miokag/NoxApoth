@@ -128,7 +128,7 @@ public class CookingPan : MonoBehaviour
         else
         {
             // Handle actions before mixing starts
-            if (_mainCamera != null && _mainCamera.isZoomedIn && !_hasStoveOnUI && inventoryStatus)
+            if (_mainCamera != null && _mainCamera.isZoomedIn && _mainCamera.clickedObjectName == "Pan" && !_hasStoveOnUI && inventoryStatus)
             {
                 // set inactive back button
                 _cameraZoom.BackMainKitchenButton.SetActive(false);

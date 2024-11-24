@@ -88,7 +88,7 @@ public class CookingPot : MonoBehaviour
         else
         {
             // Handle actions before mixing starts
-            if (mainCamera != null && mainCamera.isZoomedIn && !hasStoveOnUI && inventoryStatus)
+            if (mainCamera != null && mainCamera.isZoomedIn && mainCamera.clickedObjectName == "Pot" && !hasStoveOnUI && inventoryStatus)
             {
                 // set inactive back button
                 _cameraZoom.BackMainKitchenButton.SetActive(false);
@@ -114,6 +114,7 @@ public class CookingPot : MonoBehaviour
         }
 
     }
+    
 
     // Method to handle the behavior when mixing has started
     public void HandleMixingStarted()

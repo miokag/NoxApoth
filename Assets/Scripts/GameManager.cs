@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
 
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Gale Fern Fronds"));
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
     }

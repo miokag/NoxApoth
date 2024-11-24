@@ -9,11 +9,15 @@ public class IngredientCollider : MonoBehaviour
     private PotMixerBehavior mixer;
     private GameObject _panTrigger;
     private GameObject _panHandle;
-
+    private GameObject _pestle;
+    private CameraZoom _cameraZoom;
+    private GameObject _uiManager;
     private void Start()
     {
+        _uiManager = GameObject.Find("UIManager");
         mixer = GameObject.Find("Mixer").GetComponent<PotMixerBehavior>();
-        
+        GameObject camera = GameObject.Find("Main Camera");
+        _cameraZoom = camera.GetComponent<CameraZoom>();
     }
 
     private void OnCollisionEnter(Collision other)
@@ -31,7 +35,7 @@ public class IngredientCollider : MonoBehaviour
 
             // Remove Inventory UI components
             InventoryUIKitchen inventoryUIKitchen = FindObjectOfType<InventoryUIKitchen>();
-            if (inventoryUIKitchen != null)
+            if (inventoryUIKitchen != null && _cameraZoom.clickedObjectName == "Pot")
             {
                 Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
                 GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
@@ -43,7 +47,7 @@ public class IngredientCollider : MonoBehaviour
             }
             
             InventoryUIPan inventoryUIPan = FindObjectOfType<InventoryUIPan>();
-            if (inventoryUIPan != null)
+            if (inventoryUIPan != null && _cameraZoom.clickedObjectName == "Pan")
             {
                 Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
                 GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
@@ -61,7 +65,28 @@ public class IngredientCollider : MonoBehaviour
                 
                 Destroy(inventoryUIPanel);
                 Destroy(InventoryUICanvas);
-                Destroy(inventoryUIKitchen);
+                Destroy(inventoryUIPan);
+            }
+            
+            InventoryUIMortar inventoryUIMortar = FindObjectOfType<InventoryUIMortar>();
+            if (inventoryUIMortar != null && _cameraZoom.clickedObjectName == "Mortar")
+            {
+                Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+                GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
+                GameObject InventoryUICanvas = canvas.transform.Find("InventoryUICanvas(Clone)").gameObject;
+                
+                _pestle = GameObject.Find("Pestle");
+                PestleBehavior pestleBehavior = _pestle.GetComponent<PestleBehavior>();
+
+                pestleBehavior.isCrushing = true;
+                pestleBehavior.pestleCollider.enabled = true;
+                
+                GameObject mortarGameObject = GameObject.Find("Mortar");
+                
+                mortarGameObject.SetActive(false);
+                Destroy(inventoryUIPanel);
+                Destroy(InventoryUICanvas);
+                Destroy(inventoryUIMortar);
             }
 
             // Enable the PotMixerBehavior to allow dragging the mixer

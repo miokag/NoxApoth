@@ -25,6 +25,7 @@ MonoBehaviour:
   - May cause hallucinations
   FoundState: 0
   bottomOffset: 0
+  hexColor: '#785087'
   neededProcessedState: 6
   currentGatheredState: 0
   currentProcessedState: 0

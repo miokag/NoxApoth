@@ -22,6 +22,7 @@ public class CameraZoom : MonoBehaviour
 
     public GameObject ToBackShopButtonPrefab;
     public GameObject ToBackShopButton;
+    public string clickedObjectName;
 
     void Start()
     {
@@ -53,6 +54,9 @@ public class CameraZoom : MonoBehaviour
                 Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out RaycastHit hit))
                 {
+                    clickedObjectName = hit.collider.gameObject.name;
+                    Debug.Log("Camera Zoom Clicked Object Name: " + clickedObjectName);
+                    
                     // Check if the clicked object has the "Utensil" tag
                     if (hit.collider.CompareTag("Utensil"))
                     {
@@ -86,6 +90,7 @@ public class CameraZoom : MonoBehaviour
         isZoomedIn = false;
         targetObject = null;
         ToBackShopButton.SetActive(true);
+        clickedObjectName = "";
 
         // Destroy the back button and re-enable zooming
         BackMainKitchenButton.SetActive(false);

@@ -13,6 +13,7 @@ public class Ingredient : ScriptableObject
     public bool FoundState;  // Indicates if the ingredient has been found
     public float bottomOffset;
 
+    public string hexColor;
     public enum GatheredState { None, Bad, Good, Perfect }
     public enum ProcessedState { None, Burned, Cooked, Paste, Powdered, Simmered, Boiled }
 

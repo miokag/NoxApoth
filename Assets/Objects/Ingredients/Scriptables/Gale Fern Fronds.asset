@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: Gale Fern Fronds
   m_EditorClassIdentifier: 
   ingredientName: Gale Fern Fronds
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: cf4c35768062ea242be81a8f14015f87, type: 3}
   prefab: {fileID: 0}
+  iconGameObject: {fileID: 6028943097921460087, guid: 9fc106d17309b3a4c83fcc333ce4c7df,
+    type: 3}
   description:
   - Gale Fern Fronds Description
   effects:
   - Survives extreme weather
   - Generates a defensive breeze
+  FoundState: 0
+  bottomOffset: 0
+  hexColor: '#4B692F'
+  neededProcessedState: 0
   currentGatheredState: 0
   currentProcessedState: 0
