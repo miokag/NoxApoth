@@ -11,6 +11,7 @@ public class Ingredient : ScriptableObject
     public List<string> description;
     public List<string> effects;
     public bool FoundState;  // Indicates if the ingredient has been found
+    public bool isCookedProperly;
     public float bottomOffset;
 
     public string hexColor;

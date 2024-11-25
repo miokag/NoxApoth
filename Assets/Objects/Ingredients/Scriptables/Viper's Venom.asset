@@ -13,12 +13,19 @@ MonoBehaviour:
   m_Name: Viper's Venom
   m_EditorClassIdentifier: 
   ingredientName: Viper's Venom
-  icon: {fileID: 0}
+  icon: {fileID: -1561629493, guid: 538fd6d569ca6fb4d86eb35a9432aacf, type: 3}
   prefab: {fileID: 0}
+  iconGameObject: {fileID: 7894228883647149419, guid: 1fdf1083a0e7cac44ba9f5340bb1cd0b,
+    type: 3}
   description:
   - Viper's Venom Description
   effects:
   - Snakes use it to heal their scales
   - Contact causes tingling sensation
-  currentGatheredState: 0
+  FoundState: 0
+  isCookedProperly: 0
+  bottomOffset: 0
+  hexColor: 
+  neededProcessedState: 6
+  currentGatheredState: 3
   currentProcessedState: 0

@@ -8,4 +8,5 @@ public class Customer : ScriptableObject
     public string customerName;
     public GameObject customerPrefab;
     public Potion customerOrder;
+    public bool orderTaken;
 }

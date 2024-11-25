@@ -4,29 +4,41 @@ using UnityEngine.UI; // Add this if you're using Unity UI components
 
 public class ShopBehavior : MonoBehaviour
 {
-    [SerializeField] private GameObject backButtonPrefab; // Reference to the Back Button Prefab
-    [SerializeField] private Canvas canvas; // Reference to Canvas to place order notes
+    [SerializeField] private GameObject backButtonPrefab;
+    [SerializeField] private Canvas canvas; 
     [SerializeField] private SceneChanger changer;
+    [SerializeField] private CustomerDatabase _customerDatabase;
+    [SerializeField] private List<Customer> shopClonedCustomers; // List of cloned customers
 
-
-    private OrderManager orderManager; // Reference to the OrderManager script
+    private OrderManager orderManager; 
 
     private void Start()
     {
-        orderManager = FindObjectOfType<OrderManager>(); // Find the OrderManager in the scene
+        orderManager = FindObjectOfType<OrderManager>(); 
 
-        // Check if there are any orders
-        List<Order> orders = orderManager.GetAllOrders();
-        if (orders.Count > 0)
+        // Initialize shopClonedCustomers via GameManager
+        GameManager.Instance.InitializeShopClonedCustomers();
+        
+        // Now check and log customers after initialization
+        CheckAndLogCustomers();
+    }
+
+    private void CheckAndLogCustomers()
+    {
+        // Ensure shopClonedCustomers has been populated
+        shopClonedCustomers = GameManager.Instance.shopClonedCustomers;
+
+        if (shopClonedCustomers.Count == 0)
         {
-            if (orders != null)
+            Debug.Log("No customers available in the shop.");
+        }
+        else
+        {
+            Debug.Log("List of customers in the shop:");
+            foreach (Customer customer in shopClonedCustomers)
             {
-                foreach (Order order in orders)
-                {
-                    Debug.Log("Order Found: ");
-                    Debug.Log("Character Name: " + order.CharacterName);
-                    Debug.Log("Order Description: " + order.OrderDescription);
-                }
+                Debug.Log("Customer Name: " + customer.customerName);
+                Debug.Log("Order: " + (customer.customerOrder != null ? customer.customerOrder.name : "No order"));
             }
 
             InstantiateBackButton();

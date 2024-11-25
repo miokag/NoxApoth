@@ -15,7 +15,7 @@ dialogue = {
             { line = "My body has been feeling achy since I've been doing overtime in the office for the past few days." },
             { line = "I would like a potion that would relieve my body pain." },
             { line = "I'll stay here and wait, since I can't move around much." },
-            { line = "But I'll be guiding you by using magic, you'll see in a bit." , orderdescription = "Potion to relieve body pain.", customerorder = "Health Potion"},
+            { line = "But I'll be guiding you by using magic, you'll see in a bit." , orderdescription = "Potion to relieve body pain.", customerorder = "Healing Potion"},
         }
     },
 

@@ -64,6 +64,7 @@ public class FrontMortar : MonoBehaviour
         }
     }
     
+    
     private void FinishGrinding()
     {
         Debug.Log("Finish Grinding");
@@ -107,16 +108,10 @@ public class FrontMortar : MonoBehaviour
         GameManager.Instance.DebugPotionMix();
         
         _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(true);
-        //_backMainKitchenButton.onClick.AddListener(OnBackButtonClick);
-    }
-    
-    void OnBackButtonClick()
-    {
-        Destroy(_inventoryPanel);
-        Destroy(_inventoryUI);
-        Destroy(_inventoryUIScript);
 
     }
+    
+
     
     private IEnumerator DestroyInventoryEmptyAfterDelay(float delay)
     {

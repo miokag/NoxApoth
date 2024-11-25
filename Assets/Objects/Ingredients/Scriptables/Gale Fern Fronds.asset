@@ -25,6 +25,6 @@ MonoBehaviour:
   FoundState: 0
   bottomOffset: 0
   hexColor: '#4B692F'
-  neededProcessedState: 0
+  neededProcessedState: 2
   currentGatheredState: 0
   currentProcessedState: 0

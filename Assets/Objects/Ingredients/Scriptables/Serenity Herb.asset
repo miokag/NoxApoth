@@ -13,13 +13,19 @@ MonoBehaviour:
   m_Name: Serenity Herb
   m_EditorClassIdentifier: 
   ingredientName: Serenity Herb
-  icon: {fileID: 0}
+  icon: {fileID: 509927293, guid: 538fd6d569ca6fb4d86eb35a9432aacf, type: 3}
   prefab: {fileID: 3257488535752732401, guid: 2337d309fd2876644bb1708f37ae86f0, type: 3}
+  iconGameObject: {fileID: 3928660298084780422, guid: ce80e81fb94f4354cac981867fdebcb2,
+    type: 3}
   description:
   - Serenity Herb Description
   effects:
   - Animals seek it when injured
   - Prolonged exposure causes drowsiness
   FoundState: 0
-  currentGatheredState: 0
+  isCookedProperly: 0
+  bottomOffset: 0
+  hexColor: 
+  neededProcessedState: 3
+  currentGatheredState: 3
   currentProcessedState: 0

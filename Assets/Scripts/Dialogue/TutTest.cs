@@ -10,47 +10,74 @@ public class TutTest : MonoBehaviour
     private CustomerMovement currentCustomerMovement; // Reference to the CustomerMovement script
     private Customer cedric;
     private OrderManager orderManager;
+    private GameObject _waitingArea;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (customerDatabase != null)
+        _waitingArea = GameObject.Find("WaitingArea");
+        
+        if (GameManager.Instance.GetTutorialStep() == 0)
         {
-            cedric = customerDatabase.GetCustomerByName("Cedric");
-
-            if (cedric != null)
+            if (customerDatabase != null)
             {
-                if (customerSpawner != null)
-                {
-                    // Pass the customer to the spawner for instantiation
-                    customerSpawner.SpawnCustomer(cedric);
+                cedric = customerDatabase.GetCustomerByName("Cedric");
 
-                    // Get the CustomerMovement component from the spawned customer (assuming the customer prefab has it)
-                    currentCustomerMovement = GameObject.Find("Cedric").GetComponent<CustomerMovement>();
-                    currentCustomerMovement.enabled = false;
-                    currentCustomerMovement.OnCustomerClicked += HandleCustomerClicked;
+                if (cedric != null)
+                {
+                    if (customerSpawner != null)
+                    {
+                        // Pass the customer to the spawner for instantiation
+                        customerSpawner.SpawnCustomer(cedric);
+
+                        // Get the CustomerMovement component from the spawned customer (assuming the customer prefab has it)
+                        currentCustomerMovement = GameObject.Find("Cedric").GetComponent<CustomerMovement>();
+                        currentCustomerMovement.enabled = false;
+                        currentCustomerMovement.OnCustomerClicked += HandleCustomerClicked;
+                    }
                 }
             }
+
+            dialogueManager = FindObjectOfType<DialogueSys>();
+            orderManager = FindObjectOfType<OrderManager>();
+
+            dialogueManager.StartDialogue("shop1");
+            nextStep = 1;
+            dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
         }
-
-        dialogueManager = FindObjectOfType<DialogueSys>();
-        orderManager = FindObjectOfType<OrderManager>();
-
-        orderManager.StoreOrder("Luna", "Potion for calming nightmares", "Nightmare-Calming Potion, Moonlight Essence, Dreamroot");
-        orderManager.StoreOrder("Elric", "Sword sharpening oil", "Dragon's Scale Oil, Hardened Iron Filings, Ember Shard");
-        orderManager.StoreOrder("Mira", "Healing herb mixture", "Life Blossom Petals, Fresh Honeydew, Morning Dew Drop");
-        orderManager.StoreOrder("Garrick", "Flame-resistant potion for blacksmithing", "Fireproof Potion, Salamander's Scale, Mountain Ash");
-
-        if (dialogueManager == null) { Debug.LogError("DialogueManager is not assigned."); }
-        else
+        else 
         {
-            if (GameManager.Instance.GetTutorialStep() == 0)
+            if (customerDatabase != null)
             {
-                dialogueManager.StartDialogue("shop1");
-                nextStep = 1;
-                dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
+                cedric = customerDatabase.GetCustomerByName("Cedric");
+
+                if (cedric != null)
+                {
+                    // Directly spawn Cedric at the waiting area
+                    GameObject cedricPrefab = cedric.customerPrefab; // Assuming Customer has a `prefab` reference
+                    if (cedricPrefab != null && _waitingArea != null)
+                    {
+                        GameObject spawnedCedric = Instantiate(
+                            cedricPrefab,
+                            _waitingArea.transform.position,
+                            Quaternion.identity
+                        );
+
+                        spawnedCedric.name = "Cedric"; // Ensure the spawned object's name matches Cedric
+
+                        // Optional: Attach to the WaitingArea as a child for better organization
+                        spawnedCedric.transform.SetParent(_waitingArea.transform);
+
+                        // Set up CustomerMovement if applicable
+                        CustomerMovement movement = spawnedCedric.GetComponent<CustomerMovement>();
+                        if (movement != null)
+                        {
+                            movement.enabled = false; // Disable movement for now
+                            movement.OnCustomerClicked += HandleCustomerClicked; // Add event listener
+                        }
+                    }
+                }
             }
-            
         }
     }
 

@@ -15,10 +15,15 @@ MonoBehaviour:
   ingredientName: Shadow Spores
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  iconGameObject: {fileID: 0}
   description:
   - Shadow Spores Description
   effects:
   - Repels most insects and pests
   - Releases dark mist on contact
+  FoundState: 0
+  bottomOffset: 0
+  hexColor: 
+  neededProcessedState: 1
   currentGatheredState: 0
   currentProcessedState: 0

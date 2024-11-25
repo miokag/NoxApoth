@@ -24,8 +24,9 @@ MonoBehaviour:
   - Touching sap causes temporary numbness
   - May cause hallucinations
   FoundState: 0
+  isCookedProperly: 0
   bottomOffset: 0
   hexColor: '#785087'
-  neededProcessedState: 6
-  currentGatheredState: 0
+  neededProcessedState: 2
+  currentGatheredState: 3
   currentProcessedState: 0

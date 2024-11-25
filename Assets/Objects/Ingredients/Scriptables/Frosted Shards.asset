@@ -15,10 +15,15 @@ MonoBehaviour:
   ingredientName: Frosted Shards
   icon: {fileID: 0}
   prefab: {fileID: 0}
+  iconGameObject: {fileID: 0}
   description:
   - Frosted Shards Description
   effects:
   - Animals hide behind it during storms
   - Deflects harmful exposure
+  FoundState: 0
+  bottomOffset: 0
+  hexColor: 
+  neededProcessedState: 4
   currentGatheredState: 0
   currentProcessedState: 0

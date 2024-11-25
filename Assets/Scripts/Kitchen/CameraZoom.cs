@@ -32,7 +32,6 @@ public class CameraZoom : MonoBehaviour
         ToBackShopButton = canvas.transform.Find("ToBackShopButton").gameObject;
 
         BackMainKitchenButton = canvas.transform.Find("BackMainKitchenButton").gameObject;
-        BackMainKitchenButton.SetActive(false);
         Button backButton = BackMainKitchenButton.GetComponent<Button>();
         backButton.onClick.AddListener(BackToMainKitchen);
 

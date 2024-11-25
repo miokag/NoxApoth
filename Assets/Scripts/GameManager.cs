@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,11 +15,14 @@ public class GameManager : MonoBehaviour
 
     private IngredientDatabase clonedIngredientDatabase;
     private PotionDatabase clonedPotionDatabase;
+    public CustomerDatabase customerDatabase;
 
     public List<Ingredient> Inventory { get; private set; }
     public List<Ingredient> PotionMix = new List<Ingredient>();
-    private int inventoryLimit = 3;  // Initial inventory size limit
+    private int inventoryLimit = 3; // Initial inventory size limit
     public Ingredient ingredientProcessed;
+    public List<Customer> shopClonedCustomers { get; private set; } = new List<Customer>();
+
 
     void Awake()
     {
@@ -44,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        ClearPotionMix();
         Inventory = new List<Ingredient>();
         currentCustomer = null;
 
@@ -53,10 +58,73 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
 
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Gale Fern Fronds"));
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Viper's Venom"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Serenity Herb"));
     }
+    
+    public void InitializeShopClonedCustomers()
+    {
+        List<Order> orders = orderManager.GetAllOrders();
 
+        if (orders.Count > 0)
+        {
+            foreach (Order order in orders)
+            {
+                Debug.Log("Order Found: ");
+                Debug.Log("Character Name: " + order.CharacterName);
+                Debug.Log("Order Description: " + order.OrderDescription);
+                Debug.Log("Order Potion: " + order.CustomerOrder);
+            }
+
+            shopClonedCustomers = MatchOrdersToCustomers(orders);
+
+            // Debug the cloned customers
+            foreach (Customer customer in shopClonedCustomers)
+            {
+                Debug.Log($"Cloned Customer: {customer.customerName}, Order: {customer.customerOrder?.name ?? "None"}");
+            }
+        }
+    }
+    
+    public List<Customer> MatchOrdersToCustomers(List<Order> orders)
+    {
+        List<Customer> clonedCustomers = new List<Customer>();
+
+        foreach (Order order in orders)
+        {
+            // Find a customer in the database with a matching name
+            Customer matchedCustomer = customerDatabase.customers
+                .FirstOrDefault(customer => customer.customerName == order.CharacterName);
+
+
+            if (matchedCustomer != null)
+            {
+                // Clone the customer ScriptableObject
+                Customer clonedCustomer = ScriptableObject.Instantiate(matchedCustomer);
+
+                // Find the matching potion from the potion database
+                Potion matchedPotion = potionDatabase.potions
+                    .FirstOrDefault(potion => potion.name == order.CustomerOrder);
+
+                if (matchedPotion != null)
+                {
+                    clonedCustomer.customerOrder = matchedPotion;
+                }
+                else
+                {
+                    Debug.LogWarning($"No matching potion found for order: {order.OrderDescription}");
+                }
+
+                clonedCustomers.Add(clonedCustomer);
+            }
+            else
+            {
+                Debug.LogWarning($"No matching customer found for order: {order.CharacterName}");
+            }
+        }
+
+        return clonedCustomers;
+    }
 
     public void setCurrentCustomer(string customerName)
     {
@@ -196,6 +264,13 @@ public class GameManager : MonoBehaviour
         Debug.Log($"{ingredient.name} added to Potion Mix.");
     }
     
+    public void ClearPotionMix()
+    {
+        PotionMix.Clear();
+        Debug.Log("Potion Mix cleared.");
+    }
+
+    
     public void CurrentlyProcessing(Ingredient ingredient)
     {
         ingredientProcessed = ingredient;
@@ -232,6 +307,7 @@ public class GameManager : MonoBehaviour
             string ingredientInfo = $"Name: {ingredient.ingredientName}, " +
                                     $"Description: {string.Join(", ", ingredient.description)}, " +
                                     $"Current Gathered State: {string.Join(", ",ingredient.currentGatheredState)}, " + 
+                                    $"Needed Processed State: {string.Join(", ",ingredient.neededProcessedState)}, " + 
                                     $"Current Processed State: {string.Join(", ",ingredient.currentProcessedState)}, " + 
                                     $"FoundState: {ingredient.FoundState}";
             potionMixInfo += ingredientInfo + "\n";
