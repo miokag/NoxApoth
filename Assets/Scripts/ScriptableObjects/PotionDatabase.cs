@@ -43,7 +43,6 @@ public class PotionDatabase : ScriptableObject
         return clone;
     }
 
-
     public Potion GetRandomPotion()
     {
         if (potions == null || potions.Count == 0)

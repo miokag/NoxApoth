@@ -144,7 +144,6 @@ public class OpiumPoppyTreeNoteSpawner : MonoBehaviour
         Ingredient ingredient = GameManager.Instance.GetClonedIngredientDatabase().GetIngredientByName("Opium Poppy Tree");
         if (ingredient != null)
         {
-            GameManager.Instance.ChangeIngredientFoundState(ingredient.ingredientName, true);
             GameManager.Instance.AddToInventory(ingredient);
             inventory.UpdateUI();
 

@@ -269,7 +269,6 @@ public class GameManager : MonoBehaviour
         PotionMix.Clear();
         Debug.Log("Potion Mix cleared.");
     }
-
     
     public void CurrentlyProcessing(Ingredient ingredient)
     {

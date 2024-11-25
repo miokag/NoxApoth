@@ -32,7 +32,7 @@ public class GivePotionBehavior : MonoBehaviour
     {
         // Get a reference to the cloned potion database
         PotionDatabase clonedPotionDatabase = GameManager.Instance.GetClonedPotionDatabase();
-    
+        
         // Check if the PotionMix is not empty
         if (GameManager.Instance.PotionMix == null || GameManager.Instance.PotionMix.Count == 0)
         {
@@ -63,11 +63,38 @@ public class GivePotionBehavior : MonoBehaviour
             {
                 Debug.Log($"Ingredient '{ingredientName}' matches.");
                 correctCounter++;
+
+                // Now check if the ingredient is found in the clonedPotionDatabase
+                Ingredient clonedIngredient = clonedPotionDatabase.potions
+                    .SelectMany(potion => potion.ingredients)
+                    .FirstOrDefault(i => i.ingredientName == ingredientName);
+
+                if (clonedIngredient != null)
+                {
+                    // Check if the ingredient is found
+                    bool isFound = clonedIngredient.FoundState;
+
+                    if (isFound)
+                    {
+                        Debug.Log($"Ingredient '{ingredientName}' is found.");
+                        correctCounter++; // Increase the counter if the ingredient is found
+                    }
+                    else
+                    {
+                        Debug.Log($"Ingredient '{ingredientName}' is not found.");
+                        allMatch = false; // If not found, mark as a mismatch
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Ingredient '{ingredientName}' not found in cloned potion database.");
+                    allMatch = false; // If the ingredient is not in the cloned database, it's a mismatch
+                }
             }
             else
             {
                 Debug.Log($"Ingredient '{ingredientName}' is missing in the PotionMix.");
-                allMatch = false;
+                allMatch = false; // If the ingredient is missing, mark as a mismatch
             }
         }
 
@@ -91,34 +118,64 @@ public class GivePotionBehavior : MonoBehaviour
 
     private void Checker()
     {
+        PotionDatabase clonedPotionDatabase = GameManager.Instance.GetClonedPotionDatabase();
+        
         // Iterate over the ingredients in the PotionMix
         foreach (Ingredient ingredient in GameManager.Instance.PotionMix)
         {
             Debug.Log($"Comparing states for ingredient: {ingredient.ingredientName}");
-            if (ingredient.currentProcessedState != ingredient.neededProcessedState)
+
+            // Find the cloned ingredient from the clonedPotionDatabase
+            Ingredient clonedIngredient = clonedPotionDatabase.potions
+                .SelectMany(potion => potion.ingredients)
+                .FirstOrDefault(i => i.ingredientName == ingredient.ingredientName);
+
+            if (clonedIngredient != null)
             {
-                Debug.Log($"{ingredient.ingredientName} - Current State: {ingredient.currentProcessedState}, Needed State: {ingredient.neededProcessedState}");
-                Debug.Log($"{ingredient.ingredientName} does not match needed process state.");
+                // Now check if the ingredient is cooked properly in the cloned ingredient
+                bool isCookedProperly = clonedIngredient.isCookedProperly;
+
+                // First, check if the current processed state matches the needed processed state
+                if (ingredient.currentProcessedState != ingredient.neededProcessedState)
+                {
+                    Debug.Log($"{ingredient.ingredientName} - Current State: {ingredient.currentProcessedState}, Needed State: {ingredient.neededProcessedState}");
+                    Debug.Log($"{ingredient.ingredientName} does not match needed process state.");
+                }
+                else
+                {
+                    Debug.Log($"{ingredient.ingredientName} matches needed process state.");
+                    
+                    // Check if the ingredient is cooked properly in the cloned ingredient
+                    if (isCookedProperly)
+                    {
+                        Debug.Log($"{ingredient.ingredientName} is cooked properly.");
+                        if (isFail != true) correctCounter++;
+                    }
+                    else
+                    {
+                        Debug.Log($"{ingredient.ingredientName} is not cooked properly.");
+                    }
+                }
             }
             else
             {
-                Debug.Log($"{ingredient.ingredientName} - Current State: {ingredient.currentProcessedState}, Needed State: {ingredient.neededProcessedState}");
-                Debug.Log($"{ingredient.ingredientName} matches needed process state.");
-                if(isFail != true) correctCounter++; 
+                Debug.LogWarning($"Ingredient {ingredient.ingredientName} not found in cloned potion database.");
             }
 
+            // Check gathered state
             if (ingredient.currentGatheredState == Ingredient.GatheredState.Perfect)
             {
                 Debug.Log($"{ingredient.ingredientName} gathered state is perfect.");
-                if(isFail != true) correctCounter = correctCounter + 2;
+                if (isFail != true) correctCounter += 2;
             }
             else if (ingredient.currentGatheredState == Ingredient.GatheredState.Good)
             {
                 Debug.Log($"{ingredient.ingredientName} gathered state is good.");
-                if(isFail != true) correctCounter++;
+                if (isFail != true) correctCounter++;
             }
         }
     }
+    
 
     private void PotionResults()
     {

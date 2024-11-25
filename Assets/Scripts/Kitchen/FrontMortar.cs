@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class FrontMortar : MonoBehaviour
 {
@@ -23,6 +24,12 @@ public class FrontMortar : MonoBehaviour
     private InventoryUIMortar _inventoryUIScript;
 
     private Button _backMainKitchenButton;
+    
+    private bool isShowingVisuals;
+    private Transform potionPanel;
+    public Animator liquidAnimator;
+    private HighlightableObject _thisHighlightableObject;
+    
     private void Start()
     {
         mortarGameObject = GameObject.Find("Mortar");
@@ -32,18 +39,40 @@ public class FrontMortar : MonoBehaviour
         _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _cameraZoom = GameObject.Find("Main Camera").GetComponent<CameraZoom>();
         
+        isShowingVisuals = false;
+        potionPanel = _canvas.transform.Find("PotionPanel");
+        _thisHighlightableObject = GetComponent<HighlightableObject>();
+        
+    }
+    
+    public void PlayLiquidAnimationDirectly(string animationStateName)
+    {
+        liquidAnimator.Play(animationStateName);
     }
 
     private void OnMouseDown()
     {
+        bool inventoryStatus = GameManager.Instance.GetInventory();
+        
         if (_pestleBehavior.isCrushing)
         {
             FinishGrinding();
         }
+        else if (isShowingVisuals == true)
+        {
+            Debug.Log("Player is showing, so no inventory actions.");
+        }
+        else if (GameManager.Instance.PotionMix.Count == 3 && inventoryStatus)
+        {
+            _inventoryEmpty = Instantiate(inventoryEmptyPrefab, _canvas.transform);
+            TextMeshProUGUI inventoryText = _inventoryEmpty.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            inventoryText.text = "Potion Bottle is Full";
+            Debug.Log("Inventory is empty");
+            // Optionally, you can add a timer to destroy it after a set time if necessary
+            StartCoroutine(DestroyInventoryEmptyAfterDelay(1f));
+        }
         else if (_cameraZoom.clickedObjectName == "Mortar" && !_pestleBehavior.isCrushing)
         {
-            bool inventoryStatus = GameManager.Instance.GetInventory();
-            
             if (inventoryStatus)
             {
                 _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(false);
@@ -108,10 +137,34 @@ public class FrontMortar : MonoBehaviour
         GameManager.Instance.DebugPotionMix();
         
         _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(true);
-
+        StartCoroutine(PotionVisuals());
     }
     
+    public IEnumerator PotionVisuals()
+    {
+        isShowingVisuals = true;
+        int potionMixCount = GameManager.Instance.PotionMix.Count;
+        _thisHighlightableObject.Unhighlight();
+        
+        // Enable the potion panel to make it visible
+        potionPanel.gameObject.SetActive(true);
+        if (potionMixCount == 1) PlayAnimationDirectly("LiquidPotionAnim");
+        else if (potionMixCount == 2) PlayAnimationDirectly("LiquidPotionAnim2");
+        else if (potionMixCount == 3) PlayAnimationDirectly("LiquidPotionAnim3");
+        
+        // Wait for 3 seconds
+        yield return new WaitForSeconds(1.5f);
 
+        // Disable the potion panel to hide it
+        potionPanel.gameObject.SetActive(false);
+        isShowingVisuals = false;
+        _thisHighlightableObject.Highlight();
+    }
+    
+    public void PlayAnimationDirectly(string animationStateName)
+    {
+        liquidAnimator.Play(animationStateName);
+    }
     
     private IEnumerator DestroyInventoryEmptyAfterDelay(float delay)
     {
