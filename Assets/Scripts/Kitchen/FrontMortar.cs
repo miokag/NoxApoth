@@ -25,10 +25,12 @@ public class FrontMortar : MonoBehaviour
 
     private Button _backMainKitchenButton;
     
-    private bool isShowingVisuals;
+    public bool isShowingVisuals;
     private Transform potionPanel;
     public Animator liquidAnimator;
     private HighlightableObject _thisHighlightableObject;
+    private bool showingInventory;
+    public Collider mortarCollision;
     
     private void Start()
     {
@@ -44,7 +46,19 @@ public class FrontMortar : MonoBehaviour
         _thisHighlightableObject = GetComponent<HighlightableObject>();
         
     }
-    
+
+    private void Update()
+    {
+        if (!_cameraZoom.clickedObjectName.Contains("Mortar"))
+        {
+            mortarGameObject.SetActive(true);
+        }
+        else if (_cameraZoom.clickedObjectName.Contains("Mortar") && !showingInventory)
+        {
+            mortarGameObject.SetActive(false);
+        }
+    }
+
     public void PlayLiquidAnimationDirectly(string animationStateName)
     {
         liquidAnimator.Play(animationStateName);
@@ -138,6 +152,7 @@ public class FrontMortar : MonoBehaviour
         
         _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(true);
         StartCoroutine(PotionVisuals());
+        showingInventory = false;
     }
     
     public IEnumerator PotionVisuals()
@@ -178,6 +193,7 @@ public class FrontMortar : MonoBehaviour
     
     public void ShowInventoryItems()
     {
+        showingInventory = true;
         // Instantiates inventory UI (slots) and panel
         _inventoryPanel = Instantiate(inventoryPanelPrefab, _canvas.transform);
         _inventoryUI = Instantiate(inventoryUIPrefab, _canvas.transform);
@@ -192,7 +208,7 @@ public class FrontMortar : MonoBehaviour
         
         // Enable the mortar collision for ingredient collision
         mortarGameObject.SetActive(true);
-        Collider mortarCollision = mortarGameObject.GetComponent<Collider>();
+        mortarCollision = mortarGameObject.GetComponent<Collider>();
         mortarCollision.isTrigger = false;
         
         // Add InventoryUIMortar script

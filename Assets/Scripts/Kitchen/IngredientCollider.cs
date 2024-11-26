@@ -71,23 +71,31 @@ public class IngredientCollider : MonoBehaviour
             InventoryUIMortar inventoryUIMortar = FindObjectOfType<InventoryUIMortar>();
             if (inventoryUIMortar != null && _cameraZoom.clickedObjectName == "Mortar")
             {
+                Debug.Log("Ingredient Collider Worked!");
                 Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
                 GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
                 GameObject InventoryUICanvas = canvas.transform.Find("InventoryUICanvas(Clone)").gameObject;
-                
+    
                 _pestle = GameObject.Find("Pestle");
                 PestleBehavior pestleBehavior = _pestle.GetComponent<PestleBehavior>();
 
                 pestleBehavior.isCrushing = true;
                 pestleBehavior.pestleCollider.enabled = true;
-                
+    
                 GameObject mortarGameObject = GameObject.Find("Mortar");
-                
-                mortarGameObject.SetActive(false);
+                GameObject MortarColliders = GameObject.Find("MortarColliders");
+                Transform FrontFace = MortarColliders.transform.Find("FrontFace");
+
+                FrontMortar mortar = FrontFace.gameObject.GetComponent<FrontMortar>();
+
+                // Directly set active false for the mortar GameObject
+                mortar.mortarGameObject.SetActive(false);  // This directly hides the mortar instead of relying on the coroutine
+    
                 Destroy(inventoryUIPanel);
                 Destroy(InventoryUICanvas);
                 Destroy(inventoryUIMortar);
             }
+
 
             // Enable the PotMixerBehavior to allow dragging the mixer
             if (mixer != null)
