@@ -1,28 +1,21 @@
 using UnityEngine;
-using UnityEngine.InputSystem;  // New Input System namespace
+using UnityEngine.InputSystem;
 
 public class PlayerControllerScript : MonoBehaviour
 {
     public float speed;
     public float groundDist;
-
     public LayerMask terrainLayer;
     public Rigidbody rb;
-    public SpriteRenderer sr;
-
-    public Sprite rightSprite; // Sprite for moving right
-    public Sprite frontSprite; // Sprite for moving forward
-    public Sprite backSprite;  // Sprite for moving backward
-
-    public InteractionHandler interactionHandler; // Reference to the InteractionHandler
+    public Animator animator;
 
     // Declare InputAction variables
     private InputAction moveAction;
-    private InputAction interactAction; // Input action for interaction
+
+    private Vector2 lastDirection; // Store the last movement direction
 
     private void OnEnable()
     {
-        // Initialize input actions with composite bindings for keyboard and gamepad
         moveAction = new InputAction("Move", binding: "<Gamepad>/leftStick");
         moveAction.AddCompositeBinding("2DVector")
             .With("Up", "<Keyboard>/w")
@@ -35,14 +28,13 @@ public class PlayerControllerScript : MonoBehaviour
 
     private void OnDisable()
     {
-        // Clean up
         moveAction.Disable();
     }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        rb.interpolation = RigidbodyInterpolation.Interpolate; // Enable interpolation for smoother movement
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 
     private void FixedUpdate()
@@ -61,34 +53,28 @@ public class PlayerControllerScript : MonoBehaviour
             }
         }
 
-        // Capture movement input from the new Input System
-        Vector2 moveInput = moveAction.ReadValue<Vector2>();  // This will give a Vector2 for movement (x and y)
+        // Capture movement input
+        Vector2 moveInput = moveAction.ReadValue<Vector2>();
+        
+        // Check if there is movement
+        if (moveInput.sqrMagnitude > 0.01f)
+        {
+            // Player is moving, update lastDirection and animator
+            lastDirection = moveInput.normalized; // Save the normalized direction
+            animator.SetBool("isIdle", false);    // Switch to walking state
+            animator.SetFloat("moveX", moveInput.x);
+            animator.SetFloat("moveY", moveInput.y);
+        }
+        else
+        {
+            // Player is idle, use lastDirection for idleX and idleY
+            animator.SetBool("isIdle", true);     // Switch to idle state
+            animator.SetFloat("idleX", lastDirection.x); // Use last direction for idle
+            animator.SetFloat("idleY", lastDirection.y);
+        }
 
         // Create movement vector and normalize
         Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
         rb.velocity = moveDir * speed;
-
-        // Sprite direction logic for horizontal movement
-        if (moveInput.x < 0)
-        {
-            sr.sprite = rightSprite;
-            sr.flipX = true;
-        }
-        else if (moveInput.x > 0)
-        {
-            sr.sprite = rightSprite;
-            sr.flipX = false;
-        }
-
-        // Sprite change for vertical movement
-        if (moveInput.y > 0)
-        {
-            sr.sprite = backSprite;
-        }
-        else if (moveInput.y < 0)
-        {
-            sr.sprite = frontSprite;
-        }
-
     }
 }

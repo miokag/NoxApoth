@@ -2362,11 +2362,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   rb: {fileID: 0}
-  sr: {fileID: 1459772065}
-  rightSprite: {fileID: 2091658652, guid: 0758c2a15d87be94e995f568083d31af, type: 3}
-  frontSprite: {fileID: -1297640711, guid: 0758c2a15d87be94e995f568083d31af, type: 3}
-  backSprite: {fileID: -1141029254, guid: 0758c2a15d87be94e995f568083d31af, type: 3}
-  interactionHandler: {fileID: 400854201}
+  animator: {fileID: 1459772066}
 --- !u!136 &1289123666
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2407,7 +2403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1342318375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2672,6 +2668,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1459772064}
   - component: {fileID: 1459772065}
+  - component: {fileID: 1459772066}
   m_Layer: 0
   m_Name: PlayerSpriteSheetResized_0 (2)
   m_TagString: Untagged
@@ -2746,6 +2743,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1459772066
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1459772063}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2e186bdfee785314e9f794287173d76e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1462314090
 GameObject:
   m_ObjectHideFlags: 0
@@ -3388,7 +3406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2050356360
 MonoBehaviour:
   m_ObjectHideFlags: 0

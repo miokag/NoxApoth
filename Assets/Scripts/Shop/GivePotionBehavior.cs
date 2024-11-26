@@ -6,11 +6,17 @@ using System.Linq;
 using System.Collections.Generic;
 public class GivePotionBehavior : MonoBehaviour
 {
-    
+    private OrderManager _orderManager;
     private int correctCounter = 0;
     private bool isFail;
     private bool isPass;
     private bool isSuccess;
+
+    private void Start()
+    {
+        _orderManager = FindObjectOfType<OrderManager>();
+    }
+
     private void OnMouseDown()
     {
         Debug.Log("OnMouseDown Triggered!"); // To confirm the method is being called
@@ -103,7 +109,6 @@ public class GivePotionBehavior : MonoBehaviour
         {
             Debug.Log("All ingredients match! The potion is correct.");
             Checker();
-            GameManager.Instance.ClearPotionMix();
             Debug.Log($"Total correct counter: {correctCounter}");
             PotionResults();
         }
@@ -183,6 +188,9 @@ public class GivePotionBehavior : MonoBehaviour
         else if (correctCounter >= 11 && correctCounter <= 20) isSuccess = true;
         else if (correctCounter >= 0 && correctCounter <= 6) isFail = true;
         Debug.Log("Potion Results: isPass: " + isPass + ", isSuccess: " + isSuccess + ", isFail: " + isFail);
+        
+        GameManager.Instance.ClearPotionMix();
+        _orderManager.RemoveOrderByCustomer(GameManager.Instance.currentCustomer);
     }
     
     public List<string> GetIngredientNamesByPotion(string potionName)

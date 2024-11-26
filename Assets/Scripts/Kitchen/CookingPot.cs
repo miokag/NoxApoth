@@ -191,11 +191,13 @@ public class CookingPot : MonoBehaviour
         int potionMixCount = GameManager.Instance.PotionMix.Count;
         _thisHighlightableObject.Unhighlight();
         
+        Debug.Log("Potion Visuals Mix Count: " + potionMixCount);
+        
         // Enable the potion panel to make it visible
         potionPanel.gameObject.SetActive(true);
-        if (potionMixCount == 1) PlayAnimationDirectly("LiquidPotionAnim");
-        else if (potionMixCount == 2) PlayAnimationDirectly("LiquidPotionAnim2");
-        else if (potionMixCount == 3) PlayAnimationDirectly("LiquidPotionAnim3");
+        if (potionMixCount == 1) PlayLiquidAnimationDirectly("LiquidPotionAnim");
+        else if (potionMixCount == 2) PlayLiquidAnimationDirectly("LiquidPotionAnim2");
+        else if (potionMixCount == 3) PlayLiquidAnimationDirectly("LiquidPotionAnim3");
         
         // Wait for 3 seconds
         yield return new WaitForSeconds(1.5f);

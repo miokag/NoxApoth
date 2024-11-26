@@ -9,20 +9,38 @@ public class ShopBehavior : MonoBehaviour
     [SerializeField] private SceneChanger changer;
     [SerializeField] private CustomerDatabase _customerDatabase;
     [SerializeField] private List<Customer> shopClonedCustomers; // List of cloned customers
+    [SerializeField] private GameObject potionImage;
+    [SerializeField] private Transform potionLiquidImage;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite[] potionspriteRenderer;
 
     private OrderManager orderManager; 
 
     private void Start()
     {
+        spriteRenderer = potionLiquidImage.GetComponent<SpriteRenderer>();
+        
         orderManager = FindObjectOfType<OrderManager>(); 
-
+        
         // Initialize shopClonedCustomers via GameManager
         GameManager.Instance.InitializeShopClonedCustomers();
         
         // Now check and log customers after initialization
         CheckAndLogCustomers();
+
+        ShowPotionImage();
     }
 
+    private void ShowPotionImage()
+    {
+        if (GameManager.Instance.PotionMix.Count > 0)
+        {
+            potionImage.SetActive(true);
+            if (GameManager.Instance.PotionMix.Count == 1) spriteRenderer.sprite = potionspriteRenderer[0];
+            else if (GameManager.Instance.PotionMix.Count == 2) spriteRenderer.sprite = potionspriteRenderer[1];
+            else if (GameManager.Instance.PotionMix.Count == 3) spriteRenderer.sprite = potionspriteRenderer[2];
+        }
+    }
     private void CheckAndLogCustomers()
     {
         // Ensure shopClonedCustomers has been populated
