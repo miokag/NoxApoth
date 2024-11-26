@@ -47,7 +47,8 @@ public class CookingPan : MonoBehaviour
 
     private Transform potionPanel;
     public Animator liquidAnimator;
-    private bool isShowingVisuals;
+    public bool isShowingVisuals;
+    public bool showingInventory;
 
     private HighlightableObject _thisHighlightableObject;
 
@@ -218,6 +219,7 @@ public class CookingPan : MonoBehaviour
 
     public void ShowInventoryItems()
     {
+        showingInventory = true;
         if (inventoryUI)
         {
             _inventoryUIScript = _uiManager.AddComponent<InventoryUIPan>();

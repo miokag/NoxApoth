@@ -7,6 +7,8 @@ TagManager:
   - Utensil
   - Ingredient
   - Mortar
+  - Selectable
+  - UtensilCollider
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Ingredient
   - Scene
   - Pestle
-  - 
+  - Selectable
   - 
   - 
   - 

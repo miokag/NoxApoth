@@ -4,6 +4,7 @@ public class CustomerSpawner : MonoBehaviour
 {
     public Transform spawnLocation; // The location where the customer will be spawned
     
+    
 
 
     // Modify the SpawnCustomer method to take in the Customer ScriptableObject

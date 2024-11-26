@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class InventoryUI : MonoBehaviour
 {
     public Canvas inventoryUICanvas;
+    public InventoryUI inventoryUI;
 
     private void Start()
     {
@@ -47,7 +48,7 @@ public class InventoryUI : MonoBehaviour
                             // Add an Image component to the new GameObject
                             Image newImage = newImageObject.AddComponent<Image>();
                             newImage.sprite = ingredient.icon; // Set the sprite to the ingredient's icon
-
+                            
                             // Optionally, set the Image's size and position (if needed)
                             RectTransform newImageRect = newImage.GetComponent<RectTransform>();
                             newImageRect.sizeDelta = new Vector2(20, 20); // Set appropriate size

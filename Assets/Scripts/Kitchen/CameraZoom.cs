@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float zoomSpeed = 5f; // Speed of the zoom transition
 
     [Header("Zoom Settings")]
-    public Vector3 zoomOffset = new Vector3(0, 1, -2); // Editable zoom offset
+    public Vector3 defaultZoomOffset = new Vector3(0, 1, -2); // Default zoom offset
     public Vector3 defaultPosition; // Default position (optional override)
     public GameObject BackMainKitchenButtonPrefab;
 
@@ -23,6 +24,9 @@ public class CameraZoom : MonoBehaviour
     public GameObject ToBackShopButtonPrefab;
     public GameObject ToBackShopButton;
     public string clickedObjectName;
+
+    // Dictionary for object-specific zoom offsets
+    private Dictionary<string, Vector3> customOffsets = new Dictionary<string, Vector3>();
 
     void Start()
     {
@@ -40,6 +44,9 @@ public class CameraZoom : MonoBehaviour
         {
             defaultPosition = mainCamera.transform.position;
         }
+
+        // Set custom zoom offsets for specific objects
+        customOffsets["Pan"] = new Vector3(-0.09f, 0.03f, -2f); // Example custom offset for "Pan"
     }
 
     void Update()
@@ -55,7 +62,7 @@ public class CameraZoom : MonoBehaviour
                 {
                     clickedObjectName = hit.collider.gameObject.name;
                     Debug.Log("Camera Zoom Clicked Object Name: " + clickedObjectName);
-                    
+
                     // Check if the clicked object has the "Utensil" tag
                     if (hit.collider.CompareTag("Utensil"))
                     {
@@ -72,6 +79,14 @@ public class CameraZoom : MonoBehaviour
         if (isZoomedIn && targetObject != null)
         {
             ToBackShopButton.SetActive(false);
+
+            // Get the appropriate zoom offset
+            Vector3 zoomOffset = defaultZoomOffset; // Default offset
+            if (customOffsets.ContainsKey(clickedObjectName))
+            {
+                zoomOffset = customOffsets[clickedObjectName]; // Use custom offset if available
+            }
+
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position,
                                                          targetObject.position + zoomOffset,
                                                          Time.deltaTime * zoomSpeed);
@@ -106,5 +121,4 @@ public class CameraZoom : MonoBehaviour
         // Re-enable zooming
         canZoomIn = true;
     }
-
 }

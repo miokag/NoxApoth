@@ -12,17 +12,24 @@ public class IngredientCollider : MonoBehaviour
     private GameObject _pestle;
     private CameraZoom _cameraZoom;
     private GameObject _uiManager;
+    
+    private FrontMortar _frontMortar;
+    private CookingPot _pot;
+    private CookingPan _pan;
     private void Start()
     {
+        _pan = FindObjectOfType<CookingPan>();
+        _frontMortar = FindObjectOfType<FrontMortar>();
         _uiManager = GameObject.Find("UIManager");
         mixer = GameObject.Find("Mixer").GetComponent<PotMixerBehavior>();
         GameObject camera = GameObject.Find("Main Camera");
         _cameraZoom = camera.GetComponent<CameraZoom>();
+        _pot = FindObjectOfType<CookingPot>();
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Utensil"))
+        if (other.gameObject.CompareTag("UtensilCollider"))
         {
             // Destroy the ingredient
             Destroy(gameObject);
@@ -40,6 +47,7 @@ public class IngredientCollider : MonoBehaviour
                 Canvas canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
                 GameObject inventoryUIPanel = canvas.transform.Find("InventoryUIPanel(Clone)").gameObject;
                 GameObject InventoryUICanvas = canvas.transform.Find("InventoryUICanvas(Clone)").gameObject;
+                _pot.showingInventory = false;
                 
                 Destroy(inventoryUIPanel);
                 Destroy(InventoryUICanvas);
@@ -58,6 +66,7 @@ public class IngredientCollider : MonoBehaviour
                 _panHandle = cookingPan.panHandle;
 
                 _panHandle.SetActive(true);
+                _pan.showingInventory = false;
                 
                 cookingPan.isFryingStarted = true;
                 cookingPan.outerFry.SetActive(true);
@@ -81,15 +90,7 @@ public class IngredientCollider : MonoBehaviour
 
                 pestleBehavior.isCrushing = true;
                 pestleBehavior.pestleCollider.enabled = true;
-    
-                GameObject mortarGameObject = GameObject.Find("Mortar");
-                GameObject MortarColliders = GameObject.Find("MortarColliders");
-                Transform FrontFace = MortarColliders.transform.Find("FrontFace");
-
-                FrontMortar mortar = FrontFace.gameObject.GetComponent<FrontMortar>();
-
-                // Directly set active false for the mortar GameObject
-                mortar.mortarGameObject.SetActive(false);  // This directly hides the mortar instead of relying on the coroutine
+                _frontMortar.showingInventory = false;
     
                 Destroy(inventoryUIPanel);
                 Destroy(InventoryUICanvas);

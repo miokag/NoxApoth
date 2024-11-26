@@ -7,7 +7,6 @@ using TMPro;
 
 public class FrontMortar : MonoBehaviour
 {
-    public GameObject mortarGameObject;
     public GameObject inventoryEmptyPrefab;
     public GameObject inventoryUIPrefab;
     public GameObject inventoryPanelPrefab;
@@ -29,14 +28,13 @@ public class FrontMortar : MonoBehaviour
     private Transform potionPanel;
     public Animator liquidAnimator;
     private HighlightableObject _thisHighlightableObject;
-    private bool showingInventory;
-    public Collider mortarCollision;
+    public bool showingInventory;
+    private Kitchen _kitchen;
     
     private void Start()
     {
-        mortarGameObject = GameObject.Find("Mortar");
+        _kitchen = FindObjectOfType<Kitchen>();
         _uiManager = GameObject.Find("UIManager");
-        
         _pestleBehavior = GameObject.Find("Pestle").GetComponent<PestleBehavior>();
         _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _cameraZoom = GameObject.Find("Main Camera").GetComponent<CameraZoom>();
@@ -44,21 +42,8 @@ public class FrontMortar : MonoBehaviour
         isShowingVisuals = false;
         potionPanel = _canvas.transform.Find("PotionPanel");
         _thisHighlightableObject = GetComponent<HighlightableObject>();
-        
     }
-
-    private void Update()
-    {
-        if (!_cameraZoom.clickedObjectName.Contains("Mortar"))
-        {
-            mortarGameObject.SetActive(true);
-        }
-        else if (_cameraZoom.clickedObjectName.Contains("Mortar") && !showingInventory)
-        {
-            mortarGameObject.SetActive(false);
-        }
-    }
-
+    
     public void PlayLiquidAnimationDirectly(string animationStateName)
     {
         liquidAnimator.Play(animationStateName);
@@ -152,14 +137,13 @@ public class FrontMortar : MonoBehaviour
         
         _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(true);
         StartCoroutine(PotionVisuals());
-        showingInventory = false;
+        
     }
     
     public IEnumerator PotionVisuals()
     {
         isShowingVisuals = true;
         int potionMixCount = GameManager.Instance.PotionMix.Count;
-        _thisHighlightableObject.Unhighlight();
         
         // Enable the potion panel to make it visible
         potionPanel.gameObject.SetActive(true);
@@ -173,7 +157,6 @@ public class FrontMortar : MonoBehaviour
         // Disable the potion panel to hide it
         potionPanel.gameObject.SetActive(false);
         isShowingVisuals = false;
-        _thisHighlightableObject.Highlight();
     }
     
     public void PlayAnimationDirectly(string animationStateName)
@@ -193,30 +176,29 @@ public class FrontMortar : MonoBehaviour
     
     public void ShowInventoryItems()
     {
-        showingInventory = true;
-        // Instantiates inventory UI (slots) and panel
-        _inventoryPanel = Instantiate(inventoryPanelPrefab, _canvas.transform);
-        _inventoryUI = Instantiate(inventoryUIPrefab, _canvas.transform);
-        
-        // Adjust inventory UI Transform
-        RectTransform inventoryRect = _inventoryUI.GetComponent<RectTransform>();
-        inventoryRect.anchoredPosition = new Vector2(150, 0); // Adjust X and Y values as needed
-        
-        // Adjust inventory panel Transform
-        RectTransform inventoryPanelRect = _inventoryPanel.GetComponent<RectTransform>();
-        inventoryPanelRect.anchoredPosition = new Vector2(150, 100); // Adjust X and Y values as needed
-        
-        // Enable the mortar collision for ingredient collision
-        mortarGameObject.SetActive(true);
-        mortarCollision = mortarGameObject.GetComponent<Collider>();
-        mortarCollision.isTrigger = false;
-        
-        // Add InventoryUIMortar script
-        if (_inventoryUI)
+        if (_inventoryPanel == null)
         {
-            _inventoryUIScript = _uiManager.AddComponent<InventoryUIMortar>();
-            _inventoryUIScript.inventoryUICanvas = _inventoryUI.GetComponent<Canvas>();
+            showingInventory = true;
+            // Instantiates inventory UI (slots) and panel
+            _inventoryPanel = Instantiate(inventoryPanelPrefab, _canvas.transform);
+            _inventoryUI = Instantiate(inventoryUIPrefab, _canvas.transform);
+        
+            // Adjust inventory UI Transform
+            RectTransform inventoryRect = _inventoryUI.GetComponent<RectTransform>();
+            inventoryRect.anchoredPosition = new Vector2(150, 0); // Adjust X and Y values as needed
+        
+            // Adjust inventory panel Transform
+            RectTransform inventoryPanelRect = _inventoryPanel.GetComponent<RectTransform>();
+            inventoryPanelRect.anchoredPosition = new Vector2(150, 100); // Adjust X and Y values as needed
+        
+            // Add InventoryUIMortar script
+            if (_inventoryUI)
+            {
+                _inventoryUIScript = _uiManager.AddComponent<InventoryUIMortar>();
+                _inventoryUIScript.inventoryUICanvas = _inventoryUI.GetComponent<Canvas>();
+            }
         }
+        
     }
     
 }

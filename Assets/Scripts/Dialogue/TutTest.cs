@@ -29,9 +29,11 @@ public class TutTest : MonoBehaviour
                     {
                         // Pass the customer to the spawner for instantiation
                         customerSpawner.SpawnCustomer(cedric);
-
+                        
                         // Get the CustomerMovement component from the spawned customer (assuming the customer prefab has it)
                         currentCustomerMovement = GameObject.Find("Cedric").GetComponent<CustomerMovement>();
+                        GameObject cedricGameObject = GameObject.Find("Cedric");
+                        currentCustomerMovement.ChangeOtherObjectTag(cedricGameObject, "Untagged");
                         currentCustomerMovement.enabled = false;
                         currentCustomerMovement.OnCustomerClicked += HandleCustomerClicked;
                     }

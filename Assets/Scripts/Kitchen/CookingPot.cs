@@ -41,7 +41,8 @@ public class CookingPot : MonoBehaviour
     private int finalMixCount;
     private CameraZoom _cameraZoom;
     
-    private bool isShowingVisuals;
+    public bool isShowingVisuals;
+    public bool showingInventory;
     private Transform potionPanel;
     public Animator liquidAnimator;
     private HighlightableObject _thisHighlightableObject;
@@ -101,6 +102,7 @@ public class CookingPot : MonoBehaviour
         else if (isShowingVisuals == true)
         {
             Debug.Log("Player is showing, so no inventory actions.");
+            
         }
         else if (GameManager.Instance.PotionMix.Count == 3 && inventoryStatus)
         {
@@ -221,6 +223,7 @@ public class CookingPot : MonoBehaviour
 
     public void ShowInventoryItems()
     {
+        showingInventory = true;
         if (inventoryUI)
         {
             inventoryUIScript = UIManager.AddComponent<InventoryUIKitchen>();

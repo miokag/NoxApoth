@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Cedric
   m_EditorClassIdentifier: 
   customerName: Cedric
-  customerPrefab: {fileID: 1259435382466704508, guid: a59352c5a15608e43aa6eb0d0c88e2c0,
+  customerPrefab: {fileID: 7332591462972879101, guid: 242fee69449b16848b967421c2fd32f4,
     type: 3}
   customerOrder: {fileID: 0}
+  orderTaken: 0

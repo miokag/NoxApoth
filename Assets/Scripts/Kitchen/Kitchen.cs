@@ -6,35 +6,41 @@ using UnityEngine.UI;
 public class Kitchen : MonoBehaviour
 {
     private CameraZoom _cameraZoom;
-    private InteractionManager interactionManager;
     // Start is called before the first frame update
     
     // Highlightable Objects
-    private HighlightableObject potTrigger;
-    private HighlightableObject potObject;
+    private GameObject potTrigger;
+    private GameObject potObject;
     
-    private HighlightableObject panTrigger;
-    private HighlightableObject panObject;
+    private GameObject panTrigger;
+    private GameObject panObject;
     
-    private HighlightableObject mortarObject;
+    private GameObject mortarObject;
 
     private Canvas canvas;
     private Button backMainKitchenButton;
+    private FrontMortar frontMortar;
+    private CookingPot pot;
+    private CookingPan pan;
+    public void ChangeOtherObjectTag(GameObject targetObject, string newTag)
+    {
+        Debug.Log("Changing tag to " + newTag);
+        targetObject.tag = newTag;
+    }
     void Start()
     {
-        panObject = GameObject.Find("PanSprite").GetComponent<HighlightableObject>();
-        potObject = GameObject.Find("Pot").GetComponent<HighlightableObject>();
-        mortarObject = GameObject.Find("Mortar").GetComponent<HighlightableObject>();
+        panObject = GameObject.Find("Pan");
+        potObject = GameObject.Find("Pot");
+        mortarObject = GameObject.Find("Mortar");
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        potTrigger = GameObject.Find("PotTrigger").GetComponent<HighlightableObject>();
-        panTrigger = GameObject.Find("PanTrigger").GetComponent<HighlightableObject>();
-
-        panTrigger.canHighlight = false;
-        potTrigger.canHighlight = false;
+        potTrigger = GameObject.Find("PotTrigger");
+        panTrigger = GameObject.Find("PanTrigger");
         
-        interactionManager = GameObject.Find("InteractionManager").GetComponent<InteractionManager>();
-        
+        frontMortar = GameObject.Find("Mortar").GetComponent<FrontMortar>();
+        pan = FindObjectOfType<CookingPan>();
         _cameraZoom = Camera.main.GetComponent<CameraZoom>();
+        pot = FindObjectOfType<CookingPot>();
+        OnBackMainKitchenButtonClicked();
     }
 
 
@@ -46,35 +52,44 @@ public class Kitchen : MonoBehaviour
 
             if (_cameraZoom.targetObject.name == "Pot")
             {
-                potObject.canHighlight = false;
-                potTrigger.canHighlight = true;
+                ChangeOtherObjectTag(potObject, "Untagged");
                 
-                panTrigger.canHighlight = false;
-                panObject.canHighlight = false;
+                ChangeOtherObjectTag(panTrigger, "Untagged");
+                ChangeOtherObjectTag(panObject, "Untagged");
+
+                ChangeOtherObjectTag(mortarObject, "Untagged");
                 
-                mortarObject.canHighlight = false;
+                if(pot.showingInventory == true) ChangeOtherObjectTag(potTrigger, "Untagged");
+                else if(pot.isShowingVisuals == true) ChangeOtherObjectTag(potTrigger, "Untagged");
+                else ChangeOtherObjectTag(potTrigger, "Utensil");
             }
             else if (_cameraZoom.targetObject.name == "Pan")
             {
-                potObject.canHighlight = false;
-                potTrigger.canHighlight = false;
+                ChangeOtherObjectTag(potObject, "Untagged");
+                ChangeOtherObjectTag(potTrigger, "Untagged");
                 
-                panTrigger.canHighlight = true;
-                panObject.canHighlight = false;
+                ChangeOtherObjectTag(panObject, "Untagged");
+
+                ChangeOtherObjectTag(mortarObject, "Untagged");
                 
-                mortarObject.canHighlight = false;
+                if(pan.showingInventory == true) ChangeOtherObjectTag(panTrigger, "Untagged");
+                else if(pan.isShowingVisuals == true) ChangeOtherObjectTag(panTrigger, "Untagged");
+                else ChangeOtherObjectTag(panTrigger, "Utensil");
             }
             else if (_cameraZoom.targetObject.name == "Mortar")
             {
-                potObject.canHighlight = false;
-                potTrigger.canHighlight = false;
-                
-                panTrigger.canHighlight = false;
-                panObject.canHighlight = false;
-                panObject.canHighlight = false;
-                
-                mortarObject.canHighlight = true;
+                ChangeOtherObjectTag(potObject, "Untagged");
+                ChangeOtherObjectTag(potTrigger, "Untagged");
+
+                ChangeOtherObjectTag(panTrigger, "Untagged");
+                ChangeOtherObjectTag(panObject, "Untagged");
+
+                if(frontMortar.showingInventory == true) ChangeOtherObjectTag(mortarObject, "Untagged");
+                else if(frontMortar.isShowingVisuals == true) ChangeOtherObjectTag(mortarObject, "Untagged");
+                else ChangeOtherObjectTag(mortarObject, "Utensil");
+                    
             }
+
 
 
             Button backMainKitchenButton = _cameraZoom.BackMainKitchenButton.GetComponent<Button>();
@@ -88,12 +103,12 @@ public class Kitchen : MonoBehaviour
     
     private void OnBackMainKitchenButtonClicked()
     {
-        potObject.canHighlight = true;
-        potTrigger.canHighlight = false;
+        ChangeOtherObjectTag(potObject, "Utensil");
+        ChangeOtherObjectTag(potTrigger, "Untagged");
                 
-        panTrigger.canHighlight = false;
-        panObject.canHighlight = true;
+        ChangeOtherObjectTag(panTrigger, "Untagged");
+        ChangeOtherObjectTag(panObject, "Utensil");
                 
-        mortarObject.canHighlight = true;
+        ChangeOtherObjectTag(mortarObject, "Utensil");
     }
 }

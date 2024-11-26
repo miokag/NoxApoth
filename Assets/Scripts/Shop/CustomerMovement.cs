@@ -8,8 +8,14 @@ public class CustomerMovement : MonoBehaviour
     private bool isMoving = true;
 
     public event Action OnCustomerClicked;
+    private GameObject currentObject;
 
+    public void ChangeOtherObjectTag(GameObject targetObject, string newTag)
+    {
+        targetObject.tag = newTag;
+    }
 
+    
     public void StartMove()
     {
         StartCoroutine(MoveCustomer());
@@ -17,18 +23,22 @@ public class CustomerMovement : MonoBehaviour
 
     private IEnumerator MoveCustomer()
     {
+        currentObject = this.gameObject;
         while (isMoving)
         {
             transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
             yield return null;
+            ChangeOtherObjectTag(currentObject, "Untagged");
         }
+        
+        ChangeOtherObjectTag(currentObject, "Selectable");
     }
 
     private void OnMouseDown()
     {
         if(!isMoving)
         {
-
+                ChangeOtherObjectTag(currentObject, "Untagged");
                 Debug.Log("Cedric is Clicked");
                 OnCustomerClicked?.Invoke();           
         }

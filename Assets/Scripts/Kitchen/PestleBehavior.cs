@@ -17,6 +17,7 @@ public class PestleBehavior : MonoBehaviour
     public CameraZoom cameraZoom;
     private Vector3 _originalPosition;
     private Quaternion _originalRotation;
+    private float initialZPosition;
     
     private FrontMortar _frontMortar;
     private GameObject _frontSprite;
@@ -59,14 +60,13 @@ public class PestleBehavior : MonoBehaviour
 
         Transform frontMortar = mortarCollider.transform.Find("FrontFace");
         _frontMortar = frontMortar.GetComponent<FrontMortar>();
-        _frontSprite = GameObject.Find("MortarFrontSprite");
+        _frontSprite = GameObject.Find("Mortar");
         
     }
     
     public IEnumerator WaitForZoomAndSetInventoryUI()
     {
         yield return new WaitUntil(() => cameraZoom.clickedObjectName == "Mortar" );
-        _frontMortar.mortarGameObject.SetActive(false);
     }
     
     public void ApplyIngredientColor()
@@ -104,16 +104,21 @@ public class PestleBehavior : MonoBehaviour
             // Disable gravity while dragging, to stop the object from falling while held
             rigidbody.useGravity = false;
 
-            // Freeze rotation to prevent it from spinning
+            // Freeze rotation to prevent it from spinning or flipping
             rigidbody.freezeRotation = true;
 
             // Straighten the pestle's rotation when picked up (reset it to a specific rotation)
-            transform.rotation = Quaternion.Euler(0f, 0f, 0f); // This makes it upright (adjust as necessary for your setup)
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f); // Adjust as necessary for your setup
 
             // Calculate the offset of the click relative to the object's position in world space
             offset = transform.position - GetMouseWorldPosition();
+
+            // Store the original Z position (locking it to this value)
+            initialZPosition = transform.position.z;
         }
     }
+
+
     
     private void OnMouseDrag()
     {
@@ -122,7 +127,10 @@ public class PestleBehavior : MonoBehaviour
             // Calculate the target position in world space
             Vector3 targetPosition = GetMouseWorldPosition() + offset;
 
-            // Move the pestle smoothly by using Rigidbody's position (avoid manually setting transform.position)
+            // Ensure the Z position stays locked to the initial Z value
+            targetPosition.z = initialZPosition;
+
+            // Move the pestle using Rigidbody's MovePosition to avoid tunneling
             Vector3 moveDirection = targetPosition - transform.position;
 
             // Limit the speed of movement to prevent tunneling
@@ -131,33 +139,50 @@ public class PestleBehavior : MonoBehaviour
                 moveDirection = moveDirection.normalized * maxDragSpeed * Time.deltaTime;
             }
 
-            // Move the pestle using Rigidbody's MovePosition to avoid tunneling
+            // Move the pestle smoothly by using Rigidbody's position
             rigidbody.MovePosition(transform.position + moveDirection);
         }
     }
+
     
     private void OnMouseUp()
     {
         _frontSprite.SetActive(true);
 
-        // When the mouse is released, stop dragging
+        // Stop dragging
         isBeingHeld = false;
 
-        // Enable gravity so the pestle will fall when dropped
+        // Enable gravity so the pestle will fall naturally
         rigidbody.useGravity = true;
 
-        // Unfreeze rotation to allow it to rotate and fall naturally
+        // Unfreeze rotation, but you may want to freeze it on a specific axis to prevent flipping
         rigidbody.freezeRotation = false;
 
-        // Reset the position of the pestle to its original position
-        rigidbody.MovePosition(_originalPosition);
+        // If the pestle's rotation is unstable (flipping), you could lock its rotation temporarily
+        // For example, locking rotation on the X and Z axis to prevent flipping:
+        if (transform.eulerAngles.x > 45f || transform.eulerAngles.x < -45f)
+        {
+            transform.rotation = Quaternion.Euler(0f, transform.eulerAngles.y, 0f); // Keep it upright on X axis
+        }
 
-        // Reset the rotation to the original rotation
-        transform.rotation = _originalRotation; 
+        // Zero out the velocity to avoid unexpected movement
+        rigidbody.velocity = Vector3.zero;
 
-        // Zero out the velocity to ensure it doesn't keep moving unexpectedly
-        rigidbody.velocity = Vector3.zero; 
+        // Reset the position and rotation to the original ones when the mouse is released
+        transform.position = _originalPosition; // Reset to the original position
+        transform.rotation = _originalRotation; // Reset to the original rotation
+
+        // Prevent any forward movement in the Z direction once released
+        // Keep the Z position fixed
+        Vector3 currentPosition = transform.position;
+        currentPosition.z = initialZPosition; // Keep Z locked to the original Z position
+        transform.position = currentPosition;
     }
+
+
+
+
+
     
     private void FixedUpdate()
     {
