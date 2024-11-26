@@ -23,6 +23,7 @@ public class OrderNoteBehavior : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        Debug.Log("Order Note is Clicked!");
         // Only proceed if the object is clickable (i.e., not in Exploration scene)
         if (SceneManager.GetActiveScene().name == "Exploration")
             return; // Do nothing if we're in the "Exploration" scene

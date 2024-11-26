@@ -2065,6 +2065,12 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ToFrontShop
       objectReference: {fileID: 0}
+    - target: {fileID: 8842041861737433119, guid: 37ec677add986c54fa8a6a839fb7b04c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -784075425, guid: c8035ba4bc9665149806774a37f276e4,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

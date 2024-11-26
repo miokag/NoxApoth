@@ -4398,6 +4398,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 213781887}
     m_Modifications:
+    - target: {fileID: 2619031549907937359, guid: 5e21a160d81ba824ba01957e0e3a18fc,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -784075425, guid: c8035ba4bc9665149806774a37f276e4,
+        type: 3}
     - target: {fileID: 3385075358343088303, guid: 5e21a160d81ba824ba01957e0e3a18fc,
         type: 3}
       propertyPath: m_Name
@@ -4509,7 +4515,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4293386354340160713, guid: 5e21a160d81ba824ba01957e0e3a18fc, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e21a160d81ba824ba01957e0e3a18fc, type: 3}
@@ -5681,7 +5688,9 @@ MonoBehaviour:
     type: 3}
   inventoryPanelPrefab: {fileID: 8165424853994205709, guid: 92efc9ac46a615342bfeacfdb0a7f0ad,
     type: 3}
+  isShowingVisuals: 0
   liquidAnimator: {fileID: 1742862573}
+  mortarCollision: {fileID: 0}
 --- !u!114 &1891194988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6013,6 +6022,12 @@ PrefabInstance:
       propertyPath: m_text
       value: <
       objectReference: {fileID: 0}
+    - target: {fileID: 8842041861737433119, guid: 37ec677add986c54fa8a6a839fb7b04c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -784075425, guid: c8035ba4bc9665149806774a37f276e4,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
