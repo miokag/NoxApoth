@@ -21,10 +21,14 @@ public class GivePotionBehavior : MonoBehaviour
     
     private GameObject potionImage;
     private GameObject customerGameObject;
+
+    [SerializeField] private Sprite[] customerExpressionSprites;
+    private SpriteRenderer customerSprite;
     private void Start()
     {
         potionImage = GameObject.Find("PotionImage");
         _orderManager = FindObjectOfType<OrderManager>();
+        customerSprite = GetComponent<SpriteRenderer>();
     }
 
     private void OnMouseDown()
@@ -140,7 +144,7 @@ public class GivePotionBehavior : MonoBehaviour
     private void PotionResults()
     {
         if (correctCounter >= 7 && correctCounter <= 10) isPass = true;
-        else if (correctCounter >= 12 && correctCounter <= 20) isSuccess = true;
+        else if (correctCounter >= 11 && correctCounter <= 20) isSuccess = true;
         else if (correctCounter >= 0 && correctCounter <= 6) isFail = true;
 
         Debug.Log("Potion Results: isPass: " + isPass + ", isSuccess: " + isSuccess + ", isFail: " + isFail);
@@ -162,9 +166,18 @@ public class GivePotionBehavior : MonoBehaviour
             ShowWrongIngredientDialogues();
             ShowWrongProcessDialogues();
         }
+
+        ChangeExpressions();
     }
 
-    
+
+    private void ChangeExpressions()
+    {
+        Debug.Log("Changing expressions");
+        if(isPass) customerSprite.sprite = customerExpressionSprites[2];
+        else if(isSuccess) customerSprite.sprite = customerExpressionSprites[1];   
+        else if(isFail) customerSprite.sprite = customerExpressionSprites[3];
+    }
     public void ChangeOtherObjectTag(GameObject targetObject, string newTag)
     {
         targetObject.tag = newTag;

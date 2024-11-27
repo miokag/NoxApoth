@@ -148,6 +148,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad052fe949cf70b4c8ac853f3c59cb1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  customerExpressionSprites:
+  - {fileID: -144932194, guid: 0874a4b8573116a47a0cf1ded8a6b34e, type: 3}
+  - {fileID: 1628968877, guid: 0874a4b8573116a47a0cf1ded8a6b34e, type: 3}
+  - {fileID: -2126821800, guid: 0874a4b8573116a47a0cf1ded8a6b34e, type: 3}
+  - {fileID: -881237651, guid: 0874a4b8573116a47a0cf1ded8a6b34e, type: 3}
 --- !u!114 &2963843083460000212
 MonoBehaviour:
   m_ObjectHideFlags: 0

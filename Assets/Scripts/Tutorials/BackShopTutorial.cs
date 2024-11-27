@@ -7,16 +7,20 @@ public class BackShopTutorial : MonoBehaviour
     [SerializeField] private GameObject door; // Reference to the Door GameObject
     private DialogueSys dialogueManager;
     private DoorBehavior doorBehavior;
-
+    private KitchenBehavior kitchenBehavior;
+    [SerializeField] private GameObject bookCase;
     void Start()
     {
-
         dialogueManager = FindObjectOfType<DialogueSys>();
-        doorBehavior = door.transform.Find("Cube")?.GetComponent<DoorBehavior>();
+        doorBehavior = FindObjectOfType<DoorBehavior>();
+        kitchenBehavior = FindObjectOfType<KitchenBehavior>();
 
         // Check if the tutorial step is 1, and if so, start the dialogue
         if (GameManager.Instance.GetTutorialStep() == 1)
         {
+            ChangeOtherObjectTag(door, "Untagged");
+            ChangeOtherObjectTag(bookCase, "Untagged");
+            
             Debug.Log("Next TUTORIAL Step == 1");
             dialogueManager.StartDialogue("backshop");
 
@@ -31,7 +35,14 @@ public class BackShopTutorial : MonoBehaviour
             {
                 Debug.LogError("DoorBehavior component not found on the Cube GameObject.");
             }
+            
+            kitchenBehavior.DisableInteraction();
         }
+    }
+    
+    private void ChangeOtherObjectTag(GameObject targetObject, string newTag)
+    {
+        targetObject.tag = newTag;
     }
 
     private void OnDialogueFinished()
@@ -40,9 +51,16 @@ public class BackShopTutorial : MonoBehaviour
         if (GameManager.Instance.GetTutorialStep() == 1)
         {
             doorBehavior.EnableInteraction();
+            kitchenBehavior.EnableInteraction();
             Debug.Log("Tutorial Step Completed, moving to the next step.");
             GameManager.Instance.NextTutorialStep();
             dialogueManager.OnDialogueFinished -= OnDialogueFinished;
+            
+            ChangeOtherObjectTag(door, "Selectable");
+            ChangeOtherObjectTag(bookCase, "Selectable");
+            // Destroy this script component
+            Destroy(this);
         }
     }
+
 }

@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class DoorBehavior : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class DoorBehavior : MonoBehaviour
     [SerializeField] private Canvas canvas; // Reference to Canvas to place order notes
     [SerializeField] private GameObject leftButtonPrefab; // Reference to Left Button Prefab
     [SerializeField] private GameObject rightButtonPrefab; // Reference to Right Button Prefab
+    [SerializeField] private GameObject noOrderPrefab; // Reference to Right Button Prefab
 
     private List<Order> orders;
     private int currentOrderIndex = 0;
@@ -23,6 +25,7 @@ public class DoorBehavior : MonoBehaviour
     public Button rightButton;     // Store Right Button reference
 
     private bool isClickable = true; // Flag to track if the door is clickable
+    private GameObject _noOrder;
 
     private void Start()
     {
@@ -70,12 +73,30 @@ public class DoorBehavior : MonoBehaviour
         }
         else
         {
-            Debug.Log("No orders found in the JSON file.");
+            if (_noOrder == null)
+            {
+                _noOrder = Instantiate(noOrderPrefab, canvas.transform);
+                TextMeshProUGUI inventoryText = _noOrder.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+                inventoryText.text = "No Customer Order";
+                // Optionally, you can add a timer to destroy it after a set time if necessary
+                StartCoroutine(DestroyInventoryFullAfterDelay(1f)); // Destroy after 2 seconds
+            }
         }
 
         // After clicking, disable the interaction
         DisableInteraction();
     }
+    
+    private IEnumerator DestroyInventoryFullAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (GameManager.Instance.FullInventory())
+        {
+            Destroy(_noOrder);
+            _noOrder = null; // Reset to ensure it can be instantiated again if needed
+        }
+    }
+
 
     private void DisplayOrder(int index)
     {

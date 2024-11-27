@@ -260,6 +260,10 @@ MonoBehaviour:
     type: 3}
   rightButtonPrefab: {fileID: 7265141306100023032, guid: 5e6ebb75be1de22489bbd249737a4c54,
     type: 3}
+  noOrderPrefab: {fileID: 1743338664975890294, guid: 7b9ee5832583ddf46ada3f63e1bc57cb,
+    type: 3}
+  leftButton: {fileID: 0}
+  rightButton: {fileID: 0}
 --- !u!65 &124623595
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1812,6 +1816,9 @@ MonoBehaviour:
     type: 3}
   rightButtonPrefab: {fileID: 7265141306100023032, guid: 5e6ebb75be1de22489bbd249737a4c54,
     type: 3}
+  noOrderPrefab: {fileID: 0}
+  leftButton: {fileID: 0}
+  rightButton: {fileID: 0}
 --- !u!1001 &454499177
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3891,7 +3898,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b31bb857d4b83744c9e385bd4c4b4fcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  door: {fileID: 1741249666}
+  door: {fileID: 124389065}
+  bookCase: {fileID: 1905529929760335}
 --- !u!4 &1830083267
 Transform:
   m_ObjectHideFlags: 0

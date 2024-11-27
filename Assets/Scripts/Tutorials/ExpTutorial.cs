@@ -124,6 +124,7 @@ public class ExpTutorial : MonoBehaviour
                 Debug.Log("Potion Bookmark Button found. Waiting for click...");
                 potionBookmarkButton.onClick.AddListener(() =>
                 {
+                    notebookUIManager.DisablePotionBookmarkButton();
                     nextStep++;
                     notebookUIManager.DisableAllPotionButtons();
                     notebookUIManager.EnablePotionButton("Healing Potion");
