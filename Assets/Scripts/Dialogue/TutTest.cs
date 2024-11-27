@@ -42,7 +42,7 @@ public class TutTest : MonoBehaviour
             dialogueManager = FindObjectOfType<DialogueSys>();
             orderManager = FindObjectOfType<OrderManager>();
 
-            //dialogueManager.StartDialogue("shop1");
+            dialogueManager.StartDialogue("shop1");
             nextStep = 1;
             dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
         }

@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Serenity Herb
   m_EditorClassIdentifier: 
   ingredientName: Serenity Herb
-  icon: {fileID: 509927293, guid: 538fd6d569ca6fb4d86eb35a9432aacf, type: 3}
+  icon: {fileID: 92865031, guid: b19c53ff0f48ca843b6c7677887fa368, type: 3}
   prefab: {fileID: 3257488535752732401, guid: 2337d309fd2876644bb1708f37ae86f0, type: 3}
-  iconGameObject: {fileID: 3928660298084780422, guid: ce80e81fb94f4354cac981867fdebcb2,
+  iconGameObject: {fileID: 9022355596744129788, guid: ce80e81fb94f4354cac981867fdebcb2,
     type: 3}
   description:
-  - Serenity Herb Description
+  - Purple herb with a rounded, compact shape.
+  - 'Soft and plush texture, like a small cushion. '
+  - Grows in dense, clustered formations.
   effects:
   - Extended exposure brings a heavy eyelid.
   - Calms the body and clears the mind.
   - A finer form releases its full benefits.
   FoundState: 0
+  isinPotion: 0
   isCookedProperly: 0
   bottomOffset: 0
-  hexColor: 
+  hexColor: '#9A7AA6'
   neededProcessedState: 3
   currentGatheredState: 3
   currentProcessedState: 3

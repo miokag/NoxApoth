@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Gale Fern Fronds
   m_EditorClassIdentifier: 
   ingredientName: Gale Fern Fronds
-  icon: {fileID: 21300000, guid: cf4c35768062ea242be81a8f14015f87, type: 3}
+  icon: {fileID: 299587605, guid: f61717d87b461df4faf8136b8e460b51, type: 3}
   prefab: {fileID: 0}
   iconGameObject: {fileID: 6028943097921460087, guid: 9fc106d17309b3a4c83fcc333ce4c7df,
     type: 3}
   description:
-  - Gale Fern Fronds Description
+  - Mint green top leaves with a vibrant, fresh hue.
+  - Red, vibrant base that contrasts with the leaves.
+  - Unique, striking appearance with a two-tone color scheme.
   effects:
   - Stirs the air to create a protective flow.
   - Uncontrolled exposure may stir up a dizzying whirl.
   - Extended heat brings it to a steadier state.
   FoundState: 0
+  isinPotion: 0
   isCookedProperly: 0
   bottomOffset: 0
-  hexColor: '#4B692F'
+  hexColor: '#42E1B1'
   neededProcessedState: 6
   currentGatheredState: 0
   currentProcessedState: 0

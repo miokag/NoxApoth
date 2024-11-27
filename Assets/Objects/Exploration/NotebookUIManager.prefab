@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1771785839674791744}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.398735, y: 2.1323009, z: 3.7889233}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -59,6 +59,11 @@ MonoBehaviour:
     type: 3}
   potionButtonPrefab: {fileID: 1628568203549111612, guid: cce1dd45139f7c342840344c4b32deee,
     type: 3}
-  potionPagePrefab: {fileID: 7366404079989243431, guid: 2b3fc6b565d27cc458ec7e56526aca48,
+  potionPagePrefab: {fileID: 5972308585126857835, guid: 2b3fc6b565d27cc458ec7e56526aca48,
     type: 3}
   playerController: {fileID: 0}
+  ingredientBookmarkButton: {fileID: 0}
+  potionBookmarkButton: {fileID: 0}
+  currentNotebookUI: {fileID: 0}
+  ingredientButton: {fileID: 0}
+  potionButton: {fileID: 0}

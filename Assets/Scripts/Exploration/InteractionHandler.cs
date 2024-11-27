@@ -2,25 +2,32 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Collections;
 
 public class InteractionHandler : MonoBehaviour
 {
     public LayerMask ingredientLayer; // The layer to check for interactable objects
     public LayerMask sceneLayer;
+    
     private Collider currentInteractableObject = null; // Track the current interactable object in the trigger zone
     private NotebookUIManager notebookUIManager;
     [SerializeField] private RhythmSceneManager rhythmSceneManager;
     [SerializeField] private Canvas interactableCanvasPrefab; //For the Instruction Button
     [SerializeField] private GameObject instructionUIPrefab;
+    [SerializeField] private GameObject inventoryFullPrefab;
 
     private Canvas interactableCanvas;
     private GameObject instructionUI;
     private GameObject player;
     private bool isIngredient = false;
     private bool isSceneChanger = false;
+    private Canvas _canvas;
+
+    private GameObject _inventoryFull;
 
     private void Start()
     {
+        _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         notebookUIManager = FindAnyObjectByType<NotebookUIManager>();
         GameObject player = transform.root.gameObject;
     }
@@ -38,13 +45,33 @@ public class InteractionHandler : MonoBehaviour
                     HandleInteraction();
                     Destroy(interactableCanvas.gameObject);
                 }
-                else { Debug.Log("Full Inventory");}
+                else
+                {
+                    if (_inventoryFull == null)
+                    {
+                        _inventoryFull = Instantiate(inventoryFullPrefab, _canvas.transform);
+                        TextMeshProUGUI inventoryText = _inventoryFull.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+                        inventoryText.text = "Inventory is Full!";
+                        // Optionally, you can add a timer to destroy it after a set time if necessary
+                        StartCoroutine(DestroyInventoryFullAfterDelay(1f)); // Destroy after 2 seconds
+                    }
+                }
             }
             else if (isSceneChanger)
             {
                 BackToShop();
                 Destroy(interactableCanvas.gameObject);
             }
+        }
+    }
+    
+    private IEnumerator DestroyInventoryFullAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (GameManager.Instance.FullInventory())
+        {
+            Destroy(_inventoryFull);
+            _inventoryFull = null; // Reset to ensure it can be instantiated again if needed
         }
     }
 

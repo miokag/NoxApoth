@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf4c35768062ea242be81a8f14015f87
+guid: 432b20d8aa00d204db66c53323bcfdea
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: VINE INV_0
+      name: CRYSTAL INV_0
       rect:
         serializedVersion: 2
-        x: 39
-        y: 53
-        width: 170
-        height: 186
+        x: 46
+        y: 21
+        width: 184
+        height: 202
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30f19bae71304004ab1cd30532b8f4f0
-      internalID: 549800161
+      spriteID: f7e18f04f0ec758409ce9a164f7247c8
+      internalID: -1100788904
       vertices: []
       indices: 
       edges: []
@@ -133,7 +133,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: c06a06c5d40ea2c409a2aadc401b8a49
     internalID: 0
     vertices: []
     indices: 
@@ -141,7 +141,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      VINE INV_0: 549800161
+      CRYSTAL INV_0: -1100788904
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

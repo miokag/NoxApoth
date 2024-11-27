@@ -13,17 +13,20 @@ MonoBehaviour:
   m_Name: Opium Poppy Tree
   m_EditorClassIdentifier: 
   ingredientName: Opium Poppy Tree
-  icon: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  icon: {fileID: -1692520953, guid: 7b82f41bfa29f114e8af9559d4942235, type: 3}
   prefab: {fileID: 6063292637453430409, guid: 596d6367bbfb99645aecf3bb6900c32b, type: 3}
-  iconGameObject: {fileID: 6028943097921460087, guid: c805cc8939904324ba9836b066243d4a,
+  iconGameObject: {fileID: 2537368532974130851, guid: 2e084a3e64f8f924280e8f46c69c6bcc,
     type: 3}
   description:
-  - Opium Poppy Tree Description
+  - Twisting trunk with an intricate, spiraling shape.
+  - 'Purple-hued leaves that stand out against the bark. '
+  - Stands tall, with a unique, almost surreal appearance.
   effects:
   - A light touch brings a calming numbness.
   - May cause strange visions if handled carelessly.
   - Heat it to prevent the mind from wandering.
   FoundState: 0
+  isinPotion: 0
   isCookedProperly: 0
   bottomOffset: 0
   hexColor: '#785087'

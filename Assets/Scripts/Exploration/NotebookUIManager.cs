@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using System.Linq; 
+using System.Linq;
+using UnityEngine.SceneManagement;
 
 public class NotebookUIManager : MonoBehaviour
 {
@@ -44,9 +45,12 @@ public class NotebookUIManager : MonoBehaviour
 
     private void Start()
     {
-        GameObject playerContainer = GameObject.Find("Player");
-        GameObject player = playerContainer.transform.Find("PlayerSprite").gameObject;
-        playerController = player.GetComponent<PlayerControllerScript>();
+        if (SceneManager.GetActiveScene().name == "Exploration")
+        {
+            GameObject playerContainer = GameObject.Find("Player");
+            GameObject player = playerContainer.transform.Find("PlayerSprite").gameObject;
+            playerController = player.GetComponent<PlayerControllerScript>();
+        }
 
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
     }
@@ -104,16 +108,20 @@ public class NotebookUIManager : MonoBehaviour
             bool isActive = currentNotebookUI.activeSelf;
             currentNotebookUI.SetActive(!isActive);
             Debug.Log("Toggled Notebook UI visibility to: " + !isActive);
-            if (!isActive && playerController != null)
-            {
-                playerController.enabled = false;  // Disable PlayerController when the UI is active
-                Debug.Log("PlayerController disabled.");
+            if (SceneManager.GetActiveScene().name == "Exploration")
+            { 
+                if (!isActive && playerController != null)
+                {
+                    playerController.enabled = false;  // Disable PlayerController when the UI is active
+                    Debug.Log("PlayerController disabled.");
+                }
+                else if (isActive && playerController != null)
+                {
+                    playerController.enabled = true;   // Enable PlayerController when the UI is hidden
+                    Debug.Log("PlayerController enabled.");
+                }
             }
-            else if (isActive && playerController != null)
-            {
-                playerController.enabled = true;   // Enable PlayerController when the UI is hidden
-                Debug.Log("PlayerController enabled.");
-            }
+            
         }
     }
 
@@ -456,7 +464,7 @@ public class NotebookUIManager : MonoBehaviour
             Destroy(currentPotionPage);
         }
 
-        // Instantiate the potion page as a child of the notebook UI
+
         currentPotionPage = Instantiate(potionPagePrefab, currentNotebookUI.transform);
 
         // Find and set the text fields for potion name and ingredients (no image for now)

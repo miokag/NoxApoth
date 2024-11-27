@@ -73,7 +73,7 @@ public class ExpTutorial : MonoBehaviour
             dialogueManager.OnDialogueFinished -= RunNextDialogueNode;
             Debug.Log("Next Step = 3 is running");
             dialogueManager.StartDialogue("explorationTOC2");
-            notebookUIManager.EnableIngredientButton("Opium Poppy Tree");
+            
             nextStep++;
             dialogueManager.OnDialogueFinished += RunNextDialogueNode;
         }
@@ -86,6 +86,8 @@ public class ExpTutorial : MonoBehaviour
             // Access the button for the Opium Poppy Tree using its name
             Button ingredientButton = notebookUIManager.ingredientButtonDictionary["Opium Poppy Tree"];
 
+            notebookUIManager.EnableIngredientButton("Opium Poppy Tree");
+            
             if (ingredientButton == null)
             {
                 Debug.LogError("Ingredient Bookmark Button is null. Cannot proceed.");
@@ -122,10 +124,9 @@ public class ExpTutorial : MonoBehaviour
                 Debug.Log("Potion Bookmark Button found. Waiting for click...");
                 potionBookmarkButton.onClick.AddListener(() =>
                 {
-                    Debug.Log("Potion Bookmark Button clicked.");
+                    nextStep++;
                     notebookUIManager.DisableAllPotionButtons();
                     notebookUIManager.EnablePotionButton("Healing Potion");
-                    nextStep++;
                     RunNextDialogueNode();
                 });
             }
@@ -249,8 +250,6 @@ public class ExpTutorial : MonoBehaviour
         Debug.Log("N Button Pressed");
         notebookUIManager = Instantiate(notebookUIManagerPrefab, generalCanvas.transform);
         
-        //notebookUIManager.DisablePotionButton("Opium Poppy Tree");
-
         // Wait until the "N" key is pressed, without constant updates
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.N));
 
@@ -269,8 +268,6 @@ public class ExpTutorial : MonoBehaviour
     {
         if(nextStep!= 1 && nextStep != 7)
         {
-            Debug.Log("Next Step is NOT step 7");
-
             // Check if the notebook UI is inactive and if the player controller is enabled
             if (notebookUIManager != null && notebookUIManager.currentNotebookUI != null && notebookUIManager.currentNotebookUI.activeSelf == false)
             {

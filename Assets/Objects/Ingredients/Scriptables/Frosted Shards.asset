@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Frosted Shards
   m_EditorClassIdentifier: 
   ingredientName: Frosted Shards
-  icon: {fileID: 21300000, guid: 34435a1e2821e5740a53406f74490517, type: 3}
+  icon: {fileID: -1100788904, guid: 432b20d8aa00d204db66c53323bcfdea, type: 3}
   prefab: {fileID: 0}
-  iconGameObject: {fileID: 2937692194755827509, guid: 9d3ef15e96ae5f2478c91792c865609f,
+  iconGameObject: {fileID: 3132940320724121165, guid: 9d3ef15e96ae5f2478c91792c865609f,
     type: 3}
   description:
-  - Frosted Shards Description
+  - 'Purple-blue hue with shimmering glow. '
+  - Sharp, crystal-like edges.
+  - Found in dense clusters.
   effects:
   - Repels the worst of the cold.
   - Excess contact may cause a chilling numbness.
   - Crushing it releases its protective strength.
   FoundState: 0
+  isinPotion: 0
   isCookedProperly: 0
   bottomOffset: 0
-  hexColor: 
+  hexColor: '#5B6EE1'
   neededProcessedState: 4
   currentGatheredState: 0
   currentProcessedState: 0

@@ -13,20 +13,23 @@ MonoBehaviour:
   m_Name: Viper's Vine
   m_EditorClassIdentifier: 
   ingredientName: Viper's Vine
-  icon: {fileID: -1561629493, guid: 538fd6d569ca6fb4d86eb35a9432aacf, type: 3}
+  icon: {fileID: 549800161, guid: cf4c35768062ea242be81a8f14015f87, type: 3}
   prefab: {fileID: 0}
-  iconGameObject: {fileID: 1359404360062787366, guid: c155ebce92ded1b4aa81ea4698dbe9a3,
+  iconGameObject: {fileID: 6627732053686033194, guid: c155ebce92ded1b4aa81ea4698dbe9a3,
     type: 3}
   description:
-  - Viper's Venom Description
+  - Vine-like, tree-shaped with S curves.
+  - 'Grows along the ground in winding patterns. '
+  - Thick, sturdy branches that twist and intertwine.
   effects:
   - Contact causes uncontrollable tingling sensation
   - Eases discomfort when prepared just right.
   - A gentle boil smooths its sharp edge.
   FoundState: 0
+  isinPotion: 0
   isCookedProperly: 0
   bottomOffset: 0
-  hexColor: 
+  hexColor: '#4B692F'
   neededProcessedState: 5
   currentGatheredState: 3
   currentProcessedState: 5

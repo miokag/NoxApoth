@@ -49,8 +49,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
-        
         ClearPotionMix();
         Inventory = new List<Ingredient>();
         currentCustomer = null;
@@ -61,10 +59,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
         
         setCurrentCustomer("Cedric");
-        orderManager.StoreOrder("Cedric", "", "Healing Potion");
-        AddToPotionMix(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
-        AddToPotionMix(clonedIngredientDatabase.GetIngredientByName("Serenity Herb"));
-        AddToPotionMix(clonedIngredientDatabase.GetIngredientByName("Viper's Vine"));
 
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Viper's Vine"));
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Serenity Herb"));
