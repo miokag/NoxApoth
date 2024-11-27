@@ -1,4 +1,8 @@
 using UnityEngine;
+using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class TutTest : MonoBehaviour
 {
@@ -10,10 +14,14 @@ public class TutTest : MonoBehaviour
     private Customer cedric;
     private OrderManager orderManager;
     private GameObject _waitingArea;
+    [SerializeField] private GameObject buttonInstructionPrefab;
+    private GameObject buttonInstruction;
+    private Canvas _canvas;
 
     // Start is called before the first frame update
     void Start()
     {
+        _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _waitingArea = GameObject.Find("WaitingArea");
         
         if (GameManager.Instance.GetTutorialStep() == 0)
@@ -43,6 +51,17 @@ public class TutTest : MonoBehaviour
             orderManager = FindObjectOfType<OrderManager>();
 
             dialogueManager.StartDialogue("shop1");
+            
+            buttonInstruction = Instantiate(buttonInstructionPrefab, _canvas.transform);
+            Image KeyIcon = buttonInstruction.transform.Find("KeyIcon").GetComponent<Image>();
+            TMP_Text KeyIconText = buttonInstruction.transform.Find("KeyIconText")?.GetComponent<TMP_Text>();
+            Destroy(KeyIcon.gameObject);
+            Destroy(KeyIconText.GameObject());
+            TMP_Text DescriptionText = buttonInstruction.transform.Find("DescriptionText")?.GetComponent<TMP_Text>();
+            
+            DescriptionText.text = "Spacebar";
+            DescriptionText.GetComponent<RectTransform>().anchoredPosition += new Vector2(-10.1f, 0);
+            buttonInstruction.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, -82.6f);
             nextStep = 1;
             dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
         }
@@ -79,6 +98,15 @@ public class TutTest : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+    
+    void Update()
+    {
+        // Poll input once per frame (avoid in final implementation)
+        if (Input.GetKeyDown(KeyCode.Space) && buttonInstruction != null)
+        {
+            Destroy(buttonInstruction);
         }
     }
 

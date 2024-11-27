@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Viper's Vine
   icon: {fileID: 549800161, guid: cf4c35768062ea242be81a8f14015f87, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 7886635611427257488, guid: 89e32ebfafa5b4e40a888c8af2c1fc39, type: 3}
   iconGameObject: {fileID: 6627732053686033194, guid: c155ebce92ded1b4aa81ea4698dbe9a3,
     type: 3}
   description:

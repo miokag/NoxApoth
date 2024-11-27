@@ -51,13 +51,11 @@ public class BackShopTutorial : MonoBehaviour
         if (GameManager.Instance.GetTutorialStep() == 1)
         {
             doorBehavior.EnableInteraction();
-            kitchenBehavior.EnableInteraction();
             Debug.Log("Tutorial Step Completed, moving to the next step.");
             GameManager.Instance.NextTutorialStep();
             dialogueManager.OnDialogueFinished -= OnDialogueFinished;
             
             ChangeOtherObjectTag(door, "Selectable");
-            ChangeOtherObjectTag(bookCase, "Selectable");
             // Destroy this script component
             Destroy(this);
         }

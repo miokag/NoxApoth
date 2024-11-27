@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Frosted Shards
   icon: {fileID: -1100788904, guid: 432b20d8aa00d204db66c53323bcfdea, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 779406719094707150, guid: 66be654adb86f2b44991354b2033e8cd, type: 3}
   iconGameObject: {fileID: 3132940320724121165, guid: 9d3ef15e96ae5f2478c91792c865609f,
     type: 3}
   description:

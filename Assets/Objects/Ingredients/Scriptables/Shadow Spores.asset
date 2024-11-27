@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Shadow Spores
   icon: {fileID: -1820993028, guid: dd16b6875334337488d6e3eef00613f4, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 11788986896307324, guid: 40f804999c6afd64e93cbb1b45a3cd2f, type: 3}
   iconGameObject: {fileID: 3666545415858416906, guid: 076e30c6b06ab4a489932439d5e4df8a,
     type: 3}
   description:

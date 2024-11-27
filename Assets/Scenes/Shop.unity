@@ -1243,6 +1243,8 @@ MonoBehaviour:
   customerDatabase: {fileID: 11400000, guid: 7dc11d976fa1f2a41b88d941f1dfa9ee, type: 2}
   customerSpawner: {fileID: 1285418371}
   dialogueManager: {fileID: 0}
+  buttonInstructionPrefab: {fileID: 212112645860818800, guid: 74f8678ce39f3f047ad4aa20672df608,
+    type: 3}
 --- !u!1001 &538746826
 PrefabInstance:
   m_ObjectHideFlags: 0

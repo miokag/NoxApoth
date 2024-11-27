@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientName: Gale Fern Fronds
   icon: {fileID: 299587605, guid: f61717d87b461df4faf8136b8e460b51, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 5389006968261397198, guid: f419d44cf97657341b23e10e0640cc80, type: 3}
   iconGameObject: {fileID: 6028943097921460087, guid: 9fc106d17309b3a4c83fcc333ce4c7df,
     type: 3}
   description:
