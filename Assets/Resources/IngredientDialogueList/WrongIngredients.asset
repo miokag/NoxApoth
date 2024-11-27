@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c0d01f939aa0d4fb17a6811e57b562, type: 3}
+  m_Name: WrongIngredients
+  m_EditorClassIdentifier: 
+  ingredientDialogues:
+  - ingredient: {fileID: 11400000, guid: fae8b8a4a2dfd0d46a78cdb4bb714749, type: 2}
+    dialogues:
+    - "So... I can\u2019t feel my face, and everything seems to be melting... Should
+      I be worried?"
+    - I don't feel anything at all... Did I just drink liquid silence? My hands are
+      numb, and everything looks... kinda blurry!
+    - I thought I'd feel more... magical? Right now, I can't even feel my fingers.
+      Is this potion... numb?
+    - "I can\u2019t feel my legs, but I think I\u2019m floating. Oh wait, no\u2014those
+      are just my socks. They\u2019re moving. Is that supposed to happen?"
+  - ingredient: {fileID: 11400000, guid: b73aa5d18ced92a44a67efdf0e0562f0, type: 2}
+    dialogues:
+    - "I think the only thing this potion is clearing is my schedule... I\u2019m
+      getting cozy real fast here, are we done?"
+    - "Well, I\u2019ve calmed down, alright... so much so, I think I\u2019m stuck
+      in slow motion. Someone poke me when it\u2019s over."
+    - "Ah, I see\u2026 this is more of a 'snore-fest' potion. I'm now officially
+      awake, but in the dreamiest way possible. Maybe try again with something that
+      doesn\u2019t make me want to faceplant the table\u2026"
+    - "Well, now I'm definitely calm\u2026 a little too calm. I\u2019m not sure if
+      I\u2019m relaxed or if I\u2019m in some sort of potion-induced paralysis. Maybe
+      I should just lie down and wait for my limbs to come back."
+  - ingredient: {fileID: 11400000, guid: 95063c35592a16647a064689d106c60f, type: 2}
+    dialogues:
+    - Well, color me shocked. This is... not calming. More like an intense massage
+      treatment from ants. Somebody please turn the tingles down before I start vibrating!
+    - "Oh, that\u2019s nice... Feels like a thousand tiny ants are hosting a rave
+      in my veins. Is this what you meant by 'tingling'? Because I\u2019m definitely...
+      tingling."
+    - "Well, that\u2019s a new feeling! I feel like I just brushed against a whole
+      field of angry bees, but no stings. Just... a lot of fizzing. Can I go back
+      to normal now, or is this my life?"
+    - "Okay, so... not what I expected. My skin\u2019s vibrating like a plucked string,
+      and I\u2019m not sure if I should run or just enjoy the sensation... which
+      I am not enjoying, by the way!"
+  - ingredient: {fileID: 11400000, guid: 097f9c159c8fb794f90140cc3845ec35, type: 2}
+    dialogues:
+    - "Oh great, now I\u2019m choking on nothing! Was this supposed to make me feel
+      invincible, or just incredibly lost? This haze is thicker than my grandma\u2019s
+      stew!"
+    - "Lovely, now I\u2019m blind AND I smell like a damp forest after a storm. Is
+      this potion trying to hide me from danger, or just make me disappear entirely?"
+    - "Uh... why does it sound like I\u2019m yelling into a cave now? Is the potion
+      supposed to turn me into a ghost? Because I feel very... incorporeal right
+      now. Also, I can\u2019t find my hands."
+    - "Okay, so I\u2019m not harmed, sure, but I\u2019m also not anything. I\u2019m
+      just... a shadowy blob. What am I supposed to do now, grope my way back home?"
+  - ingredient: {fileID: 11400000, guid: 0c25ca8919494b646aaa43e3d11a6c20, type: 2}
+    dialogues:
+    - "Whoa, okay, this is less \u2018protective flow\u2019 and more \u2018personal
+      tornado!\u2019 My hair\u2019s doing cartwheels, and I think I just lost my
+      scarf. Do I look like a storm chaser to you?"
+    - "Oh, fantastic. Now I\u2019m the human equivalent of a spinning top. Is the
+      room supposed to twirl like this? Or did I just drink a hurricane in a bottle?"
+    - "Uh, is it supposed to feel like I\u2019m being chased by an overenthusiastic
+      gust of wind? Because everything I own is now on the floor, and so, apparently,
+      am I."
+    - "This isn't a potion; it\u2019s a windstorm in disguise! I was expecting \u2018protective
+      flow,\u2019 not to feel like I just offended the weather gods!"
+  - ingredient: {fileID: 11400000, guid: e5f9956494308f7439d29d2753740f7f, type: 2}
+    dialogues:
+    - "Oh, lovely, now I\u2019m an icicle with feelings. Did I just drink a snowstorm?
+      Because my tongue is trying to retreat into my skull!"
+    - "I don\u2019t know what I was expecting, but it wasn\u2019t my hands going
+      numb halfway through holding the potion bottle. I feel like I\u2019m turning
+      into an ice sculpture\u2014quick, someone pose me dramatically."
+    - "Oh, this is fun! Not only am I chilled to the core, but now I can\u2019t even
+      feel my fingers. Perfect time to try a new hobby\u2014waving... if I could
+      move my arms"
+    - "Oh, no. I was trying to avoid cold and being stuck to the earth. Is this the
+      frostbite special? Because it\u2019s working, but in all the wrong ways!"

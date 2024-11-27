@@ -19,8 +19,8 @@ public class DoorBehavior : MonoBehaviour
     private TMP_Text orderDescriptionText;
 
     private Collider doorCollider;  // Store the collider of the door
-    private Button leftButton;      // Store Left Button reference
-    private Button rightButton;     // Store Right Button reference
+    public Button leftButton;      // Store Left Button reference
+    public Button rightButton;     // Store Right Button reference
 
     private bool isClickable = true; // Flag to track if the door is clickable
 
@@ -75,12 +75,6 @@ public class DoorBehavior : MonoBehaviour
 
         // After clicking, disable the interaction
         DisableInteraction();
-    }
-
-    public void DestroyButtons()
-    {
-        Destroy(rightButton.gameObject);
-        Destroy(leftButton.gameObject);
     }
 
     private void DisplayOrder(int index)

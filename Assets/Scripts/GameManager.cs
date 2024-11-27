@@ -58,9 +58,9 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
 
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Gale Fern Fronds"));
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Viper's Venom"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Viper's Vine"));
         AddToInventory(clonedIngredientDatabase.GetIngredientByName("Serenity Herb"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
     }
     
     public void InitializeShopClonedCustomers()

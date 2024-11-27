@@ -2252,7 +2252,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1342318375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,7 +3038,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2050356361}
-  - component: {fileID: 2050356360}
   - component: {fileID: 2050356362}
   m_Layer: 0
   m_Name: Tutorial
@@ -3046,25 +3045,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2050356360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2050356359}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee75a9e0cd1daab408056b26e90c3db5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buttonInstructionUI: {fileID: 212112645860818800, guid: 74f8678ce39f3f047ad4aa20672df608,
-    type: 3}
-  canvas: {fileID: 1221526186}
-  notebookUIManager: {fileID: 1357888145645333790, guid: e5ffb03596751ac4d80811ec15088931,
-    type: 3}
-  playerController: {fileID: 1289123665}
+  m_IsActive: 1
 --- !u!4 &2050356361
 Transform:
   m_ObjectHideFlags: 0

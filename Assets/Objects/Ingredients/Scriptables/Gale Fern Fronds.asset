@@ -20,11 +20,13 @@ MonoBehaviour:
   description:
   - Gale Fern Fronds Description
   effects:
-  - Survives extreme weather
-  - Generates a defensive breeze
+  - Stirs the air to create a protective flow.
+  - Uncontrolled exposure may stir up a dizzying whirl.
+  - Extended heat brings it to a steadier state.
   FoundState: 0
+  isCookedProperly: 0
   bottomOffset: 0
   hexColor: '#4B692F'
-  neededProcessedState: 2
+  neededProcessedState: 6
   currentGatheredState: 0
   currentProcessedState: 0

@@ -13,15 +13,18 @@ MonoBehaviour:
   m_Name: Shadow Spores
   m_EditorClassIdentifier: 
   ingredientName: Shadow Spores
-  icon: {fileID: 0}
+  icon: {fileID: -1496729547, guid: 6444939835167204a8f4175981f2477e, type: 3}
   prefab: {fileID: 0}
-  iconGameObject: {fileID: 0}
+  iconGameObject: {fileID: 4075477289568170075, guid: f4a3285dbb002004d958decfb6d6ee22,
+    type: 3}
   description:
   - Shadow Spores Description
   effects:
-  - Repels most insects and pests
-  - Releases dark mist on contact
+  - Releases a shroud that dampens harm
+  - Obscures vision with a thick, suffocating haze
+  - Emits a veil of darkness upon touch.
   FoundState: 0
+  isCookedProperly: 0
   bottomOffset: 0
   hexColor: 
   neededProcessedState: 1

@@ -28,6 +28,9 @@ public class CameraZoom : MonoBehaviour
     // Dictionary for object-specific zoom offsets
     private Dictionary<string, Vector3> customOffsets = new Dictionary<string, Vector3>();
 
+    private Kitchen kitchen; // Reference to Kitchen script (assumed to be attached to a GameObject in the scene)
+    private bool previousZoomState = false;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -47,6 +50,9 @@ public class CameraZoom : MonoBehaviour
 
         // Set custom zoom offsets for specific objects
         customOffsets["Pan"] = new Vector3(-0.09f, 0.03f, -2f); // Example custom offset for "Pan"
+        
+        // Get reference to the Kitchen script
+        kitchen = FindObjectOfType<Kitchen>();
     }
 
     void Update()
@@ -97,6 +103,14 @@ public class CameraZoom : MonoBehaviour
         }
 
         mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, isZoomedIn ? zoomFOV : defaultFOV, Time.deltaTime * zoomSpeed);
+
+        // Notify the Kitchen script that the zoom state has changed
+        if (isZoomedIn != previousZoomState)
+        {
+            previousZoomState = isZoomedIn;
+            // Call OnZoomStateChanged when zoom state changes
+            kitchen.OnZoomStateChanged();
+        }
     }
 
     public void BackToMainKitchen()

@@ -20,9 +20,9 @@ MonoBehaviour:
   description:
   - Opium Poppy Tree Description
   effects:
-  - Local wildlife sleep beneath it
-  - Touching sap causes temporary numbness
-  - May cause hallucinations
+  - A light touch brings a calming numbness.
+  - May cause strange visions if handled carelessly.
+  - Heat it to prevent the mind from wandering.
   FoundState: 0
   isCookedProperly: 0
   bottomOffset: 0

@@ -59,7 +59,8 @@ public class OrderNoteBehavior : MonoBehaviour, IPointerDownHandler
             Transform actualDoor = door.transform.Find("Cube");
 
             DoorBehavior doorBehavior = actualDoor.GetComponent<DoorBehavior>();
-            doorBehavior.DestroyButtons();
+            Destroy(doorBehavior.rightButton);
+            Destroy(doorBehavior.leftButton);
             SceneManager.LoadScene("Exploration");
         }
     }

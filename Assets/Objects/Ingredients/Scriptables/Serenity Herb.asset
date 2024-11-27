@@ -20,8 +20,9 @@ MonoBehaviour:
   description:
   - Serenity Herb Description
   effects:
-  - Animals seek it when injured
-  - Prolonged exposure causes drowsiness
+  - Extended exposure brings a heavy eyelid.
+  - Calms the body and clears the mind.
+  - A finer form releases its full benefits.
   FoundState: 0
   isCookedProperly: 0
   bottomOffset: 0

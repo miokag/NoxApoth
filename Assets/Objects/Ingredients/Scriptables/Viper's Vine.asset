@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0df6d1a1b7fe71a49bd77c9dc9aaf7c2, type: 3}
-  m_Name: Viper's Venom
+  m_Name: Viper's Vine
   m_EditorClassIdentifier: 
-  ingredientName: Viper's Venom
+  ingredientName: Viper's Vine
   icon: {fileID: -1561629493, guid: 538fd6d569ca6fb4d86eb35a9432aacf, type: 3}
   prefab: {fileID: 0}
-  iconGameObject: {fileID: 7894228883647149419, guid: 1fdf1083a0e7cac44ba9f5340bb1cd0b,
+  iconGameObject: {fileID: 1359404360062787366, guid: c155ebce92ded1b4aa81ea4698dbe9a3,
     type: 3}
   description:
   - Viper's Venom Description
   effects:
-  - Snakes use it to heal their scales
-  - Contact causes tingling sensation
+  - Contact causes uncontrollable tingling sensation
+  - Eases discomfort when prepared just right.
+  - A gentle boil smooths its sharp edge.
   FoundState: 0
   isCookedProperly: 0
   bottomOffset: 0
   hexColor: 
-  neededProcessedState: 6
+  neededProcessedState: 5
   currentGatheredState: 3
   currentProcessedState: 0
