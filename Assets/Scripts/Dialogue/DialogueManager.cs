@@ -2,10 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
-using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -20,9 +16,10 @@ public class DialogueManager : MonoBehaviour
     private string currentDialogue;
     private int currentCharacterIndex;
     private bool isTyping;
-    private bool isWaitingForInput;
-    private float typingSpeed = 0.05f;
-    
+    public bool isWaitingForInput;
+    public bool skipText; // Flag to control skipping text
+    private float typingSpeed = 0.09f;
+
     private void Awake()
     {
         // Singleton setup
@@ -53,11 +50,17 @@ public class DialogueManager : MonoBehaviour
     // Show dialogue with a character name and text
     public void ShowDialogue(string characterName, string dialogue)
     {
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        // Ensure textboxCanvas is not destroyed or null before trying to activate it
-        if (textboxCanvas == null)
+        // If there's already an ongoing dialogue, do not destroy the current canvas
+        if (textboxCanvas != null && !isTyping)
         {
-            // If textboxCanvas is destroyed, recreate it
+            // Hide the previous dialogue
+            textboxCanvas.SetActive(false);
+        }
+
+        // Instantiate the new textbox canvas if no current canvas exists
+        if (textboxCanvas == null || isWaitingForInput)
+        {
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             textboxCanvas = Instantiate(TextboxCanvasPrefab, canvas.transform);
             textbox = Instantiate(TextboxPrefab, textboxCanvas.transform);
 
@@ -70,44 +73,71 @@ public class DialogueManager : MonoBehaviour
         currentCharacterIndex = 0;
         dialogueText.text = "";
 
-        // Show the textbox
         textboxCanvas.SetActive(true);
 
-        // Start the typing coroutine
         StartCoroutine(TypeDialogue());
     }
 
     private IEnumerator TypeDialogue()
     {
         isTyping = true;
-        isWaitingForInput = false;
+        isWaitingForInput = false; // Reset this flag as we start typing
+
+        // Make sure the skipText flag is reset when a new dialogue starts
+        skipText = false;
+    
+        dialogueText.text = "";
 
         while (currentCharacterIndex < currentDialogue.Length)
         {
-            // Add one character at a time
-            dialogueText.text += currentDialogue[currentCharacterIndex];
+            if (skipText)
+            {
+                dialogueText.text = currentDialogue;  // Skip typing and show the full dialogue
+                currentCharacterIndex = currentDialogue.Length;  // Finish typing immediately
+                break;
+            }
+
+            dialogueText.text += currentDialogue[currentCharacterIndex];  // Add one character at a time
             currentCharacterIndex++;
 
-            // Wait for a short time between characters (typing effect)
+            // Adjust typing speed to prevent skipping too fast
             yield return new WaitForSeconds(typingSpeed);
         }
 
-        // Dialogue finished typing, now waiting for player input
-        isTyping = false;
-        isWaitingForInput = true;
+        isTyping = false; // Done typing
+        //isWaitingForInput = true; // Now we're waiting for the user to press space to move to the next dialogue
+
     }
 
-    // Update is called once per frame
+
+
     private void Update()
     {
-        if (isWaitingForInput && Input.GetKeyDown(KeyCode.Space))
+        // If we are waiting for input and the user presses space, process the next line or skip
+        if (!isWaitingForInput && Input.GetKeyDown(KeyCode.Space) && !isTyping)
         {
-            // If dialogue is finished, proceed to next step
-            if (!isTyping)
-            {
-                textboxCanvas.SetActive(false); // Hide the textbox
-                // Trigger any post-dialogue actions here
-            }
+            // Skip to next dialogue if necessary
+            textboxCanvas.SetActive(false);
+            isWaitingForInput = true;
+            
+        }
+
+        // If typing, and user presses space, skip the current typing (force full text)
+        if (isTyping && Input.GetKeyDown(KeyCode.Space))
+        {
+            skipText = true;
+            isWaitingForInput = false;
+        }
+    }
+
+
+
+    public void DestroyTextboxCanvas()
+    {
+        if (textboxCanvas != null)
+        {
+            Destroy(textboxCanvas);
+            textboxCanvas = null;
         }
     }
 }

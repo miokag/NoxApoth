@@ -29,4 +29,4 @@ MonoBehaviour:
   hexColor: 
   neededProcessedState: 3
   currentGatheredState: 3
-  currentProcessedState: 0
+  currentProcessedState: 3

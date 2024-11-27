@@ -17,8 +17,13 @@ public class GivePotionBehavior : MonoBehaviour
     private List<string> wrongIngredients = new List<string>();
     private List<string> wrongProcess = new List<string>();
 
+    private bool isDialogueActive = false;
+    
+    private GameObject potionImage;
+    private GameObject customerGameObject;
     private void Start()
     {
+        potionImage = GameObject.Find("PotionImage");
         _orderManager = FindObjectOfType<OrderManager>();
     }
 
@@ -40,6 +45,7 @@ public class GivePotionBehavior : MonoBehaviour
 
     private void CompareStates()
     {
+//        potionImage.SetActive(false);
         // Get the current customer’s name from GameManager
         string customerName = GameManager.Instance.currentCustomer;
         
@@ -99,6 +105,7 @@ public class GivePotionBehavior : MonoBehaviour
             PotionResults();
         }
     }
+
     private void Checker()
     {
         // Iterate over the ingredients in the PotionMix
@@ -129,105 +136,178 @@ public class GivePotionBehavior : MonoBehaviour
             }
         }
     }
-
+    
     private void PotionResults()
     {
         if (correctCounter >= 7 && correctCounter <= 10) isPass = true;
-        else if (correctCounter >= 11 && correctCounter <= 20) isSuccess = true;
+        else if (correctCounter >= 12 && correctCounter <= 20) isSuccess = true;
         else if (correctCounter >= 0 && correctCounter <= 6) isFail = true;
 
         Debug.Log("Potion Results: isPass: " + isPass + ", isSuccess: " + isSuccess + ", isFail: " + isFail);
 
         GameManager.Instance.ClearPotionMix();
         _orderManager.RemoveOrderByCustomer(GameManager.Instance.currentCustomer);
-
-        // After checking potion, show dialogues for wrong ingredients
-        ShowWrongIngredientDialogues();
-        ShowWrongProcessDialogues();
-    }
-
     
-    private void ShowWrongProcessDialogues()
-{
-    StartCoroutine(ShowIngredientDialogues(wrongProcess, "WrongProcess"));
-}
+        customerGameObject = this.gameObject;
 
-private void ShowWrongIngredientDialogues()
-{
-    StartCoroutine(ShowIngredientDialogues(wrongIngredients, "WrongIngredients"));
-}
+        ChangeOtherObjectTag(customerGameObject, "Untagged");
 
-private IEnumerator ShowIngredientDialogues(List<string> ingredients, string resourceFolder)
-{
-    Debug.Log($"{resourceFolder}: " + string.Join(", ", ingredients));
-
-    // Get the current customer
-    var currentCustomer = GameManager.Instance.currentCustomer;
-
-    // Get the ingredient dialogue list for the respective resource (WrongProcess or WrongIngredients)
-    var ingredientDialogueList = Resources.Load<IngredientDialogueList>($"IngredientDialogueList/{resourceFolder}");
-    if (ingredientDialogueList == null)
-    {
-        Debug.LogError($"IngredientDialogueList for {resourceFolder} not found in resources.");
-        yield break;
-    }
-
-    // Show the "Well, it works but..." dialogue if it's the wrong process
-    if (wrongProcess.Count > 0)
-    {
-        string introDialogue = "Well, it works but...";  // The message to show before the ingredient dialogues
-        DialogueManager.Instance.ShowDialogue(currentCustomer, introDialogue);
-
-        // Wait for the player to press Space before continuing to the ingredient-specific dialogues
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-    }
-    
-    if (wrongIngredients.Count > 0)
-    {
-        string introDialogue = "Uh, oh... I don't feel right!";  // The message to show before the ingredient dialogues
-        DialogueManager.Instance.ShowDialogue(currentCustomer, introDialogue);
-
-        // Wait for the player to press Space before continuing to the ingredient-specific dialogues
-        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
-    }
-
-    // Iterate through the list of ingredients (wrongProcess or wrongIngredients)
-    foreach (string ingredient in ingredients)
-    {
-        // Clean up the name by removing "(Clone)" and any extra spaces
-        string cleanedIngredientName = ingredient.Replace("(Clone)", "").Trim();
-        
-        Debug.Log($"Processing ingredient: {cleanedIngredientName}");
-
-        // Find the corresponding dialogue entry based on the cleaned ingredient name (case insensitive)
-        var dialogueEntry = ingredientDialogueList.ingredientDialogues
-            .FirstOrDefault(entry => entry.ingredient.ingredientName.Equals(cleanedIngredientName, StringComparison.OrdinalIgnoreCase));
-
-        // Check if a dialogue entry was found and if it has dialogues available
-        if (dialogueEntry != null && dialogueEntry.dialogues.Count > 0)
+        // Show correct potion dialogues if the potion is successful
+        if (isSuccess)
         {
-            // Get a random dialogue from the list
-            string randomDialogue = dialogueEntry.dialogues[UnityEngine.Random.Range(0, dialogueEntry.dialogues.Count)];
-
-            // Log the random dialogue
-            Debug.Log($"{currentCustomer} ({resourceFolder}): {randomDialogue}");
-
-            // Show the dialogue
-            DialogueManager.Instance.ShowDialogue(currentCustomer, randomDialogue);
-
-            // Wait for the player to press Space before continuing to the next dialogue
-            yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Space));
+            ShowCorrectPotionDialogues();
         }
         else
         {
-            // Log a warning if no dialogue entry is found for the current ingredient
-            Debug.LogWarning($"No dialogue found for ingredient: {cleanedIngredientName}");
+            ShowWrongIngredientDialogues();
+            ShowWrongProcessDialogues();
         }
     }
 
-    Debug.Log("All dialogues shown.");
-}
+    
+    public void ChangeOtherObjectTag(GameObject targetObject, string newTag)
+    {
+        targetObject.tag = newTag;
+    }
+    
+    private void ShowCorrectPotionDialogues()
+    {
+        // Show dialogues for the correct potion
+        StartCoroutine(ShowPotionDialogues("CorrectPotion"));
+    }
+    
+    private IEnumerator ShowPotionDialogues(string resourceFolder)
+    {
+        Debug.Log($"{resourceFolder}: Showing correct potion dialogues.");
 
+        // Get the current customer
+        var currentCustomer = GameManager.Instance.currentCustomer;
+
+        // Get the ingredient dialogue list for the correct potion
+        var potionDialogueList = Resources.Load<PotionDialogueList>($"PotionDialogueList/{resourceFolder}");
+        if (potionDialogueList == null)
+        {
+            Debug.LogError($"IngredientDialogueList for {resourceFolder} not found in resources.");
+            yield break;
+        }
+
+        // Show the success message for the correct potion
+        string introDialogue = "Ah, this is exactly what I wanted!";  // Custom success message
+        DialogueManager.Instance.ShowDialogue(currentCustomer, introDialogue);
+
+        // Wait for the dialogue to finish typing before continuing
+        yield return new WaitUntil(() => DialogueManager.Instance.isWaitingForInput); // Wait until input is ready
+
+        // Now, show the dialogues for each correct potion ingredient (if any)
+        foreach (var dialogueEntry in potionDialogueList.potionDialogues)
+        {
+            if (dialogueEntry.dialogues.Count > 0)
+            {
+                // Get a random dialogue from the list
+                string randomDialogue = dialogueEntry.dialogues[UnityEngine.Random.Range(0, dialogueEntry.dialogues.Count)];
+
+                // Log the random dialogue
+                Debug.Log($"{currentCustomer} (CorrectPotion): {randomDialogue}");
+
+                // Show the dialogue
+                DialogueManager.Instance.ShowDialogue(currentCustomer, randomDialogue);
+
+                // Wait for the player to press Space before continuing to the next dialogue
+                yield return new WaitUntil(() => DialogueManager.Instance.isWaitingForInput);  // Wait until input is ready
+            }
+        }
+
+        Debug.Log("All correct potion dialogues shown.");
+    }
+
+
+    private void ShowWrongProcessDialogues()
+    {
+        StartCoroutine(ShowIngredientDialogues(wrongProcess, "WrongProcess"));
+    }
+
+    private void ShowWrongIngredientDialogues()
+    {
+        StartCoroutine(ShowIngredientDialogues(wrongIngredients, "WrongIngredients"));
+    }
+
+    private IEnumerator ShowIngredientDialogues(List<string> ingredients, string resourceFolder)
+    {
+        Debug.Log($"{resourceFolder}: " + string.Join(", ", ingredients));
+
+        // Get the current customer
+        var currentCustomer = GameManager.Instance.currentCustomer;
+
+        // Get the ingredient dialogue list for the respective resource (WrongProcess or WrongIngredients)
+        var ingredientDialogueList = Resources.Load<IngredientDialogueList>($"IngredientDialogueList/{resourceFolder}");
+        if (ingredientDialogueList == null)
+        {
+            Debug.LogError($"IngredientDialogueList for {resourceFolder} not found in resources.");
+            yield break;
+        }
+
+        // Show the "Well, it works but..." dialogue if it's the wrong process
+        if (wrongProcess.Count > 0)
+        {
+            string introDialogue = "Well, it works but...";  // The message to show before the ingredient dialogues
+            DialogueManager.Instance.ShowDialogue(currentCustomer, introDialogue);
+
+            // Wait for the dialogue to finish typing before continuing
+            yield return new WaitUntil(() => DialogueManager.Instance.isWaitingForInput); // Wait until input is ready
+        }
+
+        if (wrongIngredients.Count > 0)
+        {
+            string introDialogue = "Uh, oh... I don't feel right!";  // The message to show before the ingredient dialogues
+            DialogueManager.Instance.ShowDialogue(currentCustomer, introDialogue);
+
+            // Wait for the dialogue to finish typing before continuing
+            yield return new WaitUntil(() => DialogueManager.Instance.isWaitingForInput); // Wait until input is ready
+        }
+
+        // Add a small delay here to prevent skipping the first dialogue
+        yield return new WaitForSeconds(0.2f);  // Adjust this value to your preference
+
+        // Iterate through the list of ingredients (wrongProcess or wrongIngredients)
+        foreach (string ingredient in ingredients)
+        {
+            // Clean up the name by removing "(Clone)" and any extra spaces
+            string cleanedIngredientName = ingredient.Replace("(Clone)", "").Trim();
+            
+            Debug.Log($"Processing ingredient: {cleanedIngredientName}");
+
+            // Find the corresponding dialogue entry based on the cleaned ingredient name (case insensitive)
+            var dialogueEntry = ingredientDialogueList.ingredientDialogues
+                .FirstOrDefault(entry => entry.ingredient.ingredientName.Equals(cleanedIngredientName, StringComparison.OrdinalIgnoreCase));
+
+            // Check if a dialogue entry was found and if it has dialogues available
+            if (dialogueEntry != null && dialogueEntry.dialogues.Count > 0)
+            {
+                // Get a random dialogue from the list
+                string randomDialogue = dialogueEntry.dialogues[UnityEngine.Random.Range(0, dialogueEntry.dialogues.Count)];
+
+                // Log the random dialogue
+                Debug.Log($"{currentCustomer} ({resourceFolder}): {randomDialogue}");
+
+                // Show the dialogue
+                DialogueManager.Instance.ShowDialogue(currentCustomer, randomDialogue);
+
+                // Wait for the player to press Space before continuing to the next dialogue
+                yield return new WaitUntil(() => DialogueManager.Instance.isWaitingForInput);  // Wait until input is ready
+            }
+            else
+            {
+                // Log a warning if no dialogue found for the current ingredient
+                Debug.LogWarning($"No dialogue found for ingredient: {cleanedIngredientName}");
+            }
+        }
+        Debug.Log("All dialogues shown.");
+    }
+
+    public void DestroyCustomer()
+    {
+        Destroy(customerGameObject);
+    }
 
     public List<string> GetIngredientNamesByPotion(string potionName)
     {

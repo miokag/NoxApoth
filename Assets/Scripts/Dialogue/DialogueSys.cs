@@ -1,17 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using MoonSharp.Interpreter;
 using TMPro;
 using System.IO;
-using System.Linq;
+using MoonSharp.Interpreter;
 using System;
-
 public class DialogueSys : MonoBehaviour
 {
     public static DialogueSys Instance { get; private set; }
-    public event Action OnDialogueFinished;  // Event to notify when dialogue is finished
+    public event Action OnDialogueFinished; // Event to notify when dialogue is finished
 
     private TMP_Text characterText;
     private TMP_Text dialogueText;
@@ -24,19 +21,21 @@ public class DialogueSys : MonoBehaviour
 
     private string _currentNode;
     private int _lineIndex;
-
+    private bool _isTyping; // Tracks whether text is currently being typed
     private bool _isDialogueFinished;
     private string _characterName;
-    
+
     private string _orderDescription = "";
     private string _customerOrder = "";
 
     private GameObject _currentOrderNote; // Stores the current active order note
 
-
     private GameObject textbox;
     private Canvas canvas;
     private Canvas textboxCanvas;
+
+    private float typingSpeed = 0.05f; // Speed for typing effect
+    private bool _skipText = false;
 
     private void Awake()
     {
@@ -52,7 +51,7 @@ public class DialogueSys : MonoBehaviour
             return;
         }
     }
-    
+
     void Start()
     {
         LoadLuaScript(luaFileName);
@@ -94,7 +93,7 @@ public class DialogueSys : MonoBehaviour
             Destroy(textbox);
         }
 
-        if(textboxCanvas != null)
+        if (textboxCanvas != null)
         {
             Destroy(textboxCanvas.gameObject);
         }
@@ -135,9 +134,15 @@ public class DialogueSys : MonoBehaviour
             if (textArray.Type == DataType.Table && _lineIndex < textArray.Table.Length)
             {
                 var dialogueLine = textArray.Table.Values.ElementAt(_lineIndex).Table;
-                dialogueText.text = dialogueLine.Get("line").String;
                 _orderDescription = dialogueLine.Get("orderdescription").String;
                 _customerOrder = dialogueLine.Get("customerorder").String;
+
+                // Start the typing effect for the dialogue line
+                string fullLine = dialogueLine.Get("line").String;
+
+                StopAllCoroutines(); // Stop any ongoing typing
+                _skipText = false; // Reset skip flag
+                StartCoroutine(TypeDialogue(fullLine)); // Start typing the new line
             }
 
             // When lineIndex exceeds the available dialogue lines, set dialogue finished and destroy the textbox
@@ -149,8 +154,47 @@ public class DialogueSys : MonoBehaviour
                     CreateOrderNote(); // Call CreateOrderNote if these values exist
                 }
                 DestroyTextbox();
-                OnDialogueFinished?.Invoke();  // Trigger the event when dialogue finishes
+                OnDialogueFinished?.Invoke(); // Trigger the event when dialogue finishes
             }
+        }
+    }
+
+    private IEnumerator TypeDialogue(string fullLine)
+    {
+        _isTyping = true;
+        dialogueText.text = "";
+
+        foreach (char letter in fullLine)
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(typingSpeed);
+
+            // If the spacebar is pressed, break out and show the full text
+            if (_skipText)
+            {
+                dialogueText.text = fullLine; // Show the full line immediately
+                break;
+            }
+        }
+
+        _isTyping = false;
+        _skipText = false; // Reset skipText flag after the line is done
+    }
+    
+    public void NextLine()
+    {
+        if (_isTyping)
+        {
+            // If typing, immediately finish typing and show the full line
+            _skipText = true; // Skip current typing effect
+            dialogueText.text = dialogueText.text; // Ensure the full text is displayed
+            _isTyping = false;
+        }
+        else if (!_isDialogueFinished)
+        {
+            // Move to the next line
+            _lineIndex++;
+            DisplayDialogueNode(_currentNode);
         }
     }
 
@@ -188,16 +232,6 @@ public class DialogueSys : MonoBehaviour
         }
     }
 
-    public void NextLine()
-    {
-        if (!_isDialogueFinished)
-        {
-            _lineIndex++;
-            DisplayDialogueNode(_currentNode);
-        }
-    }
-
-    // This method handles destroying the textbox once the last line is finished
     private void DestroyTextbox()
     {
         if (textbox != null)
@@ -210,12 +244,21 @@ public class DialogueSys : MonoBehaviour
         _isDialogueFinished = false;
     }
 
-    // Option 1: Use OnGUI to check for spacebar press
     void OnGUI()
     {
+        // Handle spacebar press in OnGUI
         if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Space)
         {
-            NextLine();
+            if (_isTyping)
+            {
+                // Skip the typing effect if currently typing
+                _skipText = true;
+            }
+            else
+            {
+                // Otherwise, go to the next line
+                NextLine();
+            }
         }
     }
 }

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 273eb8ce81f3239418006dbca6bb22b4, type: 3}
+  m_Name: CorrectPotion
+  m_EditorClassIdentifier: 
+  potionDialogues:
+  - Potion: {fileID: 11400000, guid: d2dde9d59ae8d7640b9df464c07c32ab, type: 2}
+    dialogues:
+    - I feel like a new person! You should charge extra for this kind of miracle
+      work!
+    - "If I knew healing potions worked this fast, I would've stopped by sooner.
+      You\u2019re a genius."
+    - "I swear this potion just added five more years to my life. Or maybe just ten
+      minutes of energy, but who\u2019s counting?"
+    - "A sip of this and I\u2019m practically invincible. What is this, magic in
+      a bottle?"
+  - Potion: {fileID: 11400000, guid: a643b1d5875844540b07c983daacd494, type: 2}
+    dialogues:
+    - "Well, look at me\u2014invincible! Is this what superhero feels like?"
+    - Oh, honey, I'm about to take on dragons with this. Hope you're ready for my
+      new badass self!
+    - "Is it just me, or am I now basically a walking tank? I\u2019m loving this!"
+    - "The only thing dangerous now is my attitude. You\u2019ve really outdone yourself
+      with this one!"
