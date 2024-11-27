@@ -15,76 +15,65 @@ MonoBehaviour:
   ingredientDialogues:
   - ingredient: {fileID: 11400000, guid: fae8b8a4a2dfd0d46a78cdb4bb714749, type: 2}
     dialogues:
-    - I feel better now... But why am I seeing a parade of tiny creatures? Are they...
-      imaginary?
-    - The potion worked... but why can't I stop thinking the floor is covered in
-      marshmallows? Also, my fingertips are like... cotton.
-    - "Potion's fine, but why is my skin tingling... like it\u2019s made of velvet?
-      And why are those squirrels talking?"
-    - "I\u2019m healed, but I feel... weightless, like I'm floating above the ground!
-      Is that supposed to happen?"
+    - Why am I seeing a parade of tiny creatures? Are they... imaginary?
+    - Why can't I stop thinking the floor is covered in marshmallows? Also, my fingertips
+      are like... cotton.
+    - "Why is my skin tingling... like it\u2019s made of velvet? And why are those
+      squirrels talking?"
+    - I  feel... weightless, I can see myself floating above the ground! Is that
+      supposed to happen?
   - ingredient: {fileID: 11400000, guid: b73aa5d18ced92a44a67efdf0e0562f0, type: 2}
     dialogues:
-    - "Okay, that worked, but now everything's just... too calm. I can\u2019t even
-      get excited about a dragon flying by. Maybe I\u2019ll go take a nap... outside
-      the shop..!"
-    - "It's working but... The calmness... it\u2019s taking over! I\u2019m so relaxed
-      I think I just forgot how to move. I\u2019m just here, existing. I might stay
-      this way forever, actually."
-    - "Wow, it really worked! But now... my eyelids are so heavy. I think I\u2019ll
-      just stare at this wall for an hour, like it\u2019s the most interesting thing
-      ever."
-    - "Well, it\u2019s definitely working... but now I can\u2019t stop blinking like
-      I\u2019m in a staring contest with a windmill. It\u2019s... oddly peaceful?"
+    - "Now everything's just... too calm. I can\u2019t even get excited about a dragon
+      flying by. Maybe I\u2019ll go take a nap... outside the shop..!"
+    - "The calmness... it\u2019s taking over! I\u2019m so relaxed I think I just
+      forgot how to move. I\u2019m just here, existing. I might stay this way forever,
+      actually."
+    - "Now... my eyelids are so heavy. I think I\u2019ll just stare at this wall
+      for an hour, like it\u2019s the most interesting thing ever."
+    - "Now I can\u2019t stop blinking like I\u2019m in a staring contest with a windmill.
+      It\u2019s... oddly peaceful?"
   - ingredient: {fileID: 11400000, guid: 95063c35592a16647a064689d106c60f, type: 2}
     dialogues:
-    - "Okay, well, it\u2019s definitely working, but... now I\u2019m a human maraca.
-      Why can\u2019t I stop wiggling?! At least I feel... oddly at peace... while
-      jittering like a leaf in the wind."
-    - "Well, that\u2019s it's working! But I\u2019ve never felt so... smooth? Except
-      for my spontaneous vibrating. I think I\u2019m half zen, half jumping bean\u2014either
-      way, this feels weirdly good."
-    - "Wow, it really worked! But now... my eyelids are so heavy. I think I\u2019ll
-      just stare at this wall for an hour, like it\u2019s the most interesting thing
-      ever."
+    - "Now I\u2019m a human maraca. Why can\u2019t I stop wiggling?! At least I feel...
+      oddly at peace... while jittering like a leaf in the wind."
+    - "tI\u2019ve never felt so... smooth? Except for my spontaneous vibrating. I
+      think I\u2019m half zen, half jumping bean\u2014either way, this feels weirdly
+      good."
+    - "It\u2019s like my skin\u2019s been replaced with a million tiny tickles. It\u2019s...
+      not unpleasant, just... a bit... eager? Oh no, not again, I think it\u2019s
+      starting to crawl up my neck now!"
     - "Ahh, it's definitely... working. It's really nice! So nice that my skin's
       practically having a party. It\u2019s like I\u2019m getting an uninvited massage
       from every inch of me at once. Calming... but also, um... aggressive"
   - ingredient: {fileID: 11400000, guid: 097f9c159c8fb794f90140cc3845ec35, type: 2}
     dialogues:
-    - "Alright, it worked... but now I\u2019m leaving tiny clouds of darkness everywhere
-      I walk. Do you think this is subtle? Because I look like a storm cloud with
-      legs!"
-    - "Okay, I feel tougher, but WHY are these shadowy tendrils following me? Is
-      this the potion or is something alive in here? It\u2019s like I\u2019ve got
-      clingy ghosts hanging off me!"
-    - "Oh, it worked alright. But now I look like the villain in a fairy tale. I
-      mean, who doesn\u2019t love a good dark shroud, but this is a bit dramatic,
-      don\u2019t you think?"
-    - "Okay, sure, I feel safer, but at what cost? I can\u2019t tell if it\u2019s
-      night, day, or if I\u2019m just inside a very poorly lit closet. Did you mix
-      in actual darkness?"
+    - "Now I\u2019m leaving tiny clouds of darkness everywhere I walk. Do you think
+      this is subtle? Because I look like a storm cloud with legs!"
+    - "WHY are these shadowy tendrils following me? Is this the potion or is something
+      alive in here? It\u2019s like I\u2019ve got clingy ghosts hanging off me!"
+    - "Now I look like the villain in a fairy tale. I mean, who doesn\u2019t love
+      a good dark shroud, but this is a bit dramatic, don\u2019t you think?"
+    - "At what cost? I can\u2019t tell if it\u2019s night, day, or if I\u2019m just
+      inside a very poorly lit closet. Did you mix in actual darkness?"
   - ingredient: {fileID: 11400000, guid: 0c25ca8919494b646aaa43e3d11a6c20, type: 2}
     dialogues:
-    - "Oh, it worked all right. But now I\u2019m being followed by a personal breeze
-      like I\u2019m starring in my own heroic saga. Am I supposed to look this cool
-      all the time"
-    - "I feel great, but I think the wind likes me too much. I\u2019m basically a
-      walking kite. Please tell me this wears off before I hit a tree!"
-    - "So this is nice, but, uh... the constant swirling is a bit extra, don\u2019t
-      you think? I can\u2019t tell if I\u2019m safer or just destined to annoy every
-      loose paper within five miles!"
-    - "Sure, it's working, but now I\u2019ve got leaves orbiting me like I\u2019m
-      some kind of forest wizard. I didn\u2019t order the \u2018druid aesthetic,\u2019
-      but thanks for that!"
+    - "Now I\u2019m being followed by a personal breeze like I\u2019m starring in
+      my own heroic saga. Am I supposed to look this cool all the time"
+    - "I think the wind likes me too much. I\u2019m basically a walking kite. Please
+      tell me this wears off before I hit a tree!"
+    - "Uh... the constant swirling is a bit extra, don\u2019t you think? I can\u2019t
+      tell if I\u2019m safer or just destined to annoy every loose paper within five
+      miles!"
+    - "Now I\u2019ve got leaves orbiting me like I\u2019m some kind of forest wizard.
+      I didn\u2019t order the \u2018druid aesthetic,\u2019 but thanks for that!"
   - ingredient: {fileID: 11400000, guid: e5f9956494308f7439d29d2753740f7f, type: 2}
     dialogues:
-    - "I feel invincible, but now I leave a trail of frost behind me like some sort
-      of... frosty breadcrumbs for giants? I\u2019m practically leading a snowstorm
-      wherever I go!"
-    - "Hmm, so it's working. But now everything I touch gets an instant makeover!
-      Don\u2019t mind me, I\u2019m just giving your chair a nice winter refresh."
-    - Okay, I feel great, but WHY do I look like a dragon that only breathes winter?
-      This is not how I wanted to make an impression.
-    - Well, I feel fine, but my hairstyle is now the peak of winter fashion. Do you
-      think frozen bangs will catch on? Asking for my new, frosty self.
+    - "I leave a trail of frost behind me like some sort of... frosty breadcrumbs
+      for giants? I\u2019m practically leading a snowstorm wherever I go!"
+    - "Everything I touch gets an instant makeover! Don\u2019t mind me, I\u2019m
+      just giving your chair a nice winter refresh."
+    - WHY do I look like a dragon that only breathes winter? This is not how I wanted
+      to make an impression.
+    - My hairstyle is now the peak of winter fashion. Do you think frozen bangs will
+      catch on? Asking for my new, frosty self.

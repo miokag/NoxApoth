@@ -878,8 +878,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a4c8f9addecc2d44957cd889c595c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueText: {fileID: 0}
-  characterNameText: {fileID: 0}
+  TextboxCanvasPrefab: {fileID: 6273294158789918913, guid: 0af778cba1e5c9e40861bdb6ba4d1aca,
+    type: 3}
+  TextboxPrefab: {fileID: 8243923612640862033, guid: c0f906248df92e74580f49b4e816e1bc,
+    type: 3}
 --- !u!1001 &393683773
 PrefabInstance:
   m_ObjectHideFlags: 0

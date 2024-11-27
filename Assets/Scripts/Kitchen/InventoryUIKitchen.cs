@@ -59,7 +59,7 @@ public class InventoryUIKitchen : MonoBehaviour
 
                             // Optionally, set the Image's size and position (if needed)
                             RectTransform newImageRect = newImage.GetComponent<RectTransform>();
-                            newImageRect.sizeDelta = new Vector2(20, 20); // Set appropriate size
+                            newImageRect.sizeDelta = new Vector2(30, 30); // Set appropriate size
                             newImageRect.anchoredPosition = Vector2.zero; // Center it within the slot
                         }
                     }

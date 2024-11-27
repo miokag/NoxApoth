@@ -4,87 +4,110 @@ using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine;
+using TMPro;
+
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-
-    public TextMeshProUGUI characterNameText;
-    public TextMeshProUGUI dialogueText;
-
-    private Queue<string> dialogueLines; // Store the dialogue lines
-    private bool isTyping = false;
-
+    public GameObject TextboxCanvasPrefab;
+    public GameObject TextboxPrefab;
+    private Canvas canvas;
+    private GameObject textboxCanvas;
+    private GameObject textbox;
+    private TextMeshProUGUI characterText;
+    private TextMeshProUGUI dialogueText;
+    private string currentDialogue;
+    private int currentCharacterIndex;
+    private bool isTyping;
+    private bool isWaitingForInput;
+    private float typingSpeed = 0.05f;
+    
     private void Awake()
     {
+        // Singleton setup
         if (Instance == null)
+        {
             Instance = this;
-
-        dialogueLines = new Queue<string>(); // Initialize the queue
-    }
-
-    // This function starts the dialogue by passing the character's name and a list of dialogue lines
-    public void StartDialogue(string characterName, List<string> lines)
-    {
-        // Clear any existing dialogue
-        dialogueLines.Clear();
-
-        // Set the character name
-        characterNameText.text = characterName;
-
-        // Add all dialogue lines to the queue
-        foreach (string line in lines)
-        {
-            dialogueLines.Enqueue(line);
         }
-
-        // Show the first line of dialogue
-        ShowNextLine();
-    }
-
-    // This function is called when the player presses the spacebar
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && !isTyping && dialogueLines.Count > 0)
+        else
         {
-            ShowNextLine();
+            Destroy(gameObject);  // Destroy duplicate if any
         }
     }
 
-    // This function handles the display of the next line of dialogue
-    private void ShowNextLine()
+    private void Start()
     {
-        if (dialogueLines.Count == 0)
-        {
-            EndDialogue();
-            return;
-        }
+        // Find canvas and instantiate textbox prefab
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        textboxCanvas = Instantiate(TextboxCanvasPrefab, canvas.transform);
+        textbox = Instantiate(TextboxPrefab, textboxCanvas.transform);
 
-        // Get the next line of dialogue
-        string line = dialogueLines.Dequeue();
+        characterText = textbox.transform.Find("NameBox/CharacterName").GetComponent<TextMeshProUGUI>();
+        dialogueText = textbox.transform.Find("DialogueBox/DialogueText").GetComponent<TextMeshProUGUI>();
 
-        // Start typing animation (optional, for now we just show it directly)
-        StartCoroutine(TypeLine(line));
+        // Hide textbox initially
+        textboxCanvas.SetActive(false);
     }
 
-    // Type the line one character at a time (optional animation)
-    private IEnumerator TypeLine(string line)
+    // Show dialogue with a character name and text
+    public void ShowDialogue(string characterName, string dialogue)
+    {
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        // Ensure textboxCanvas is not destroyed or null before trying to activate it
+        if (textboxCanvas == null)
+        {
+            // If textboxCanvas is destroyed, recreate it
+            textboxCanvas = Instantiate(TextboxCanvasPrefab, canvas.transform);
+            textbox = Instantiate(TextboxPrefab, textboxCanvas.transform);
+
+            characterText = textbox.transform.Find("NameBox/CharacterName").GetComponent<TextMeshProUGUI>();
+            dialogueText = textbox.transform.Find("DialogueBox/DialogueText").GetComponent<TextMeshProUGUI>();
+        }
+
+        characterText.text = characterName;
+        currentDialogue = dialogue;
+        currentCharacterIndex = 0;
+        dialogueText.text = "";
+
+        // Show the textbox
+        textboxCanvas.SetActive(true);
+
+        // Start the typing coroutine
+        StartCoroutine(TypeDialogue());
+    }
+
+    private IEnumerator TypeDialogue()
     {
         isTyping = true;
-        dialogueText.text = ""; // Clear existing text
+        isWaitingForInput = false;
 
-        foreach (char letter in line)
+        while (currentCharacterIndex < currentDialogue.Length)
         {
-            dialogueText.text += letter; // Add one letter at a time
-            yield return null; // Wait until the next frame
+            // Add one character at a time
+            dialogueText.text += currentDialogue[currentCharacterIndex];
+            currentCharacterIndex++;
+
+            // Wait for a short time between characters (typing effect)
+            yield return new WaitForSeconds(typingSpeed);
         }
 
-        isTyping = false; // Finish typing
+        // Dialogue finished typing, now waiting for player input
+        isTyping = false;
+        isWaitingForInput = true;
     }
 
-    // This function ends the dialogue and hides the textbox
-    private void EndDialogue()
+    // Update is called once per frame
+    private void Update()
     {
-        // You can hide the textbox here, or trigger any other end-of-dialogue behavior
-        Debug.Log("Dialogue ended.");
+        if (isWaitingForInput && Input.GetKeyDown(KeyCode.Space))
+        {
+            // If dialogue is finished, proceed to next step
+            if (!isTyping)
+            {
+                textboxCanvas.SetActive(false); // Hide the textbox
+                // Trigger any post-dialogue actions here
+            }
+        }
     }
 }
