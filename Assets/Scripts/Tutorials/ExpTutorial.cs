@@ -224,7 +224,8 @@ public class ExpTutorial : MonoBehaviour
                 DimageComponent.enabled = false;
 
                 StartCoroutine(CheckForWASDPress(WInstrucButton.gameObject, AInstrucButton.gameObject, SInstrucButton.gameObject, DInstrucButton.gameObject));
-
+                
+                GameManager.Instance.NextTutorialStep();
             }
             else
             {

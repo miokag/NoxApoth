@@ -58,7 +58,10 @@ public class GameManager : MonoBehaviour
 
         clonedIngredientDatabase = ingredientDatabase.Clone();
         clonedPotionDatabase = potionDatabase.Clone(clonedIngredientDatabase);
-
+        
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
+        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
     }
     
     public void InitializeShopClonedCustomers()

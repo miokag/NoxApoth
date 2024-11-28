@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class GivePotionBehavior : MonoBehaviour
+public class GivePotionBehaviorTutorial : MonoBehaviour
 {
+    public bool isDone;
     private OrderManager _orderManager;
     private int correctCounter = 0;
     private bool isFail;
@@ -379,6 +380,7 @@ public class GivePotionBehavior : MonoBehaviour
     private void ResetThis()
     {
         GameManager.Instance.currentCustomer = null;
+        isDone = true;
     }
 
     

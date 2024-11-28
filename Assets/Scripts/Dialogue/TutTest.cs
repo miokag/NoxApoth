@@ -17,12 +17,15 @@ public class TutTest : MonoBehaviour
     [SerializeField] private GameObject buttonInstructionPrefab;
     private GameObject buttonInstruction;
     private Canvas _canvas;
+    private GivePotionBehaviorTutorial givePotionBehaviorTutorial;
 
     // Start is called before the first frame update
     void Start()
     {
         _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         _waitingArea = GameObject.Find("WaitingArea");
+        dialogueManager = FindObjectOfType<DialogueSys>();
+        orderManager = FindObjectOfType<OrderManager>();
         
         if (GameManager.Instance.GetTutorialStep() == 0)
         {
@@ -46,10 +49,7 @@ public class TutTest : MonoBehaviour
                     }
                 }
             }
-
-            dialogueManager = FindObjectOfType<DialogueSys>();
-            orderManager = FindObjectOfType<OrderManager>();
-
+            
             dialogueManager.StartDialogue("shop1");
             
             buttonInstruction = Instantiate(buttonInstructionPrefab, _canvas.transform);
@@ -65,7 +65,13 @@ public class TutTest : MonoBehaviour
             nextStep = 1;
             dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
         }
+
+        if (GameManager.Instance.GetTutorialStep() == 3)
+        {
+            givePotionBehaviorTutorial = cedric.AddComponent<GivePotionBehaviorTutorial>();
+        }
     }
+    
     
     void Update()
     {
@@ -73,6 +79,14 @@ public class TutTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && buttonInstruction != null)
         {
             Destroy(buttonInstruction);
+        }
+        
+        if (GameManager.Instance.GetTutorialStep() == 3 && givePotionBehaviorTutorial.isDone == true)
+        {
+            dialogueManager.LoadLuaScript("TutorialDialogue");
+            Destroy(givePotionBehaviorTutorial);
+            dialogueManager.StartDialogue("review");
+            GameManager.Instance.tutorialDone = true;
         }
     }
 

@@ -75,6 +75,25 @@ dialogue = {
             { line = "If there are any effects that's listed down on each ingredient, then that might help." },
             { line = "Since it's for my body aches maybe look for something that would relieve or numb them?" },
             { line = "Sorry, I don't know what I'm talking about so I'll leave it up to you!" },
+            { line = "Also, when gathering ingredients, make sure to always touch the most solid looking one!" },
+            { line = "Since they're poisonous, you might start hallucinating..." },
+            { line = "Try to avoid transparent looking ones, or different colored ones..." },
+            { line = "Just use your notebook outside and in the kitchen and you'll be fine!" },
+            { line = "Anyway, good luck! I'll be waiting on the counter for my order!" }
+        }
+    },
+
+    review = {
+        character = "Cedric",
+        text = {
+            { line = "Now that you've heard my review, keep in my everything I've said." },
+            { line = "If people say they don't feel good, then it probably didn't work..." },
+            { line = "You've most likely used a wrong ingredient." },
+            { line = "If it does work with side effects, then you probably processed it wrong"},
+            { line = "Just listen to your customers properly, take notes of what they say, it might be a hint of what you did wrong." },  
+            { line = "Well, I think you'll do great! I'll go back to work."},
+            { line = "Just go to the back of the shop and then go back here to receive new customers." },
+            { line = "Good luck!"}
         }
     }
 }
