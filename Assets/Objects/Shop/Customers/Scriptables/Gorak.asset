@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Gorak
   m_EditorClassIdentifier: 
   customerName: Gorak
-  customerPrefab: {fileID: 0}
+  customerPrefab: {fileID: 1425484222346141330, guid: e92df8543201bfb42b73d87a7c606125,
+    type: 3}
   customerOrder: {fileID: 0}
+  orderTaken: 0

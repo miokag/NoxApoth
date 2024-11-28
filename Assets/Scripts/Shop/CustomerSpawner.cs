@@ -1,11 +1,12 @@
 using UnityEngine;
+using System;
 
 public class CustomerSpawner : MonoBehaviour
 {
     public Transform spawnLocation; // The location where the customer will be spawned
-    
-    
 
+    // Define an event to notify when a customer has been spawned
+    public event Action<GameObject> OnCustomerSpawned;
 
     // Modify the SpawnCustomer method to take in the Customer ScriptableObject
     public void SpawnCustomer(Customer customer)
@@ -20,6 +21,9 @@ public class CustomerSpawner : MonoBehaviour
 
             // Set the name of the instantiated customer based on the customer name
             spawnedCustomer.name = customer.customerName;
+
+            // Invoke the OnCustomerSpawned event
+            OnCustomerSpawned?.Invoke(spawnedCustomer);
         }
         else
         {

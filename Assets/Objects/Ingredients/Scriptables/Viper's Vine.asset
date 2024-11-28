@@ -31,5 +31,5 @@ MonoBehaviour:
   bottomOffset: 0
   hexColor: '#4B692F'
   neededProcessedState: 5
-  currentGatheredState: 3
+  currentGatheredState: 0
   currentProcessedState: 0

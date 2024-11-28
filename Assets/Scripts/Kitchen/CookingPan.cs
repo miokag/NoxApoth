@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using System.Linq;
+using System;
 public class CookingPan : MonoBehaviour
 {
     public static bool IsActive { get; private set; }
@@ -95,7 +96,7 @@ public class CookingPan : MonoBehaviour
         finalCount = _panHandleBehavior.moveCounter;
 
         Ingredient ingredient = GameManager.Instance.ingredientProcessed;
-        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();
+        Ingredient clonedIngredient = GameManager.Instance.Inventory.FirstOrDefault(i => string.Equals(i.ingredientName, ingredient.ingredientName, StringComparison.OrdinalIgnoreCase));
 
         if (finalCount >= 5 && finalCount < 10)
         {
@@ -121,6 +122,7 @@ public class CookingPan : MonoBehaviour
 
         // Add the ingredient to the potion mix
         GameManager.Instance.AddToPotionMix(clonedIngredient);
+        GameManager.Instance.RemoveFromInventory(ingredient);
         GameManager.Instance.DebugPotionMix();
 
         _cameraZoom.BackMainKitchenButton.SetActive(true);

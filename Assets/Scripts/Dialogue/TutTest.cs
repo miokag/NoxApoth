@@ -65,40 +65,6 @@ public class TutTest : MonoBehaviour
             nextStep = 1;
             dialogueManager.OnDialogueFinished += RunNextDialogueNode;  // Subscribe to the event
         }
-        else 
-        {
-            if (customerDatabase != null)
-            {
-                cedric = customerDatabase.GetCustomerByName("Cedric");
-
-                if (cedric != null)
-                {
-                    // Directly spawn Cedric at the waiting area
-                    GameObject cedricPrefab = cedric.customerPrefab; // Assuming Customer has a `prefab` reference
-                    if (cedricPrefab != null && _waitingArea != null)
-                    {
-                        GameObject spawnedCedric = Instantiate(
-                            cedricPrefab,
-                            _waitingArea.transform.position,
-                            Quaternion.identity
-                        );
-
-                        spawnedCedric.name = "Cedric"; // Ensure the spawned object's name matches Cedric
-
-                        // Optional: Attach to the WaitingArea as a child for better organization
-                        spawnedCedric.transform.SetParent(_waitingArea.transform);
-
-                        // Set up CustomerMovement if applicable
-                        CustomerMovement movement = spawnedCedric.GetComponent<CustomerMovement>();
-                        if (movement != null)
-                        {
-                            movement.enabled = false; // Disable movement for now
-                            movement.OnCustomerClicked += HandleCustomerClicked; // Add event listener
-                        }
-                    }
-                }
-            }
-        }
     }
     
     void Update()

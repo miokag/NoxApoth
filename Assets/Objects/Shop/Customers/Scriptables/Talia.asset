@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Talia
   m_EditorClassIdentifier: 
   customerName: Talia
-  customerPrefab: {fileID: 0}
+  customerPrefab: {fileID: 963975890775627559, guid: c50f48adf68b8e14fa6f987a666db9a5,
+    type: 3}
   customerOrder: {fileID: 0}
+  orderTaken: 0

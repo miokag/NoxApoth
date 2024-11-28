@@ -23,8 +23,8 @@ MonoBehaviour:
   - Star-shaped pattern on the cap.
   effects:
   - Releases a shroud that dampens harm
-  - Obscures vision with a thick, suffocating haze
-  - Emits a veil of darkness upon touch.
+  - Obscures vision with a thick, suffocating haze.
+  - Put under a large amount of heat to ampligy it's strength.
   FoundState: 0
   isinPotion: 0
   isCookedProperly: 0

@@ -67,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aaa18d8837bfe944eb669c6512856dc4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e440a47c6899d49418af648467a64abe, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -91,6 +91,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ringPrefab: {fileID: 768654558694812899, guid: f6b3f72574e9e5a49ae643c30cc12450,
     type: 3}
+  isOtherNote: 0
+  rhythmSceneManager: {fileID: 0}
   shrinkDuration: 2
   minHitThreshold: 0.4
   maxHitThreshold: 0.6

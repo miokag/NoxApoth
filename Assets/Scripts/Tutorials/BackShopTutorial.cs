@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BackShopTutorial : MonoBehaviour
 {
-    [SerializeField] private GameObject door; // Reference to the Door GameObject
+    [SerializeField] public GameObject door; // Reference to the Door GameObject
     private DialogueSys dialogueManager;
     private DoorBehavior doorBehavior;
     private KitchenBehavior kitchenBehavior;
-    [SerializeField] private GameObject bookCase;
+    [SerializeField] public GameObject bookCase;
     void Start()
     {
         dialogueManager = FindObjectOfType<DialogueSys>();

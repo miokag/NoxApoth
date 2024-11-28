@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using System;
+using System.Linq;
 public class CookingPot : MonoBehaviour
 {
     public static bool IsActive { get; private set; }
@@ -150,7 +151,7 @@ public class CookingPot : MonoBehaviour
     {
         Debug.Log("HandleMixingStarted() triggered.");
         Ingredient ingredient = GameManager.Instance.ingredientProcessed;
-        Ingredient clonedIngredient = (Ingredient)ingredient.Clone(); // Use the cloned version
+        Ingredient clonedIngredient = GameManager.Instance.Inventory.FirstOrDefault(i => string.Equals(i.ingredientName, ingredient.ingredientName, StringComparison.OrdinalIgnoreCase)); // Use the cloned version
         finalMixCount = potMixer.mixCount;
 
         if (finalMixCount >= 5 && finalMixCount < 10)
@@ -181,6 +182,7 @@ public class CookingPot : MonoBehaviour
         
         // Add the ingredient to the potion mix
         GameManager.Instance.AddToPotionMix(clonedIngredient);
+        GameManager.Instance.RemoveFromInventory(ingredient);
         GameManager.Instance.DebugPotionMix();
     
         _cameraZoom.BackMainKitchenButton.SetActive(true);

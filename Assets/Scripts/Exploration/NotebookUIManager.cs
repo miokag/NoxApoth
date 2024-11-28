@@ -442,12 +442,12 @@ public class NotebookUIManager : MonoBehaviour
 
         if (descriptionText != null)
         {
-            descriptionText.text = string.Join("\n", ingredient.description);
+            descriptionText.text = string.Join("\n\n", ingredient.description);
         }
 
         if (effectsText != null)
         {
-            effectsText.text = string.Join("\n", ingredient.effects);
+            effectsText.text = string.Join("\n\n", ingredient.effects);
         }
 
         Debug.Log("Ingredient page displayed with details for: " + ingredient.ingredientName);
@@ -466,16 +466,19 @@ public class NotebookUIManager : MonoBehaviour
 
 
         currentPotionPage = Instantiate(potionPagePrefab, currentNotebookUI.transform);
+        GameObject potionPageContainer = currentPotionPage.transform.Find("PotionPageContainer").gameObject;
 
         // Find and set the text fields for potion name and ingredients (no image for now)
         TMP_Text nameText = currentPotionPage.transform.Find("PotionNameText")?.GetComponent<TMP_Text>();
-        TMP_Text potionIngredients = currentPotionPage.transform.Find("PotionIngredientsText")?.GetComponent<TMP_Text>();
+        TMP_Text potionIngredients = potionPageContainer.transform.Find("PotionIngredientsText")?.GetComponent<TMP_Text>();
+        TMP_Text potionProcess = potionPageContainer.transform.Find("PotionProcessText")?.GetComponent<TMP_Text>();
 
         if (nameText != null) nameText.text = potion.potionName;
 
         if (potionIngredients != null)
         {
             List<string> ingredientStrings = new List<string>();
+            List<string> ingredientProcessStrings = new List<string>();
 
             foreach (Ingredient ingredient in potion.ingredients)
             {
@@ -488,10 +491,20 @@ public class NotebookUIManager : MonoBehaviour
                 {
                     ingredientStrings.Add("???"); // Add "???" if the ingredient is not found
                 }
+
+                if (ingredient.isinPotion)
+                {
+                    ingredientProcessStrings.Add(ingredient.neededProcessedState.ToString());
+                }
+                else
+                {
+                    ingredientProcessStrings.Add("???");
+                }
             }
 
             // Join the ingredients list into a string with line breaks
-            potionIngredients.text = string.Join("\n", ingredientStrings);
+            potionIngredients.text = string.Join("\n\n", ingredientStrings);
+            potionProcess.text = string.Join("\n\n", ingredientProcessStrings);
         }
 
         Debug.Log("Potion page displayed with details for: " + potion.potionName);

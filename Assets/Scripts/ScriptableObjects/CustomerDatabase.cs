@@ -12,4 +12,8 @@ public class CustomerDatabase : ScriptableObject
         return customers.Find(c => c.customerName == name);
     }
 
+    public List<Customer> GetAllCustomers()
+    {
+        return customers;
+    }
 }

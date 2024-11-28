@@ -6,7 +6,7 @@ using System.Collections;
 public class NoteBehavior : MonoBehaviour, IPointerClickHandler
 {
     public GameObject ringPrefab; // Assign your ring prefab in the inspector
-    private GameObject ringInstance;
+    public GameObject ringInstance;
     public bool isOtherNote;
 
     [SerializeField] RhythmSceneManager rhythmSceneManager;
@@ -14,7 +14,6 @@ public class NoteBehavior : MonoBehaviour, IPointerClickHandler
     [SerializeField] private float shrinkDuration = 1.0f; // Time in seconds for the ring to shrink
     [SerializeField] private float minHitThreshold = 0.4f; // Minimum allowable size difference
     [SerializeField] private float maxHitThreshold = 0.6f; // Maximum allowable size difference
-
 
     void Start()
     {
@@ -24,14 +23,16 @@ public class NoteBehavior : MonoBehaviour, IPointerClickHandler
         if (ringPrefab != null)
         {
             // Instantiate the ring as a child of the note
-            ringInstance = Instantiate(ringPrefab, transform.position, Quaternion.identity, transform.parent);
+            ringInstance = Instantiate(ringPrefab, transform.position, Quaternion.identity, transform);
 
             RectTransform ringRectTransform = ringInstance.GetComponent<RectTransform>();
             RectTransform noteRectTransform = GetComponent<RectTransform>();
 
             if (ringRectTransform != null && noteRectTransform != null)
             {
-                ringRectTransform.anchoredPosition = noteRectTransform.anchoredPosition;
+                // Ensure ring is positioned correctly relative to the note
+                // Use localPosition for proper parenting, and match the note's RectTransform settings
+                ringRectTransform.localPosition = Vector3.zero; // Adjust if necessary
                 ringRectTransform.localScale = Vector3.one;
 
                 // Disable the raycast target to avoid blocking clicks on the note
@@ -40,6 +41,8 @@ public class NoteBehavior : MonoBehaviour, IPointerClickHandler
                 {
                     ringGraphic.raycastTarget = false; // This makes the ring non-interactive
                 }
+
+                // Start shrinking the ring
                 StartCoroutine(ShrinkRing(ringRectTransform));
             }
             else
@@ -52,16 +55,17 @@ public class NoteBehavior : MonoBehaviour, IPointerClickHandler
             Debug.LogError("Ring prefab is not assigned in the inspector.");
         }
     }
+    
+    
 
     // This method will be triggered when the note is clicked
     public void OnPointerClick(PointerEventData eventData)
     {
-
         if (ringInstance == null) return;
 
         if (isOtherNote == true)
         {
-            //Skip hit/miss detection
+            // Skip hit/miss detection
             Destroy(gameObject);
             Destroy(ringInstance);
         }
@@ -76,13 +80,10 @@ public class NoteBehavior : MonoBehaviour, IPointerClickHandler
                 rhythmSceneManager.RegisterHit();
             }
 
-
             // Destroy the note after the click
             Destroy(gameObject);
             Destroy(ringInstance);
         }
-
-        
     }
 
     IEnumerator ShrinkRing(RectTransform ringRectTransform)

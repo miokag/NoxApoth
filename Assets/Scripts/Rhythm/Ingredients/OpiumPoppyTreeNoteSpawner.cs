@@ -54,7 +54,7 @@ public class OpiumPoppyTreeNoteSpawner : MonoBehaviour
     private void Start()
     {
         UIManager = GameObject.Find("UIManager");
-        maxNotes = Random.Range(3, 5);
+        maxNotes = Random.Range(5, 10);
         totalNotes = 0;
         StartCoroutine(SpawnNotes());
 
@@ -121,41 +121,62 @@ public class OpiumPoppyTreeNoteSpawner : MonoBehaviour
     }
 
     private IEnumerator CheckForNotesCompletion()
+{
+    InventoryUI inventory = UIManager.GetComponent<InventoryUI>();
+
+    // Wait for all non-ghost notes to be destroyed
+    while (spawnedNotes.Count > 0)
     {
-        InventoryUI inventory = UIManager.GetComponent<InventoryUI>();
-
-        // Wait for all non-ghost notes to be destroyed
-        while (spawnedNotes.Count > 0)
-        {
-            spawnedNotes.RemoveAll(note => note == null);
-            yield return null;
-        }
-
-        Debug.Log("All notes have been destroyed!");
-
-        if (rhythmSceneManager == null)
-        {
-            Debug.LogError("RhythmSceneManager component not found.");
-            yield break;
-        }
-
-        rhythmSceneManager.ScoreHandler(maxNotes);
-
-        Ingredient ingredient = GameManager.Instance.GetClonedIngredientDatabase().GetIngredientByName("Opium Poppy Tree");
-        if (ingredient != null)
-        {
-            GameManager.Instance.AddToInventory(ingredient);
-            inventory.UpdateUI();
-
-            Debug.Log($"{ingredient.ingredientName} has been added to inventory.");
-        }
-        else
-        {
-            Debug.LogError("Ingredient not found in the database!");
-        }
-
-        // Destroy Rhythm UI after completion
-        rhythmSceneManager.DestroyRhythmUI();
+        spawnedNotes.RemoveAll(note => note == null);
+        yield return null;
     }
+
+    Debug.Log("All notes have been destroyed!");
+
+    // Retrieve the ingredient
+    Ingredient ingredient = GameManager.Instance.GetClonedIngredientDatabase().GetIngredientByName("Opium Poppy Tree");
+    if (ingredient != null)
+    {
+        rhythmSceneManager.ScoreHandler(maxNotes);
+        
+        // Assign GatheredState based on the rhythmResult
+        switch (rhythmSceneManager.rhythmResult)
+        {
+            case RhythmResult.Fail:
+                ingredient.currentGatheredState = Ingredient.GatheredState.Bad;
+                Debug.Log("Result: Fail. Ingredient state set to Bad.");
+                break;
+            case RhythmResult.Pass:
+                ingredient.currentGatheredState = Ingredient.GatheredState.Good;
+                Debug.Log("Result: Pass. Ingredient state set to Good.");
+                break;
+            case RhythmResult.Success:
+                ingredient.currentGatheredState = Ingredient.GatheredState.Perfect;
+                Debug.Log("Result: Success. Ingredient state set to Perfect.");
+                break;
+            default:
+                Debug.LogWarning("Unexpected result. Ingredient state unchanged.");
+                break;
+        }
+
+        // Add ingredient to inventory and update the UI
+        GameManager.Instance.AddToInventory(ingredient);
+        inventory.UpdateUI();
+
+        GameManager.Instance.DebugInventory();
+
+        Debug.Log($"{ingredient.ingredientName} has been added to inventory.");
+    }
+    else
+    {
+        Debug.LogError("Ingredient not found in the database!");
+    }
+
+    // Destroy Rhythm UI after completion
+    this.enabled = false;
+    rhythmSceneManager.DestroyRhythmUI();
+    rhythmSceneManager.ResetRhythmGame();
+}
+
 
 }

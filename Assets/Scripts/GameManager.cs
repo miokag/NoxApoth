@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System;
+using Unity.VisualScripting;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -22,8 +25,8 @@ public class GameManager : MonoBehaviour
     private int inventoryLimit = 3; // Initial inventory size limit
     public Ingredient ingredientProcessed;
     public List<Customer> shopClonedCustomers { get; private set; } = new List<Customer>();
-
-
+    public bool tutorialDone;
+    
     void Awake()
     {
         if (Instance == null)
@@ -56,13 +59,6 @@ public class GameManager : MonoBehaviour
         clonedIngredientDatabase = ingredientDatabase.Clone();
         clonedPotionDatabase = potionDatabase.Clone(clonedIngredientDatabase);
 
-        Debug.Log("Cloned IngredientDatabase and PotionDatabase.");
-        
-        setCurrentCustomer("Cedric");
-
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Viper's Vine"));
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Serenity Herb"));
-        AddToInventory(clonedIngredientDatabase.GetIngredientByName("Opium Poppy Tree"));
     }
     
     public void InitializeShopClonedCustomers()
@@ -177,6 +173,24 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning($"Ingredient '{ingredientName}' not found in cloned database.");
         }
     }
+    
+    public void ChangeIngredientIsInPotion(string ingredientName, bool isinPotion)
+    {
+        Ingredient ingredient = clonedIngredientDatabase.GetIngredientByName(ingredientName);
+
+        Debug.Log(ingredient.GetInstanceID());
+
+        if (ingredient != null)
+        {
+            Debug.Log($"Before change, {ingredientName} Is In Potion: {ingredient.isinPotion}");
+            ingredient.AdjustInPotionState(isinPotion);  // Modify the FoundState of the cloned ingredient
+            Debug.Log($"After change, {ingredientName} Is In Potion: {ingredient.isinPotion}");
+        }
+        else
+        {
+            Debug.LogWarning($"Ingredient '{ingredientName}' not found in cloned database.");
+        }
+    }
 
     public void LogIngredientDatabaseContents()
     {
@@ -241,6 +255,27 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("Inventory limit reached. Cannot add more items.");
         }
     }
+    public void AddToPotionMix(Ingredient ingredient)
+    {
+        // Find the cloned ingredient in the inventory
+        Ingredient clonedIngredient = Inventory.FirstOrDefault(i => string.Equals(i.ingredientName, ingredient.ingredientName, StringComparison.OrdinalIgnoreCase));
+
+        Debug.Log("Cloned Ingredient : " +  clonedIngredient.ingredientName);
+
+        if (clonedIngredient != null)
+        {
+            Debug.Log($"Found ingredient in inventory: {clonedIngredient.ingredientName} (InstanceID: {clonedIngredient.GetInstanceID()})");
+            // Add it to the potion mix
+            PotionMix.Add(clonedIngredient);
+            Debug.Log($"{ingredient.ingredientName} added to Potion Mix.");
+        }
+        else
+        {
+            Debug.LogWarning($"{ingredient.ingredientName} not found in inventory. Cannot add to potion mix.");
+        }
+    }
+
+    
 
 
     public void RemoveFromInventory(Ingredient ingredient)
@@ -260,12 +295,8 @@ public class GameManager : MonoBehaviour
     }
 
     
-    public void AddToPotionMix(Ingredient ingredient)
-    {
-        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();  // Clone the ingredient before adding
-        PotionMix.Add(clonedIngredient);
-        Debug.Log($"{ingredient.name} added to Potion Mix.");
-    }
+    
+
     
     public void ClearPotionMix()
     {
@@ -293,7 +324,8 @@ public class GameManager : MonoBehaviour
             string ingredientInfo = $"Name: {ingredient.ingredientName}, " +
                                     $"Description: {string.Join(", ", ingredient.description)}, " +
                                     $"Effects: {string.Join(", ", ingredient.effects)}, " +
-                                    $"FoundState: {ingredient.FoundState}";
+                                    $"FoundState: {ingredient.FoundState}" +
+                                    $"Current Gathered State: {ingredient.currentGatheredState}";
             inventoryInfo += ingredientInfo + "\n";
         }
 
@@ -311,7 +343,8 @@ public class GameManager : MonoBehaviour
                                     $"Current Gathered State: {string.Join(", ",ingredient.currentGatheredState)}, " + 
                                     $"Needed Processed State: {string.Join(", ",ingredient.neededProcessedState)}, " + 
                                     $"Current Processed State: {string.Join(", ",ingredient.currentProcessedState)}, " + 
-                                    $"FoundState: {ingredient.FoundState}";
+                                    $"FoundState: {ingredient.FoundState}, " + 
+                                    $"Is In Potion: {ingredient.isinPotion}, ";
             potionMixInfo += ingredientInfo + "\n";
         }
 

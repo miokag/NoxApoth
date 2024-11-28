@@ -33,9 +33,6 @@ public class IngredientCollider : MonoBehaviour
         {
             // Destroy the ingredient
             Destroy(gameObject);
-
-            // Remove the ingredient from inventory
-            GameManager.Instance.RemoveFromInventory(ingredient);
             
             // Become current ingredient being processed
             GameManager.Instance.CurrentlyProcessing(ingredient);

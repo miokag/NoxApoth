@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Linq;
 
 public class FrontMortar : MonoBehaviour
 {
@@ -103,7 +105,7 @@ public class FrontMortar : MonoBehaviour
         Debug.Log("Final Count: " + finalCount);
         
         Ingredient ingredient = GameManager.Instance.ingredientProcessed;
-        Ingredient clonedIngredient = (Ingredient)ingredient.Clone();
+        Ingredient clonedIngredient = GameManager.Instance.Inventory.FirstOrDefault(i => string.Equals(i.ingredientName, ingredient.ingredientName, StringComparison.OrdinalIgnoreCase)); // Use the cloned version
         
         if (finalCount >= 10 && finalCount < 15)
         {
@@ -133,6 +135,7 @@ public class FrontMortar : MonoBehaviour
         
         // Add the ingredient to the potion mix
         GameManager.Instance.AddToPotionMix(clonedIngredient);
+        GameManager.Instance.RemoveFromInventory(ingredient);
         GameManager.Instance.DebugPotionMix();
         
         _pestleBehavior.cameraZoom.BackMainKitchenButton.SetActive(true);

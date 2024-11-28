@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GivePotionBehavior : MonoBehaviour
 {
@@ -24,11 +25,17 @@ public class GivePotionBehavior : MonoBehaviour
 
     [SerializeField] private Sprite[] customerExpressionSprites;
     private SpriteRenderer customerSprite;
+    public ActualCustomerSpawner _actualCustomerSpawner;
+    private Canvas _canvas;
+    private Transform textboxCanvas;
     private void Start()
     {
+        _actualCustomerSpawner = FindObjectOfType<ActualCustomerSpawner>();
         potionImage = GameObject.Find("PotionImage");
         _orderManager = FindObjectOfType<OrderManager>();
         customerSprite = GetComponent<SpriteRenderer>();
+        if (GameManager.Instance.PotionMix.Count > 0) this.gameObject.tag = "Selectable";
+        _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
     }
 
     private void OnMouseDown()
@@ -84,6 +91,16 @@ public class GivePotionBehavior : MonoBehaviour
             if (requiredIngredientNames.Contains(ingredientName))
             {
                 Debug.Log($"Ingredient '{ingredientName}' matches.");
+                Ingredient clonedIngredient = GameManager.Instance.GetClonedIngredientDatabase().GetIngredientByName(ingredientName);
+                if (clonedIngredient != null && clonedIngredient.FoundState == false)
+                {
+                    clonedIngredient.FoundState = true;
+                    Debug.Log($"{ingredientName} found in the cloned database. isFound set to true.");
+                }
+                else
+                {
+                    Debug.LogError($"{ingredientName} not found in the cloned database.");
+                }
                 correctCounter++;
             }
             else
@@ -98,7 +115,6 @@ public class GivePotionBehavior : MonoBehaviour
         {
             Debug.Log("All ingredients match! The potion is correct.");
             Checker();
-            GameManager.Instance.ClearPotionMix();
             Debug.Log($"Total correct counter: {correctCounter}");
             PotionResults();
         }
@@ -126,7 +142,16 @@ public class GivePotionBehavior : MonoBehaviour
             {
                 Debug.Log($"{ingredient.ingredientName} - Current State: {ingredient.currentProcessedState}, Needed State: {ingredient.neededProcessedState}");
                 Debug.Log($"{ingredient.ingredientName} matches needed process state.");
-                if(isFail != true) correctCounter++; 
+                if(isFail != true) correctCounter++;
+                
+                Ingredient clonedIngredient = GameManager.Instance.GetClonedIngredientDatabase().GetIngredientByName(ingredient.ingredientName);
+                if (clonedIngredient != null && clonedIngredient.isinPotion == false)
+                {
+                    clonedIngredient.isinPotion = true;
+                    Debug.Log("This ingredient isinPotion: " + clonedIngredient.isinPotion);
+                    Debug.Log($"{ingredient.ingredientName} found in the cloned database. isinPotion set to true.");
+                }
+                
             }
             if (ingredient.currentGatheredState == Ingredient.GatheredState.Perfect)
             {
@@ -138,6 +163,10 @@ public class GivePotionBehavior : MonoBehaviour
                 Debug.Log($"{ingredient.ingredientName} gathered state is good.");
                 if(isFail != true) correctCounter++;
             }
+            else if (ingredient.currentGatheredState == Ingredient.GatheredState.Bad)
+            {
+                if(isFail != true) wrongProcess.Add(ingredient.name);
+            }
         }
     }
     
@@ -148,7 +177,7 @@ public class GivePotionBehavior : MonoBehaviour
         else if (correctCounter >= 0 && correctCounter <= 6) isFail = true;
 
         Debug.Log("Potion Results: isPass: " + isPass + ", isSuccess: " + isSuccess + ", isFail: " + isFail);
-
+        GameManager.Instance.DebugPotionMix();
         GameManager.Instance.ClearPotionMix();
         _orderManager.RemoveOrderByCustomer(GameManager.Instance.currentCustomer);
     
@@ -231,6 +260,8 @@ public class GivePotionBehavior : MonoBehaviour
         }
 
         Debug.Log("All correct potion dialogues shown.");
+
+        ResetThis();
     }
 
 
@@ -314,12 +345,24 @@ public class GivePotionBehavior : MonoBehaviour
                 Debug.LogWarning($"No dialogue found for ingredient: {cleanedIngredientName}");
             }
         }
+
         Debug.Log("All dialogues shown.");
+
+        // Now reset everything after dialogues are shown
+        ResetThis();
     }
+
+    private void ResetThis()
+    {
+        GameManager.Instance.currentCustomer = null;
+    }
+
+    
 
     public void DestroyCustomer()
     {
         Destroy(customerGameObject);
+        Debug.Log("Destroy customer");
     }
 
     public List<string> GetIngredientNamesByPotion(string potionName)

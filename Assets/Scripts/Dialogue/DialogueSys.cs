@@ -64,7 +64,7 @@ public class DialogueSys : MonoBehaviour
         _isDialogueFinished = false;
     }
 
-    private void LoadLuaScript(string fileName)
+    public void LoadLuaScript(string fileName)
     {
         _luaScript = new Script();
         string filePath = Path.Combine(Application.dataPath, "Scripts", "Dialogue", fileName + ".lua");
@@ -215,16 +215,8 @@ public class DialogueSys : MonoBehaviour
             characterNameText.text = _characterName;
             orderDescriptionText.text = _orderDescription;
 
-            // Find the OrderManager in the scene and save the order
-            OrderManager orderManager = FindObjectOfType<OrderManager>();
-            if (orderManager != null)
-            {
-                orderManager.StoreOrder(_characterName, _orderDescription, _customerOrder);
-            }
-            else
-            {
-                Debug.LogError("OrderManager is not found in the scene.");
-            }
+            OrderManager.Instance.StoreOrder(_characterName, _orderDescription, _customerOrder);
+
         }
         else
         {

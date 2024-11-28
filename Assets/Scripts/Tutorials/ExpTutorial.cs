@@ -21,31 +21,33 @@ public class ExpTutorial : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextStep = 0;
-        GameObject playerContainer = GameObject.Find("Player");
-        GameObject player = playerContainer.transform.Find("PlayerSprite").gameObject;
-        _playerControllerScript = player.GetComponent<PlayerControllerScript>();
-
-        _playerControllerScript.enabled = false;
-
-        dialogueManager = FindObjectOfType<DialogueSys>();
-
-        generalCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        if (dialogueManager == null) { Debug.LogError("Canvas is not assigned."); }
-        else
+        if (GameManager.Instance.GetTutorialStep() == 2)
         {
-            Debug.Log("Canvas assigned.");
-            if (dialogueManager == null) { Debug.LogError("DialogueManager is not assigned."); }
+            nextStep = 0;
+            GameObject playerContainer = GameObject.Find("Player");
+            GameObject player = playerContainer.transform.Find("PlayerSprite").gameObject;
+            _playerControllerScript = player.GetComponent<PlayerControllerScript>();
+
+            _playerControllerScript.enabled = false;
+
+            dialogueManager = FindObjectOfType<DialogueSys>();
+
+            generalCanvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            if (dialogueManager == null) { Debug.LogError("Canvas is not assigned."); }
             else
             {
-                dialogueManager.StartDialogue("exploration1");
-                nextStep = 1;
-                dialogueManager.OnDialogueFinished += RunNextDialogueNode;
+                Debug.Log("Canvas assigned.");
+                if (dialogueManager == null) { Debug.LogError("DialogueManager is not assigned."); }
+                else
+                {
+                    dialogueManager.StartDialogue("exploration1");
+                    nextStep = 1;
+                    dialogueManager.OnDialogueFinished += RunNextDialogueNode;
+                }
+
             }
-
         }
-
-
+        
     }
 
     private void RunNextDialogueNode()

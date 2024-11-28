@@ -26,9 +26,13 @@ public class DoorBehavior : MonoBehaviour
 
     private bool isClickable = true; // Flag to track if the door is clickable
     private GameObject _noOrder;
+    private GameObject _tutorial;
+    private BackShopTutorial _backShopTutorial;
 
     private void Start()
     {
+        _tutorial = GameObject.Find("Tutorial");
+        _backShopTutorial = _tutorial.GetComponent<BackShopTutorial>();
         // Get the collider for disabling interaction
         doorCollider = GetComponent<Collider>();
     }
@@ -57,14 +61,21 @@ public class DoorBehavior : MonoBehaviour
                     characterNameText = orderNote.transform.Find("CharacterNameText")?.GetComponent<TMP_Text>();
                     orderDescriptionText = orderNote.transform.Find("OrderDescriptionText")?.GetComponent<TMP_Text>();
 
-                    // Instantiate and setup the Left and Right buttons
-                    GameObject leftButtonObj = Instantiate(leftButtonPrefab, canvas.transform);
-                    leftButton = leftButtonObj.GetComponent<Button>();
-                    leftButton.onClick.AddListener(ShowPreviousOrder);
+                    if (orders.Count > 1)
+                    {
+                        // Instantiate and setup the Left and Right buttons
+                        GameObject leftButtonObj = Instantiate(leftButtonPrefab, canvas.transform);
+                        leftButton = leftButtonObj.GetComponent<Button>();
+                        leftButton.onClick.AddListener(ShowPreviousOrder);
 
-                    GameObject rightButtonObj = Instantiate(rightButtonPrefab, canvas.transform);
-                    rightButton = rightButtonObj.GetComponent<Button>();
-                    rightButton.onClick.AddListener(ShowNextOrder);
+                        GameObject rightButtonObj = Instantiate(rightButtonPrefab, canvas.transform);
+                        rightButton = rightButtonObj.GetComponent<Button>();
+                        rightButton.onClick.AddListener(ShowNextOrder);
+                    }
+                    this.gameObject.tag = "Untagged";
+                    GameObject toKitchen = _backShopTutorial.bookCase;
+                    toKitchen.tag = "Untagged";
+
                 }
 
                 // Display the first order

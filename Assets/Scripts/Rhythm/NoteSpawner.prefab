@@ -11,6 +11,11 @@ GameObject:
   - component: {fileID: 7153667912620570965}
   - component: {fileID: 5429525706930409614}
   - component: {fileID: 1942822290397437395}
+  - component: {fileID: 1078539298686772785}
+  - component: {fileID: 456770133339007834}
+  - component: {fileID: 5289161964454734387}
+  - component: {fileID: 1009678692769044978}
+  - component: {fileID: 6858195624997214740}
   m_Layer: 0
   m_Name: NoteSpawner
   m_TagString: Untagged
@@ -40,7 +45,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4381002058156374939}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ec025e8cc766b4f4ab4ecf86526d4698, type: 3}
   m_Name: 
@@ -57,7 +62,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4381002058156374939}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ae97e1ec77826d4b8a6bdc63d8e164c, type: 3}
   m_Name: 
@@ -69,6 +74,116 @@ MonoBehaviour:
   spawnArea: {fileID: 0}
   spawnInterval: 2
   ghostSpawnInterval: 0.5
+  rhythmSceneManager: {fileID: 0}
+  UIManager: {fileID: 0}
   maxNotes: 0
-  totalNotes: 0
   RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}
+--- !u!114 &1078539298686772785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381002058156374939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db4b21ba0e604fe4d941d79dc568c861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 6047335694060590032, guid: 66df18e1060e9fb4a9bddaa6e3a7a4e2,
+    type: 3}
+  ghostNotePrefab: {fileID: 723721984648260861, guid: 045da06439f99ea4b91d8b5fb3431b9f,
+    type: 3}
+  spawnArea: {fileID: 0}
+  spawnInterval: 1
+  ghostSpawnInterval: 0.5
+  rhythmSceneManager: {fileID: 0}
+  UIManager: {fileID: 0}
+  maxNotes: 0
+  RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}
+--- !u!114 &456770133339007834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381002058156374939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ecd8acb5ec07604eb0cc2c19e01ddb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 6047335694060590032, guid: 66df18e1060e9fb4a9bddaa6e3a7a4e2,
+    type: 3}
+  ghostNotePrefab: {fileID: 723721984648260861, guid: 045da06439f99ea4b91d8b5fb3431b9f,
+    type: 3}
+  spawnArea: {fileID: 0}
+  spawnInterval: 1
+  ghostSpawnInterval: 1
+  rhythmSceneManager: {fileID: 0}
+  UIManager: {fileID: 0}
+  RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}
+  maxNotes: 10
+--- !u!114 &5289161964454734387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381002058156374939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d9d1c6aa0d9ead4e9e737f40fcc590a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frozenBarrierPrefab: {fileID: 7162144267441415116, guid: 4caa8cc2c45989a4bb1507d2cff8e08c,
+    type: 3}
+  notePrefab: {fileID: 6047335694060590032, guid: 66df18e1060e9fb4a9bddaa6e3a7a4e2,
+    type: 3}
+  spawnArea: {fileID: 0}
+  clicksToBreak: 5
+  spawnInterval: 1
+  UIManager: {fileID: 0}
+  RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}
+--- !u!114 &1009678692769044978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381002058156374939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d745cfb981369fb44ad6a09d91185f11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 6047335694060590032, guid: 66df18e1060e9fb4a9bddaa6e3a7a4e2,
+    type: 3}
+  spawnArea: {fileID: 0}
+  spawnInterval: 1
+  UIManager: {fileID: 0}
+  RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}
+--- !u!114 &6858195624997214740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4381002058156374939}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848c021ec6ed21641b82c0a783766a74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  notePrefab: {fileID: 6047335694060590032, guid: 66df18e1060e9fb4a9bddaa6e3a7a4e2,
+    type: 3}
+  spawnArea: {fileID: 0}
+  spawnInterval: 1
+  UIManager: {fileID: 0}
+  RhythmManagerGameObject: {fileID: 0}
+  OtherRhythmManagerGameObject: {fileID: 0}

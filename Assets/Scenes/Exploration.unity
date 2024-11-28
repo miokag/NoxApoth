@@ -213,6 +213,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &102552335
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 102552337}
+  - component: {fileID: 102552336}
+  m_Layer: 0
+  m_Name: VideoPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!328 &102552336
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102552335}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 77f8b21308be07a4a9c18e404c3e516e, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 992a31e85a1341d4a849e4efedf403c7, type: 2}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources: []
+  m_DirectAudioVolumes: []
+  m_Url: 
+  m_EnabledAudioTracks: 
+  m_DirectAudioMutes: 
+  m_ControlledAudioTrackCount: 0
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 1
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
+--- !u!4 &102552337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102552335}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 482, y: 271, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &139870700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,6 +1568,14 @@ MonoBehaviour:
   RhythmUIPrefab: {fileID: 5023876891673305237, guid: 660783f1038e9194485f6696a52f2ac8,
     type: 3}
   canvas: {fileID: 1221526186}
+  videoClips:
+  - {fileID: 32900000, guid: 77f8b21308be07a4a9c18e404c3e516e, type: 3}
+  - {fileID: 32900000, guid: ed6c9afd236eb0b4b82961a46735f77c, type: 3}
+  - {fileID: 32900000, guid: 0dfc2c2f3c40ff1469f45cd185ff9cc4, type: 3}
+  - {fileID: 32900000, guid: 6ef2997fa1c66174d89a35ab3c098478, type: 3}
+  - {fileID: 32900000, guid: 30b2d647bba901f4b95735791a3b94be, type: 3}
+  - {fileID: 32900000, guid: 95b2ff689ff4d03449d4462d1fa311cf, type: 3}
+  videoPlayer: {fileID: 0}
   isSuccess: 0
   isPass: 0
   isFail: 0
@@ -2536,7 +2610,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1341193728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2556,6 +2630,7 @@ MonoBehaviour:
   customerDatabase: {fileID: 11400000, guid: 7dc11d976fa1f2a41b88d941f1dfa9ee, type: 2}
   PotionMix: []
   ingredientProcessed: {fileID: 0}
+  tutorialDone: 0
 --- !u!4 &1341193729
 Transform:
   m_ObjectHideFlags: 0
@@ -3487,7 +3562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2050356361
 Transform:
   m_ObjectHideFlags: 0
@@ -3722,3 +3797,4 @@ SceneRoots:
   - {fileID: 738361681}
   - {fileID: 1341193729}
   - {fileID: 1185165202}
+  - {fileID: 102552337}
